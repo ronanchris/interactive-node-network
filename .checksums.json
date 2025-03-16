@@ -1,0 +1,29 @@
+{
+  "rules.md": {
+    "hash": "pending_initial_scan",
+    "last_checked": "2024-03-17T00:00:00Z",
+    "last_modified": "2024-03-17T00:00:00Z"
+  },
+  "sessions.md": {
+    "hash": "pending_initial_scan",
+    "last_checked": "2024-03-17T00:00:00Z",
+    "last_modified": "2024-03-17T00:00:00Z"
+  },
+  "docs": {
+    "performance/README.md": {
+      "hash": "pending_initial_scan",
+      "last_checked": "2024-03-17T00:00:00Z",
+      "last_modified": "2024-03-17T00:00:00Z"
+    },
+    "performance/monitoring.md": {
+      "hash": "pending_initial_scan",
+      "last_checked": "2024-03-17T00:00:00Z",
+      "last_modified": "2024-03-17T00:00:00Z"
+    },
+    "session-management.md": {
+      "hash": "pending_initial_scan",
+      "last_checked": "2024-03-17T00:00:00Z",
+      "last_modified": "2024-03-17T00:00:00Z"
+    }
+  }
+} 

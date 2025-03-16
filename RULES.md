@@ -1,4 +1,96 @@
-# Project Rules and Best Practices
+# Project Rules and Guidelines
+
+This document serves as the main entry point for all project rules and guidelines. Each section links to detailed documentation in the `docs/` directory.
+
+## Quick Access
+
+### For AI Assistants
+1. **Session Management**: Start here at the beginning of each session
+   - [Session Management Rules](./docs/session-management.md)
+   - Required reading at session start
+   - Includes memory and performance guidelines
+
+2. **User Interaction**
+   - [User Interaction Guidelines](./docs/user-interaction.md)
+   - Critical for all user communications
+   - Defines response formats and protocols
+
+3. **Development Process**
+   - [Development Workflow](./docs/development-workflow.md)
+   - [Project Standards](./docs/project-standards.md)
+   - Follow these for all code changes
+
+### For Performance and Error Handling
+1. **Performance Management**
+   - [Performance Overview](./docs/performance/README.md)
+   - [Monitoring Rules](./docs/performance/monitoring.md)
+   - [Threshold Guidelines](./docs/performance/thresholds.md)
+   - [Optimization Strategies](./docs/performance/optimization.md)
+
+2. **Error Management**
+   - [Error Handling Overview](./docs/errors/README.md)
+   - [Detection Guidelines](./docs/errors/detection.md)
+   - [Recovery Procedures](./docs/errors/recovery.md)
+   - [Prevention Strategies](./docs/errors/prevention.md)
+
+### For Project Management
+1. **Communication**
+   - [Communication Guidelines](./docs/communication.md)
+   - Includes formatting and response protocols
+
+2. **Maintenance**
+   - [Maintenance Procedures](./docs/maintenance.md)
+   - Regular upkeep and technical debt management
+
+3. **Deployment**
+   - [Deployment Guidelines](./docs/deployment.md)
+   - Build and release procedures
+
+## Document Updates
+
+When any rules document is updated:
+1. Update relevant section in `docs/`
+2. Update cross-references if needed
+3. Update this index if new sections added
+4. Record changes in `SESSIONS.md`
+5. Update `.checksums.json`
+
+## Required Reading Order
+
+AI assistants must read documents in this order at session start:
+1. `RULES.md` (this file) - Main router
+2. `docs/session-management.md` - Session handling
+3. `SESSIONS.md` - Current context
+4. Relevant section docs based on current task
+
+## Cross-Reference Map
+
+```mermaid
+graph TD
+    A[RULES.md] --> B[Session Management]
+    A --> C[Performance]
+    A --> D[Error Handling]
+    A --> E[Development]
+    
+    C --> C1[Monitoring]
+    C --> C2[Thresholds]
+    C --> C3[Optimization]
+    
+    D --> D1[Detection]
+    D --> D2[Recovery]
+    D --> D3[Prevention]
+    
+    E --> E1[Workflow]
+    E --> E2[Standards]
+    E --> E3[Deployment]
+```
+
+## File Locations
+
+- Main Rules: `/RULES.md`
+- Documentation: `/docs/*`
+- Sessions: `/SESSIONS.md`
+- Checksums: `/.checksums.json`
 
 ## Educational Support
 
