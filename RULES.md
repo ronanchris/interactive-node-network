@@ -157,6 +157,10 @@
   * When switching between distinct tasks
   * When chat history becomes very long
 - Example: "Let's start a fresh chat for the new feature implementation"
+- At the start of each new chat:
+  * Ask AI to scan RULES.md first
+  * This ensures all project guidelines are followed consistently
+  * Example: "Would you like me to scan the RULES.md file to ensure I follow all project guidelines? (y/n)"
 
 ### 2. Memory Management
 - Start new chat sessions periodically to prevent memory issues

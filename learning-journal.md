@@ -8,6 +8,8 @@ This document tracks new concepts, tools, and practices as we encounter them in 
 2. [Tools](#tools)
    - [Vite](#vite)
    - [Tailwind CSS](#tailwind-css)
+   - [Terser](#terser)
+   - [esbuild](#esbuild)
 3. [Frameworks](#frameworks)
    - [React](#react)
 4. [Best Practices](#best-practices)
@@ -109,6 +111,70 @@ Example from our project:
 2. Consistent design system
 3. No need to write custom CSS
 4. Highly customizable
+
+### Terser
+*First Encountered: March 16, 2024*
+
+**What is it?**
+Terser is a JavaScript minifier and compressor tool that optimizes JavaScript code for production. It's the modern successor to UglifyJS and is widely used in build tools like Vite.
+
+**How we used it**
+We initially used Terser through Vite's build configuration but encountered compatibility issues with GitHub Actions:
+```typescript
+build: {
+  minify: 'terser',
+  terserOptions: {
+    compress: {
+      drop_console: true,
+      drop_debugger: true
+    }
+  }
+}
+```
+
+**Why we switched**
+Due to Unicode handling issues in GitHub Actions builds, we switched to esbuild for minification.
+
+**Related Concepts**
+- Code Minification
+- Build Optimization
+- Bundle Size Management
+- Production Deployment
+
+### esbuild
+*First Encountered: March 16, 2024*
+
+**What is it?**
+esbuild is an extremely fast JavaScript bundler and minifier written in Go. It's designed to be significantly faster than traditional JavaScript-based build tools while providing similar optimization capabilities.
+
+**How we're using it**
+We use esbuild through Vite's build configuration for production builds:
+```typescript
+build: {
+  minify: 'esbuild',  // Using esbuild instead of terser
+  rollupOptions: {
+    output: {
+      manualChunks: {
+        react: ['react', 'react-dom'],
+        vendor: ['react-colorful']
+      }
+    }
+  }
+}
+```
+
+**Why it's valuable**
+1. Extremely fast build times
+2. Good compatibility with CI/CD environments
+3. Built-in minification and bundling
+4. Native support in Vite
+5. More reliable Unicode handling
+
+**Related Concepts**
+- Build Performance
+- Code Bundling
+- Development vs Production Builds
+- CI/CD Compatibility
 
 ## Frameworks
 
