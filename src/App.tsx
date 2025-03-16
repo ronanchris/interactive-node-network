@@ -1,4 +1,3 @@
-import React from 'react'
 import NetworkVisualizationController from './components/NetworkVisualizationController'
 
 function App() {
