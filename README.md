@@ -2,6 +2,10 @@
 
 An interactive node network visualization with customizable themes and controls, built with React, TypeScript, and Canvas.
 
+## Live Demo
+
+Visit the live demo at: [https://yourusername.github.io/interactive-node-network](https://yourusername.github.io/interactive-node-network)
+
 ## Features
 
 - Real-time interactive node network visualization
@@ -76,3 +80,23 @@ src/
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Deployment
+
+The project is automatically deployed to GitHub Pages using GitHub Actions. Every push to the `main` branch triggers a new deployment.
+
+### Manual Deployment
+
+If you want to deploy manually:
+
+1. Build the project:
+```bash
+npm run build
+```
+
+2. Preview the build locally:
+```bash
+npm run preview
+```
+
+3. The built files will be in the `dist` directory, ready for deployment to any static hosting service.

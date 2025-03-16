@@ -7,6 +7,9 @@ export default defineConfig({
   base: '/interactive-node-network/',
   build: {
     minify: 'esbuild',
+    target: 'esnext',  // Modern browsers for better optimization
+    cssCodeSplit: true,  // Enable CSS code splitting
+    reportCompressedSize: false,  // Skip reporting compressed size for faster builds
     rollupOptions: {
       output: {
         manualChunks: {
@@ -17,6 +20,14 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-colorful']
+    include: ['react', 'react-dom', 'react-colorful'],
+    esbuildOptions: {
+      target: 'esnext',
+      drop: ['console', 'debugger']  // Remove console.log and debugger statements
+    }
+  },
+  esbuild: {
+    drop: ['console', 'debugger'],  // Also drop console.log and debugger in source code
+    target: 'esnext'
   }
 }) 

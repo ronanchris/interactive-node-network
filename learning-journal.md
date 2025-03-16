@@ -151,7 +151,10 @@ esbuild is an extremely fast JavaScript bundler and minifier written in Go. It's
 We use esbuild through Vite's build configuration for production builds:
 ```typescript
 build: {
-  minify: 'esbuild',  // Using esbuild instead of terser
+  minify: 'esbuild',
+  target: 'esnext',  // Modern browsers for better optimization
+  cssCodeSplit: true,  // Enable CSS code splitting
+  reportCompressedSize: false,  // Skip reporting compressed size
   rollupOptions: {
     output: {
       manualChunks: {
@@ -160,8 +163,26 @@ build: {
       }
     }
   }
+},
+optimizeDeps: {
+  include: ['react', 'react-dom', 'react-colorful'],
+  esbuildOptions: {
+    target: 'esnext',
+    drop: ['console', 'debugger']  // Remove debug code
+  }
+},
+esbuild: {
+  drop: ['console', 'debugger'],  // Clean production code
+  target: 'esnext'
 }
 ```
+
+Our configuration:
+1. Uses modern JavaScript features (esnext)
+2. Removes console.log and debugger statements
+3. Splits CSS for better caching
+4. Chunks React and vendor code separately
+5. Skips compressed size reporting for faster builds
 
 **Why it's valuable**
 1. Extremely fast build times
@@ -169,12 +190,17 @@ build: {
 3. Built-in minification and bundling
 4. Native support in Vite
 5. More reliable Unicode handling
+6. Optimized production code size
+7. Better browser caching through code splitting
 
 **Related Concepts**
 - Build Performance
 - Code Bundling
 - Development vs Production Builds
 - CI/CD Compatibility
+- Code Splitting
+- Tree Shaking
+- Modern JavaScript Features
 
 ## Frameworks
 
