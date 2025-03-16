@@ -1,4 +1,48 @@
 import React, { useEffect, useRef, useState } from 'react';
+import NodeNetworkWrapper from './components/NodeNetworkWrapper';
+import { VARIANTS } from './components/NodeNetworkWrapper';
+
+// Define Node type
+interface Node {
+  x: number;
+  y: number;
+  radius: number;
+  velocity: {
+    x: number;
+    y: number;
+  };
+  phase: number;
+  brightness: number;
+}
+
+// Update the Theme type to be more specific
+type Theme = {
+  background: string;
+  nodeColor: string;
+  connectionColor: string;
+  pulseColor: string;
+  nodeBrightness: number;
+};
+
+// Define props interface
+interface InteractiveNodeNetworkProps {
+  nodeCount?: number;
+  themeVariant?: keyof typeof THEME_VARIANTS;
+  mouseInteractionRadius?: number;
+  height?: string;
+  customTheme?: Theme | null | undefined;
+}
+
+interface CustomNodeNetworkWrapperProps {
+  variant?: keyof typeof VARIANTS;
+  themeVariant?: keyof typeof THEME_VARIANTS;
+  height?: string;
+  className?: string;
+  contentOverlay?: React.ReactNode;
+  mouseInteractionRadius?: number;
+  nodeCount?: number;
+  customTheme?: Theme | null | undefined;
+}
 
 // Constants for the network
 const THEME_VARIANTS = {
@@ -44,26 +88,34 @@ const THEME_VARIANTS = {
     pulseColor: 'rgba(57, 255, 20, 0.5)',
     nodeBrightness: 1.0
   }
-};
+} as const;
+
+// Add type definitions for our state variables
+type ColorState = string;
+type OpacityState = number;
+type ThemeVariantState = keyof typeof THEME_VARIANTS;
 
 // Node network class
-const InteractiveNodeNetwork = ({ 
+const InteractiveNodeNetwork: React.FC<InteractiveNodeNetworkProps> = ({ 
   nodeCount = 30, 
   themeVariant = 'default',
   mouseInteractionRadius = 200,
   height = '100%',
   customTheme = null
 }) => {
-  const canvasRef = useRef(null);
-  const requestRef = useRef(null);
-  const [nodes, setNodes] = useState([]);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const requestRef = useRef<number | null>(null);
+  const [nodes, setNodes] = useState<Node[]>([]);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [mousePosition, setMousePosition] = useState({ x: null, y: null });
+  const [mousePosition, setMousePosition] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
   const [isTouch, setIsTouch] = useState(false);
   const [dpr, setDpr] = useState(1);
   
   // Initialize network
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     setIsTouch(isMobile);
     
@@ -78,8 +130,9 @@ const InteractiveNodeNetwork = ({
     }
     
     // Setup canvas
-    const canvas = canvasRef.current;
     const container = canvas.parentElement;
+    if (!container) return;
+    
     const { width, height } = container.getBoundingClientRect();
     
     // Set canvas dimensions
@@ -91,7 +144,7 @@ const InteractiveNodeNetwork = ({
     setDimensions({ width, height });
     
     // Create nodes
-    const newNodes = [];
+    const newNodes: Node[] = [];
     for (let i = 0; i < actualNodeCount; i++) {
       newNodes.push({
         x: Math.random() * width,
@@ -117,6 +170,7 @@ const InteractiveNodeNetwork = ({
     
     // Handle resize
     const handleResize = () => {
+      if (!canvas || !container) return;
       const { width, height } = container.getBoundingClientRect();
       canvas.width = width * devicePixelRatio;
       canvas.height = height * devicePixelRatio;
@@ -130,17 +184,21 @@ const InteractiveNodeNetwork = ({
     return () => {
       if (!isMobile) {
         window.removeEventListener('mousemove', handleMouseMove);
-      } else {
+      } else if (canvas) {
         canvas.removeEventListener('touchmove', handleTouchMove);
       }
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(requestRef.current);
+      if (requestRef.current !== null) {
+        cancelAnimationFrame(requestRef.current);
+      }
     };
   }, [nodeCount]);
   
   // Handle mouse movement
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: MouseEvent) => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+    
     const rect = canvas.getBoundingClientRect();
     setMousePosition({
       x: e.clientX - rect.left,
@@ -149,26 +207,27 @@ const InteractiveNodeNetwork = ({
   };
   
   // Handle touch movement
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: TouchEvent) => {
     e.preventDefault();
-    if (e.touches.length > 0) {
-      const canvas = canvasRef.current;
-      const rect = canvas.getBoundingClientRect();
-      setMousePosition({
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top
-      });
-    }
+    const canvas = canvasRef.current;
+    if (!canvas || !e.touches.length) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    setMousePosition({
+      x: e.touches[0].clientX - rect.left,
+      y: e.touches[0].clientY - rect.top
+    });
   };
   
   // Animation loop
   useEffect(() => {
-    if (!canvasRef.current || nodes.length === 0) return;
-    
-    // Use custom theme if provided, otherwise use the selected theme variant
-    const theme = customTheme || THEME_VARIANTS[themeVariant] || THEME_VARIANTS.default;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d', { alpha: false }); // Use non-alpha for better performance
+    if (!canvas || nodes.length === 0) return;
+    
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
+    
+    const theme = customTheme || (THEME_VARIANTS[themeVariant as keyof typeof THEME_VARIANTS] || THEME_VARIANTS.default);
     
     const animate = () => {
       ctx.fillStyle = theme.background;
@@ -293,15 +352,20 @@ const InteractiveNodeNetwork = ({
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       
       setNodes(updatedNodes);
+      if (requestRef.current !== null) {
+        cancelAnimationFrame(requestRef.current);
+      }
       requestRef.current = requestAnimationFrame(animate);
     };
     
     requestRef.current = requestAnimationFrame(animate);
     
     return () => {
-      cancelAnimationFrame(requestRef.current);
+      if (requestRef.current !== null) {
+        cancelAnimationFrame(requestRef.current);
+      }
     };
-  }, [nodes, dimensions, mousePosition, themeVariant, mouseInteractionRadius, dpr, customTheme]);
+  }, [nodes, dimensions, mousePosition, dpr, customTheme, themeVariant]);
   
   return (
     <div className="w-full h-full" style={{ height }}>
@@ -314,16 +378,8 @@ const InteractiveNodeNetwork = ({
 };
 
 // NodeNetworkWrapper with different variants
-const VARIANTS = {
-  FULLSCREEN: 'fullscreen',
-  BACKGROUND: 'background',
-  HERO: 'hero',
-  CARD: 'card',
-  INTERACTIVE_DEMO: 'interactive_demo'
-};
-
-const NodeNetworkWrapper = ({ 
-  variant = VARIANTS.FULLSCREEN,
+const CustomNodeNetworkWrapper: React.FC<CustomNodeNetworkWrapperProps> = ({ 
+  variant = 'FULLSCREEN',
   themeVariant = 'default',
   height = '100%',
   className = '',
@@ -334,13 +390,13 @@ const NodeNetworkWrapper = ({
 }) => {
   const getVariantStyles = () => {
     switch(variant) {
-      case VARIANTS.BACKGROUND:
+      case 'BACKGROUND':
         return 'fixed top-0 left-0 w-full h-full z-0 opacity-60';
-      case VARIANTS.HERO:
+      case 'HERO':
         return 'relative w-full';
-      case VARIANTS.CARD:
+      case 'CARD':
         return 'overflow-hidden';
-      case VARIANTS.INTERACTIVE_DEMO:
+      case 'INTERACTIVE_DEMO':
         return 'relative w-full border rounded-lg shadow-lg overflow-hidden';
       default:
         return 'w-full h-full';
@@ -350,9 +406,9 @@ const NodeNetworkWrapper = ({
   // Adjust node count based on variant
   const getNodeCount = () => {
     switch(variant) {
-      case VARIANTS.CARD:
+      case 'CARD':
         return Math.floor(nodeCount * 0.5); // Fewer nodes for cards
-      case VARIANTS.BACKGROUND:
+      case 'BACKGROUND':
         return Math.floor(nodeCount * 0.8); // Slightly fewer for background
       default:
         return nodeCount;
@@ -380,44 +436,39 @@ const NodeNetworkWrapper = ({
 // Controller component for advanced options
 const NetworkVisualizationController = () => {
   const [nodeCount, setNodeCount] = useState(30);
-  const [theme, setTheme] = useState('default');
+  const [theme, setTheme] = useState<ThemeVariantState>('default');
   const [interactionRadius, setInteractionRadius] = useState(200);
   const [interactionEnabled, setInteractionEnabled] = useState(true);
   const [customMode, setCustomMode] = useState(false);
+  const [customTheme, setCustomTheme] = useState<Theme | null>(null);
   
-  // Custom color controls
-  const [backgroundColor, setBackgroundColor] = useState('#0a1929');
-  const [nodeColor, setNodeColor] = useState('#4dabf5');
-  const [connectionColor, setConnectionColor] = useState('#4dabf5');
-  const [connectionOpacity, setConnectionOpacity] = useState(20);
-  const [nodeBrightness, setNodeBrightness] = useState(100);
+  // Update state types
+  const [backgroundColor, setBackgroundColor] = useState<ColorState>(THEME_VARIANTS.default.background);
+  const [nodeColor, setNodeColor] = useState<ColorState>(THEME_VARIANTS.default.nodeColor);
+  const [connectionColor, setConnectionColor] = useState<ColorState>(THEME_VARIANTS.default.nodeColor);
+  const [connectionOpacity, setConnectionOpacity] = useState<OpacityState>(20);
+  const [nodeBrightness, setNodeBrightness] = useState<OpacityState>(100);
   
-  // Computed custom theme that overrides the selected theme when custom mode is active
-  const [customTheme, setCustomTheme] = useState({
-    background: backgroundColor,
-    nodeColor: nodeColor,
-    connectionColor: `rgba(${hexToRgb(connectionColor).join(', ')}, ${connectionOpacity/100})`,
-    pulseColor: `rgba(${hexToRgb(nodeColor).join(', ')}, 0.5)`,
-    nodeBrightness: nodeBrightness/100
-  });
-  
-  // Update custom theme when color values change
   useEffect(() => {
     if (customMode) {
-      setCustomTheme({
-        background: backgroundColor,
-        nodeColor: nodeColor,
-        connectionColor: `rgba(${hexToRgb(connectionColor).join(', ')}, ${connectionOpacity/100})`,
-        pulseColor: `rgba(${hexToRgb(nodeColor).join(', ')}, 0.5)`,
-        nodeBrightness: nodeBrightness/100
-      });
+      const rgb = hexToRgb(connectionColor);
+      if (rgb) {
+        const [r, g, b] = rgb;
+        setCustomTheme({
+          background: backgroundColor,
+          nodeColor: nodeColor,
+          connectionColor: `rgba(${r}, ${g}, ${b}, ${connectionOpacity/100})`,
+          pulseColor: `rgba(${r}, ${g}, ${b}, 0.5)`,
+          nodeBrightness: nodeBrightness/100
+        });
+      }
     }
-  }, [backgroundColor, nodeColor, connectionColor, connectionOpacity, nodeBrightness, customMode]);
+  }, [customMode, backgroundColor, nodeColor, connectionColor, connectionOpacity, nodeBrightness]);
   
   const themes = Object.keys(THEME_VARIANTS);
   
   // Helper function to convert hex to rgb
-  function hexToRgb(hex) {
+  function hexToRgb(hex: string): [number, number, number] | null {
     // Remove the # if present
     hex = hex.replace('#', '');
     
@@ -426,85 +477,89 @@ const NetworkVisualizationController = () => {
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
     
+    // Check if the parsing was successful
+    if (isNaN(r) || isNaN(g) || isNaN(b)) {
+      return null;
+    }
+    
     return [r, g, b];
   }
   
-  // Calculate contrast ratio between two colors (simplified version)
-  const calculateContrastRatio = (color1, color2) => {
+  // Calculate contrast ratio as a number
+  const calculateContrastRatio = (color1: string, color2: string): number => {
     const rgb1 = hexToRgb(color1);
     const rgb2 = hexToRgb(color2);
     
-    // Calculate relative luminance
-    const luminance1 = calculateLuminance(rgb1);
-    const luminance2 = calculateLuminance(rgb2);
+    if (!rgb1 || !rgb2) {
+      return 1;
+    }
     
-    // Calculate contrast ratio
-    const ratio = (Math.max(luminance1, luminance2) + 0.05) / 
-                 (Math.min(luminance1, luminance2) + 0.05);
+    const l1 = calculateLuminance(rgb1);
+    const l2 = calculateLuminance(rgb2);
     
-    return ratio.toFixed(2);
+    const lighter = Math.max(l1, l2);
+    const darker = Math.min(l1, l2);
+    
+    return (lighter + 0.05) / (darker + 0.05);
   };
   
   // Calculate luminance of RGB color
-  const calculateLuminance = (rgb) => {
-    const [r, g, b] = rgb.map(val => {
+  const calculateLuminance = (rgb: [number, number, number]): number => {
+    const adjustValue = (val: number): number => {
       val = val / 255;
       return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
-    });
+    };
     
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    const [r, g, b] = rgb;
+    return 0.2126 * adjustValue(r) + 0.7152 * adjustValue(g) + 0.0722 * adjustValue(b);
   };
   
   // Get WCAG compliance status based on contrast ratio
-  const getContrastStatus = (ratio) => {
-    if (ratio >= 7) return { status: 'Excellent', color: 'text-green-600' };
-    if (ratio >= 4.5) return { status: 'Good (AA)', color: 'text-blue-600' };
-    if (ratio >= 3) return { status: 'Fair (AA Large)', color: 'text-yellow-600' };
-    return { status: 'Poor', color: 'text-red-600' };
+  const getContrastStatus = (ratio: number): string => {
+    const ratioStr = ratio.toFixed(2);
+    if (parseFloat(ratioStr) >= 7) return 'Excellent';
+    if (parseFloat(ratioStr) >= 4.5) return 'Good (AA)';
+    if (parseFloat(ratioStr) >= 3) return 'Fair (AA Large)';
+    return 'Poor';
   };
   
   const contrastRatio = calculateContrastRatio(
-    customMode ? backgroundColor : THEME_VARIANTS[theme].background, 
+    customMode ? backgroundColor : THEME_VARIANTS[theme].background,
     customMode ? nodeColor : THEME_VARIANTS[theme].nodeColor
-  );
+  ).toFixed(2);
   
-  const contrastStatus = getContrastStatus(contrastRatio);
+  const contrastStatus = getContrastStatus(parseFloat(contrastRatio));
   
-  // Handle theme change
-  const handleThemeChange = (newTheme) => {
+  // Handle theme change with proper typing
+  const handleThemeChange = (newTheme: ThemeVariantState) => {
     setTheme(newTheme);
-    if (!customMode) return;
-    
-    // If switching to a preset theme, update custom colors to match
-    const themeSettings = THEME_VARIANTS[newTheme];
-    setBackgroundColor(themeSettings.background);
-    setNodeColor(themeSettings.nodeColor);
+    if (!customMode) {
+      setCustomTheme(null);
+    }
   };
   
-  // Toggle custom mode
+  // Toggle custom mode with proper typing
   const toggleCustomMode = () => {
     const newMode = !customMode;
     setCustomMode(newMode);
     
     if (newMode) {
-      // When enabling custom mode, initialize with current theme colors
       const themeSettings = THEME_VARIANTS[theme];
       setBackgroundColor(themeSettings.background);
       setNodeColor(themeSettings.nodeColor);
-      setConnectionColor(themeSettings.nodeColor); // Initially set connection color same as node color
+      setConnectionColor(themeSettings.nodeColor);
     }
   };
   
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
       <div className="mb-8 bg-white rounded-lg shadow-lg overflow-hidden">
-        <NodeNetworkWrapper 
-          variant={VARIANTS.INTERACTIVE_DEMO}
+        <CustomNodeNetworkWrapper 
+          variant="INTERACTIVE_DEMO"
           themeVariant={theme}
           height="400px"
           mouseInteractionRadius={interactionEnabled ? interactionRadius : 0}
           nodeCount={nodeCount}
-          // Override theme when in custom mode
           customTheme={customMode ? customTheme : null}
         />
       </div>
@@ -533,13 +588,13 @@ const NetworkVisualizationController = () => {
             </label>
             <select 
               value={theme}
-              onChange={(e) => handleThemeChange(e.target.value)}
+              onChange={(e) => handleThemeChange(e.target.value as keyof typeof THEME_VARIANTS)}
               className="w-full p-2 border rounded"
               disabled={customMode}
             >
-              {themes.map(t => (
-                <option key={t} value={t}>
-                  {t.charAt(0).toUpperCase() + t.slice(1)}
+              {Object.keys(THEME_VARIANTS).map((key) => (
+                <option key={key} value={key}>
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
                 </option>
               ))}
             </select>
@@ -710,8 +765,8 @@ const NetworkVisualizationController = () => {
               </div>
               <div className="text-right">
                 <div className="text-2xl font-bold">{contrastRatio}:1</div>
-                <div className={`text-sm ${contrastStatus.color}`}>
-                  {contrastStatus.status}
+                <div className={`text-sm ${contrastStatus === 'Excellent' ? 'text-green-600' : contrastStatus === 'Good (AA)' ? 'text-blue-600' : contrastStatus === 'Fair (AA Large)' ? 'text-yellow-600' : 'text-red-600'}`}>
+                  {contrastStatus}
                 </div>
               </div>
             </div>
@@ -731,32 +786,32 @@ const NodeNetworkDemo = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div className="bg-white rounded-lg shadow-lg overflow-hidden h-64">
-            <NodeNetworkWrapper 
-              variant={VARIANTS.CARD} 
+            <CustomNodeNetworkWrapper 
+              variant="CARD"
               themeVariant="default"
               height="100%"
             />
           </div>
           
           <div className="bg-white rounded-lg shadow-lg overflow-hidden h-64">
-            <NodeNetworkWrapper 
-              variant={VARIANTS.CARD} 
+            <CustomNodeNetworkWrapper 
+              variant="CARD"
               themeVariant="warm"
               height="100%"
             />
           </div>
           
           <div className="bg-white rounded-lg shadow-lg overflow-hidden h-64">
-            <NodeNetworkWrapper 
-              variant={VARIANTS.CARD} 
+            <CustomNodeNetworkWrapper 
+              variant="CARD"
               themeVariant="cool"
               height="100%"
             />
           </div>
           
           <div className="bg-white rounded-lg shadow-lg overflow-hidden h-64">
-            <NodeNetworkWrapper 
-              variant={VARIANTS.CARD} 
+            <CustomNodeNetworkWrapper 
+              variant="CARD"
               themeVariant="night"
               height="100%"
             />
@@ -764,8 +819,8 @@ const NodeNetworkDemo = () => {
         </div>
         
         <div className="mb-12">
-          <NodeNetworkWrapper 
-            variant={VARIANTS.HERO}
+          <CustomNodeNetworkWrapper 
+            variant="HERO"
             themeVariant="cool"
             height="60vh"
             contentOverlay={
@@ -782,8 +837,5 @@ const NodeNetworkDemo = () => {
     </div>
   );
 };
-
-// Export the components with variants
-NodeNetworkWrapper.VARIANTS = VARIANTS;
 
 export default NodeNetworkDemo;

@@ -1,5 +1,35 @@
 # Project Rules and Best Practices
 
+## Educational Support
+
+### 1. Knowledge Introduction
+- When encountering technical concepts, tools, or patterns for the first time, automatically offer explanations
+- Use a simple y/n choice system for user to request explanations
+- Break down complex topics into digestible options (e.g., y1, y2, y3 for different levels or aspects)
+- Wait for user response before proceeding with technical details
+- Example: "I see we're using TypeScript for the first time. Would you like me to explain what it is and why we're using it? (y/n)"
+
+### 2. Knowledge Documentation
+- Maintain learning-journal.md as our primary learning documentation
+- Structure entries with:
+  * Date first encountered
+  * Brief description
+  * Real example from our project
+  * Why it's useful
+- Categories include:
+  * Languages and Frameworks
+  * Tools and Libraries
+  * Best Practices
+  * Design Patterns
+- Cross-reference related concepts
+- Update existing entries when building on previous knowledge
+
+### 3. Documentation Integration
+- Suggest updates to existing .md files when relevant
+- Create new specialized .md files for complex topics
+- Maintain cross-references between related concepts
+- Keep documentation DRY (Don't Repeat Yourself)
+
 ## User Interaction Rules
 
 ### 1. Explicit Acceptance Instructions
