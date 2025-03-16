@@ -35,8 +35,6 @@ const InteractiveNodeNetwork: React.FC<{
   }>>([]);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [mousePosition, setMousePosition] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
-  // @ts-ignore - Used for mobile detection
-  const [isTouch, setIsTouch] = useState(false);
   const [dpr, setDpr] = useState(1);
   
   // Theme definitions
