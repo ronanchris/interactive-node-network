@@ -395,3 +395,17 @@
    - Archive important releases
    - Document recovery procedures
    - Test restore processes 
+
+## Cursor IDE Behavior
+
+### Accept All Automation
+When using Cursor with AI assistance:
+1. **Command Automation**: Clicking "Accept all" for code changes will automatically execute any pending approved commands
+2. **Safety Features**:
+   - Commands only run after you've reviewed and accepted related code changes
+   - Commands marked with `require_user_approval: true` need explicit code acceptance
+   - You can review proposed commands before clicking "Accept all"
+3. **Workflow Benefits**:
+   - Streamlines the development process
+   - Eliminates need for separate command approvals
+   - Maintains user control over code changes and command execution 
