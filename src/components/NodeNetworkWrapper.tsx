@@ -15,7 +15,6 @@ interface NodeNetworkWrapperProps {
   themeVariant?: string;
   height?: string;
   className?: string;
-  contentOverlay?: React.ReactNode;
   mouseInteractionRadius?: number;
   nodeCount?: number;
   nodeSize?: number;
@@ -33,7 +32,6 @@ const NodeNetworkWrapper: React.FC<NodeNetworkWrapperProps> = ({
   themeVariant = 'default',
   height = '100%',
   className = '',
-  contentOverlay = null,
   mouseInteractionRadius = 200,
   nodeCount = 30,
   nodeSize = 4,

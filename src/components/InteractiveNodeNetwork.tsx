@@ -35,7 +35,6 @@ const InteractiveNodeNetwork: React.FC<{
   }>>([]);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [mousePosition, setMousePosition] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
-  const [isTouch, setIsTouch] = useState(false);
   const [dpr, setDpr] = useState(1);
   
   // Theme definitions
@@ -87,7 +86,6 @@ const InteractiveNodeNetwork: React.FC<{
   // Initialize network
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    setIsTouch(isMobile);
     
     // Get device pixel ratio
     const devicePixelRatio = window.devicePixelRatio || 1;
