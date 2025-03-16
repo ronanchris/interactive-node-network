@@ -25,14 +25,19 @@ jobs:
       
       - name: Install dependencies
         run: |
-          npm install
-          npm list
+          npm install --verbose
+          npm list --depth=0
+      
+      - name: TypeScript Check
+        run: |
+          npx tsc --noEmit --pretty
       
       - name: Build
         run: |
-          npm run build
+          npm run build --verbose
         env:
           CI: false
+          DEBUG: vite:*
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
