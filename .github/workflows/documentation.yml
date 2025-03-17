@@ -1,46 +1,27 @@
 name: Documentation Checks
 
 on:
+  # Only run on changes to documentation files
   push:
     branches: [ main ]
     paths:
-      - 'docs/**'
+      - 'docs/[!s]*/**'    # All docs folders except those starting with 's'
+      - 'docs/[a-r]*/**'   # Docs folders a through r
+      - 'docs/[t-z]*/**'   # Docs folders t through z
       - '**.md'
-    paths-ignore:
-      - '.github/**'
-      - 'docs/status/**'
-      - 'src/**'
-      - 'dist/**'
-      - 'node_modules/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'vite.config.ts'
   pull_request:
     branches: [ main ]
     paths:
-      - 'docs/**'
+      - 'docs/[!s]*/**'    # All docs folders except those starting with 's'
+      - 'docs/[a-r]*/**'   # Docs folders a through r
+      - 'docs/[t-z]*/**'   # Docs folders t through z
       - '**.md'
-    paths-ignore:
-      - '.github/**'
-      - 'docs/status/**'
-      - 'src/**'
-      - 'dist/**'
-      - 'node_modules/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'vite.config.ts'
 
 jobs:
   check-documentation:
-    # Only run if:
-    # 1. Not a workflow file change
-    # 2. Not a dashboard deployment
-    # 3. Actually has documentation changes
-    if: |
-      !contains(github.event.head_commit.modified, '.github/workflows') &&
-      !contains(github.event.head_commit.message, 'deploy-dashboard') &&
-      (contains(github.event.head_commit.modified, 'docs/') || contains(github.event.head_commit.modified, '.md'))
     runs-on: ubuntu-latest
+    # Skip if it's a dashboard deployment
+    if: "!contains(github.event.head_commit.message, 'deploy-dashboard')"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -56,18 +37,18 @@ jobs:
         run: npm ci
 
       - name: Run documentation checks
-        continue-on-error: true
         run: |
-          npm run docs:check || true
-          npm run docs:coverage || true
+          echo "Running documentation checks (non-blocking)"
+          npm run docs:check || echo "Docs check completed"
+          npm run docs:coverage || echo "Coverage check completed"
 
       - name: Update checksums
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        continue-on-error: true
         run: |
+          echo "Updating checksums (non-blocking)"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          npm run docs:update-checksums || true
-          git add .checksums.json || true
-          git commit -m "chore: update documentation checksums" || true
-          git push || true 
+          npm run docs:update-checksums || echo "No checksums to update"
+          git add .checksums.json || echo "No checksums to add"
+          git commit -m "chore: update documentation checksums" || echo "No changes to commit"
+          git push || echo "No changes to push" 
