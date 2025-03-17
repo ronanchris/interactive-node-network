@@ -31,18 +31,34 @@ jobs:
           npm ci
           npm install -D terser
         
-      - name: Build
-        run: |
-          # Build the main app
-          npm run build
-          
-          # Generate and copy status dashboard
-          npm run docs:health || true
-          mkdir -p dist/status
-          cp -r docs/status/* dist/status/ || true
+      - name: Build main app
+        run: npm run build
         env:
           BASE_URL: /interactive-node-network/
+          NODE_ENV: production
+        
+      - name: Build status dashboard
+        run: |
+          # Generate health report
+          npm run docs:health || true
+          
+          # Copy status dashboard files
+          mkdir -p dist/status
+          cp -r docs/status/* dist/status/ || true
+          
+          # Ensure index.html exists in root
+          if [ ! -f dist/index.html ]; then
+            cp dist/status/index.html dist/index.html || true
+          fi
+        env:
           NODE_OPTIONS: --experimental-specifier-resolution=node
+        
+      - name: List files
+        run: |
+          echo "Contents of dist directory:"
+          ls -la dist/
+          echo "\nContents of dist/status directory:"
+          ls -la dist/status/ || echo "status directory not found"
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
