@@ -14,6 +14,12 @@ This directory contains documentation related to learning and knowledge manageme
    - Quality assurance tools
    - CI/CD integration
    - Monitoring and reporting
+3. [Advanced Automation](./advanced-automation.md)
+   - Table of Contents generation
+   - Documentation coverage analysis
+   - Version synchronization
+   - Automated diagrams
+   - Metrics and monitoring
 
 ## Purpose
 
