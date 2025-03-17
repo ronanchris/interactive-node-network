@@ -23,13 +23,19 @@ Following up on our Discord conversation, I wanted to share how I've structured 
   - [`doc-relationships.md`](../diagrams/doc-relationships.md) - Documentation connections
   - [`project-structure.md`](../diagrams/project-structure.md) - Project organization
 
-### 4. Learning and Development
+### 4. Documentation Automation
+- [`scripts/docs/link-checker.ts`](../../scripts/docs/link-checker.ts) - Validates documentation links
+- [`scripts/docs/link-fixer.ts`](../../scripts/docs/link-fixer.ts) - Automatically fixes common link issues
+- [`scripts/docs/coverage.ts`](../../scripts/docs/coverage.ts) - Checks documentation coverage
+- [`.github/workflows/docs-check.yml`](../../.github/workflows/docs-check.yml) - GitHub Actions for doc checks
+
+### 5. Learning and Development
 - [`docs/learning/README.md`](../learning/README.md) - Learning resources index
 - [`docs/learning/learning-journal.md`](../learning/learning-journal.md) - Progress tracking
 - [`docs/learning/advanced-automation.md`](../learning/advanced-automation.md) - Advanced features
 - [`docs/learning/documentation-automation.md`](../learning/documentation-automation.md) - Doc management
 
-### 5. Performance and Monitoring
+### 6. Performance and Monitoring
 - [`docs/performance/README.md`](../performance/README.md) - Performance metrics
 - [`docs/performance/monitoring.md`](../performance/monitoring.md) - System monitoring
 
@@ -50,12 +56,20 @@ I've organized the documentation with a few key principles:
    - Performance docs in `docs/performance/`
    - Visual docs in `docs/diagrams/`
 
-3. **Learning Focus**
+3. **Documentation Standards**
+   - All internal links must start with `./` or `../`
+   - Links to Markdown files must include `.md` extension
+   - Each directory should have a `README.md`
+   - Documentation coverage is automatically checked
+   - Broken links are automatically detected
+   - Common link issues are automatically fixed
+
+4. **Learning Focus**
    - Documented learning process in `docs/learning/`
    - Clear guides for different aspects
    - Comprehensive technical documentation
 
-4. **Project Evolution**
+5. **Project Evolution**
    - Session-based development tracking
    - Decision documentation
    - Progress monitoring
@@ -118,10 +132,24 @@ graph TD
     SCRIPTS --> SETUP[setup-machine.ts]
     SCRIPTS --> TESTS[tests/]
     
+    %% Documentation Scripts
+    DOC_SCRIPTS --> LINK_CHECK[link-checker.ts]
+    DOC_SCRIPTS --> LINK_FIX[link-fixer.ts]
+    DOC_SCRIPTS --> DOC_COV[coverage.ts]
+    
+    %% GitHub Actions
+    ROOT --> GITHUB[.github/]
+    GITHUB --> WORKFLOWS[workflows/]
+    WORKFLOWS --> DOC_CHECK[docs-check.yml]
+    
     %% Relationships and Dependencies
     RULES -.-> |references| DOCS
     SESSIONS -.-> |updates| JOURNAL
     DOC_SCRIPTS -.-> |manages| DOCS
+    LINK_CHECK -.-> |validates| DOCS
+    LINK_FIX -.-> |fixes| DOCS
+    DOC_COV -.-> |analyzes| DOCS
+    DOC_CHECK -.-> |monitors| DOCS
     SETUP -.-> |configures| MACHINE
     
     %% Styling
@@ -132,13 +160,15 @@ graph TD
     classDef technical fill:#fce4ec,stroke:#c2185b,stroke-width:2px;
     classDef src fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
     classDef scripts fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px;
+    classDef github fill:#f1f8e9,stroke:#558b2f,stroke-width:2px;
     
     class ROOT root;
     class DOCS,LEARNING,PERF,ERRORS docs;
     class GUIDES,COACH,CURSOR,PERMS guides;
     class TECHNICAL,NETWORK technical;
     class SRC,COMPONENTS src;
-    class SCRIPTS,DOC_SCRIPTS,SETUP,TESTS scripts;
+    class SCRIPTS,DOC_SCRIPTS,SETUP,TESTS,LINK_CHECK,LINK_FIX,DOC_COV scripts;
+    class GITHUB,WORKFLOWS,DOC_CHECK github;
 ```
 
 ### Key File Relationships

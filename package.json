@@ -69,7 +69,8 @@
     "init:machine-management": "ts-node scripts/init-machine-management.ts",
     "fix-links": "ts-node scripts/fix-links.ts",
     "docs:check-links": "node --loader ts-node/esm scripts/docs/link-checker.ts",
-    "docs:fix-links": "node --loader ts-node/esm scripts/docs/link-fixer.ts"
+    "docs:fix-links": "node --loader ts-node/esm scripts/docs/link-fixer.ts",
+    "docs:reorganize": "node --loader ts-node/esm scripts/docs/reorganize.ts"
   },
   "keywords": [],
   "author": "",
