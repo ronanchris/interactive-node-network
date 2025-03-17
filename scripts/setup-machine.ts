@@ -247,9 +247,20 @@ class MachineSetup {
 }
 
 // Run setup if called directly
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const args = process.argv.slice(2);
   const setup = new MachineSetup();
-  setup.setup().catch(console.error);
+  
+  if (args[0] === 'verify') {
+    setup.verify().then(verified => {
+      process.exit(verified ? 0 : 1);
+    });
+  } else {
+    setup.setup().catch(error => {
+      console.error('Setup failed:', error);
+      process.exit(1);
+    });
+  }
 }
 
 export const machineSetup = new MachineSetup(); 
