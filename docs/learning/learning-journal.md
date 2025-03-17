@@ -267,4 +267,67 @@ src/
 1. Easier navigation of codebase
 2. Better code reusability
 3. Simplified maintenance
-4. Clearer project structure 
+4. Clearer project structure
+
+### GitHub SSH Authentication
+*First Encountered: March 17, 2024*
+
+**What is it?**
+SSH (Secure Shell) authentication is a secure way to interact with GitHub without using passwords or tokens. It uses a pair of cryptographic keys: a private key (kept secret on your computer) and a public key (shared with GitHub).
+
+**How we're using it**
+We set up SSH authentication for seamless GitHub access:
+1. Generated SSH key pair:
+   ```bash
+   ssh-keygen -t ed25519 -C "computer-name-github"
+   ```
+2. Added public key to GitHub (Settings → SSH Keys)
+3. Configured repository to use SSH:
+   ```bash
+   git remote set-url origin git@github.com:username/repository.git
+   ```
+
+Example workflow for multiple computers:
+```bash
+# On Computer 1 (M3-Max)
+ssh-keygen -t ed25519 -C "M3-Max-GitHub"
+# Add to GitHub as "M3-Max"
+
+# On Computer 2 (MacBook)
+ssh-keygen -t ed25519 -C "MacBook-GitHub"
+# Add to GitHub as "MacBook"
+
+# Verify SSH connection on either computer
+ssh -T git@github.com
+
+# Check current remote URL
+git remote -v
+
+# Switch from HTTPS to SSH
+git remote set-url origin git@github.com:username/repository.git
+```
+
+Each computer maintains its own secure connection, and you can:
+- Push/pull without tokens
+- Easily identify which computer accessed GitHub
+- Revoke access for a specific computer if needed
+
+**Why it's valuable**
+1. More secure than password authentication
+2. No need to manage or enter tokens
+3. Each computer can have its own key
+4. Keys don't expire like tokens do
+5. Easy to revoke access for specific computers
+
+**Related Concepts**
+- Public Key Cryptography
+- Git Remote URLs
+- GitHub Authentication Methods
+- Multi-Machine Development
+
+**Best Practices**
+1. Use unique keys for each computer
+2. Give keys descriptive names
+3. Keep private keys secure
+4. Back up important keys
+5. Remove keys from GitHub when no longer needed 
