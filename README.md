@@ -33,15 +33,17 @@ Our documentation is structured to guide you from setup to advanced topics. Here
 
 ### 2. Core Documentation
 All core documentation is in the `docs/` directory:
-- [Documentation Overview](./docs/README.md) - Complete documentation index
+- [Documentation Overview](./docs/documentation-overview.md) - Complete documentation index
 - [Documentation Structure](./docs/documentation-structure.md) - Understand how our docs are organized
 - [Documentation Relationships](./docs/diagrams/doc-relationships.md) - Visual guide to documentation
 - [Project Structure](./docs/diagrams/project-structure.md) - Visual guide to codebase organization
 
+> **Related Standards**: See [Documentation Standards](./CONTRIBUTING.md#documentation-standards) in CONTRIBUTING.md for writing guidelines.
+
 ### 3. Guides and Technical Documentation
 - [Coach's Guide](./docs/guides/coach-michael-stolarz-guide.md) - Project overview and educational aspects
 - [Permissions Guide](./docs/guides/permissions-guide.md) - Access and security rules
-- [Cursor Instructions](./docs/guides/cursor-instructions.md) - AI interaction guidelines
+- [Cursor Instructions](./docs/guides/cursor-setup.md) - AI interaction guidelines
 - [Network Summary](./docs/technical/node-network-summary.md) - Technical implementation details
 
 ### 4. Learning and Development
@@ -79,6 +81,7 @@ All core documentation is in the `docs/` directory:
 /
 ├── docs/                    # Documentation root
 │   ├── README.md           # Documentation index
+│   ├── documentation-overview.md # Complete documentation reference
 │   ├── quick-start.md      # Getting started guide
 │   ├── machine-management.md # Environment setup
 │   ├── documentation-structure.md # Documentation organization
@@ -119,18 +122,17 @@ npm run generate-diagrams  # Update documentation diagrams
 
 ## 🆘 Getting Help
 
-1. **Documentation Issues**
-   - Check [Error Handling](./docs/errors/README.md)
-   - Review [Learning Journal](./docs/learning/learning-journal.md)
-   - See [Documentation Structure](./docs/documentation-structure.md)
+1. **Check Common Issues**
+   - See [Troubleshooting Guide](./docs/reference/troubleshooting.md)
+   - Review [Error Documentation](./docs/errors/README.md)
 
 2. **Performance Issues**
-   - See [Performance Documentation](./docs/performance/README.md)
-   - Check monitoring guides
+   - See [Performance Standards](./RULES.md#performance-standards)
+   - Check [Monitoring Guide](./docs/performance/monitoring.md)
 
-3. **Environment Issues**
-   - Review [Machine Management](./docs/machine-management.md)
-   - Run environment checks
+3. **Development Questions**
+   - See [Development Guide](./docs/guides/development-guide.md)
+   - Review [Architecture Documentation](./docs/technical/architecture.md)
 
 ## 📝 Best Practices
 
@@ -138,16 +140,19 @@ npm run generate-diagrams  # Update documentation diagrams
    ```bash
    npm run docs:session start
    ```
+   > See [Session Template](./docs/sessions/TEMPLATE.md) for documentation format
 
 2. **Document Learnings**
    ```bash
    npm run docs:learn
    ```
+   > See [Learning Journal](./docs/learning/learning-journal.md) for progress tracking
 
 3. **Verify Environment**
    ```bash
    npm run verify-machine
    ```
+   > See [Machine Management](./docs/machine-management.md) for setup details
 
 ## 🔄 Regular Maintenance
 
@@ -155,11 +160,13 @@ npm run generate-diagrams  # Update documentation diagrams
    ```bash
    npm run docs:check
    ```
+   > See [Documentation Automation](./docs/learning/documentation-automation.md) for maintenance tools
 
 2. **Update Diagrams**
    ```bash
    npm run generate-diagrams
    ```
+   > See [Documentation Relationships](./docs/diagrams/documentation-relationships.md) for diagram structure
 
 Remember: This documentation system is designed to evolve. If you find areas for improvement, follow our [Contributing Guidelines](./CONTRIBUTING.md) to help make it better.
 
@@ -172,9 +179,9 @@ Remember: This documentation system is designed to evolve. If you find areas for
 ---
 
 For a complete overview of our documentation:
-1. Start with the [Documentation Structure Guide](./docs/documentation-structure.md)
-2. View the [Documentation Relationships](./docs/diagrams/documentation-relationships.md)
-3. Check the [Documentation Overview](./docs/README.md)
+1. Start with the [Documentation Overview](./docs/documentation-overview.md)
+2. View the [Documentation Structure Guide](./docs/documentation-structure.md)
+3. Check the [Documentation Relationships](./docs/diagrams/documentation-relationships.md)
 
 This guide will help you get started with the Interactive Node Network project quickly and efficiently.
 
@@ -442,3 +449,96 @@ This document outlines the standards and guidelines for the Interactive Node Net
 - [Quick Start Guide](./quick-start.md)
 - [Error Handling](./errors/README.md)
 - [Performance Guidelines](./performance/README.md)
+
+# Development Sessions
+
+This directory contains detailed records of development sessions, including accomplishments, technical decisions, and progress tracking.
+
+## Document Overview
+
+### Root Level Documents
+- `README.md` - Project overview, quick start, and main documentation index
+- `CONTRIBUTING.md` - Development guidelines and documentation standards
+- `RULES.md` - Core development rules and guidelines
+- `package.json` - Project dependencies and scripts
+- `tsconfig.json` - TypeScript configuration
+- `vite.config.ts` - Vite build configuration
+
+### Documentation Directory (`docs/`)
+#### Core Documentation
+- `docs/README.md` - Documentation system overview
+- `docs/quick-start.md` - Getting started guide
+- `docs/documentation-structure.md` - Documentation organization guide
+- `docs/machine-management.md` - Environment setup guide
+
+#### Guides (`docs/guides/`)
+- `docs/guides/coach-michael-stolarz-guide.md` - Project overview and educational aspects
+- `docs/guides/permissions-guide.md` - Access and security rules
+- `docs/guides/cursor-setup.md` - AI interaction guidelines
+- `docs/guides/development-guide.md` - Development workflow and standards
+
+#### Technical Documentation (`docs/technical/`)
+- `docs/technical/architecture.md` - System architecture and design decisions
+- `docs/technical/node-network-summary.md` - Network implementation details
+- `docs/technical/maintenance.md` - System maintenance procedures
+- `docs/technical/performance.md` - Performance optimization guide
+
+#### Learning Resources (`docs/learning/`)
+- `docs/learning/README.md` - Learning resources index
+- `docs/learning/learning-journal.md` - Progress tracking and learnings
+- `docs/learning/advanced-automation.md` - Advanced automation features
+- `docs/learning/documentation-automation.md` - Documentation management
+
+#### Performance (`docs/performance/`)
+- `docs/performance/README.md` - Performance metrics and standards
+- `docs/performance/monitoring.md` - System monitoring guide
+- `docs/performance/optimization.md` - Performance optimization techniques
+
+#### Reference (`docs/reference/`)
+- `docs/reference/troubleshooting.md` - Common issues and solutions
+- `docs/reference/api.md` - API documentation
+- `docs/reference/glossary.md` - Project terminology
+
+#### Sessions (`docs/sessions/`)
+- `docs/sessions/README.md` - Session history and tracking
+- `docs/sessions/TEMPLATE.md` - Session documentation template
+
+#### Diagrams (`docs/diagrams/`)
+- `docs/diagrams/project-structure.md` - Visual project organization
+- `docs/diagrams/doc-relationships.md` - Documentation connections
+- `docs/diagrams/architecture.md` - System architecture diagrams
+
+### Scripts (`scripts/`)
+#### Documentation (`scripts/docs/`)
+- `scripts/docs/link-checker.ts` - Link validation tool
+- `scripts/docs/link-fixer.ts` - Automated link fixing
+- `scripts/docs/coverage.ts` - Documentation coverage checker
+- `scripts/docs/diagrams.ts` - Diagram generation
+- `scripts/docs/reorganize.ts` - Documentation reorganization
+
+#### Environment (`scripts/`)
+- `scripts/setup-machine.ts` - Machine setup automation
+- `scripts/check-environment.ts` - Environment verification
+- `scripts/init-machine-management.ts` - Machine management initialization
+- `scripts/fix-links.ts` - Link fixing utility
+
+#### Tests (`scripts/tests/`)
+- `scripts/tests/test-machine-detection.ts` - Machine detection tests
+
+### Source Code (`src/`)
+- `src/` - Main application source code
+- `src/components/` - React components
+- `src/utils/` - Utility functions
+- `src/types/` - TypeScript type definitions
+- `src/styles/` - CSS and styling files
+
+### Configuration Files
+- `.env.example` - Environment variables template
+- `.gitignore` - Git ignore rules
+- `.eslintrc.json` - ESLint configuration
+- `.prettierrc` - Prettier configuration
+
+### Build Output
+- `dist/` - Production build output
+- `coverage/` - Test coverage reports
+- `docs/diagrams/` - Generated documentation diagrams

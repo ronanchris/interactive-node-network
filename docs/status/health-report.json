@@ -1,0 +1,1525 @@
+{
+  "timestamp": "2025-03-17T17:55:08.491Z",
+  "overallScore": 47,
+  "metrics": {
+    "coverage": 17,
+    "linkHealth": 23,
+    "contentFreshness": 100
+  },
+  "fileDetails": [
+    {
+      "path": "CHANGELOG.md",
+      "lastModified": "2025-03-17T17:24:33.557Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 1822
+    },
+    {
+      "path": "README.md",
+      "lastModified": "2025-03-17T17:00:00.579Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 3046
+    },
+    {
+      "path": "diagrams/documentation-relationships.md",
+      "lastModified": "2025-03-17T17:23:22.161Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 5031
+    },
+    {
+      "path": "documentation-overview.md",
+      "lastModified": "2025-03-17T17:28:13.051Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 8094
+    },
+    {
+      "path": "guides/SOP-ai.md",
+      "lastModified": "2025-03-17T16:59:54.395Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 1131
+    },
+    {
+      "path": "guides/SOP-human.md",
+      "lastModified": "2025-03-17T16:59:47.764Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 1237
+    },
+    {
+      "path": "guides/coach-michael-stolarz-guide.md",
+      "lastModified": "2025-03-17T17:12:07.428Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 15538
+    },
+    {
+      "path": "guides/communication.md",
+      "lastModified": "2025-03-17T06:30:29.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 2115
+    },
+    {
+      "path": "guides/cursor-instructions.md",
+      "lastModified": "2025-03-17T16:25:50.246Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 33663
+    },
+    {
+      "path": "guides/cursor-setup.md",
+      "lastModified": "2025-03-17T17:09:39.493Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 855
+    },
+    {
+      "path": "guides/development-guide.md",
+      "lastModified": "2025-03-17T06:27:52.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 13698
+    },
+    {
+      "path": "guides/permissions-guide.md",
+      "lastModified": "2025-03-17T03:57:27.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 4741
+    },
+    {
+      "path": "guides/session-management.md",
+      "lastModified": "2025-03-17T06:30:29.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 2653
+    },
+    {
+      "path": "guides/user-interaction.md",
+      "lastModified": "2025-03-17T06:30:29.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 3044
+    },
+    {
+      "path": "reference/api.md",
+      "lastModified": "2025-03-17T17:43:04.820Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 2343
+    },
+    {
+      "path": "reference/glossary.md",
+      "lastModified": "2025-03-17T17:04:30.186Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 11707
+    },
+    {
+      "path": "reference/sdk/nodejs.md",
+      "lastModified": "2025-03-17T17:43:14.360Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 471
+    },
+    {
+      "path": "reference/sdk/python.md",
+      "lastModified": "2025-03-17T17:43:19.685Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 403
+    },
+    {
+      "path": "reference/tools/testing.md",
+      "lastModified": "2025-03-17T17:43:28.220Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 472
+    },
+    {
+      "path": "reference/troubleshooting.md",
+      "lastModified": "2025-03-17T06:27:52.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 12065
+    },
+    {
+      "path": "sessions/README.md",
+      "lastModified": "2025-03-17T17:21:11.463Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 8771
+    },
+    {
+      "path": "sessions/TEMPLATE.md",
+      "lastModified": "2025-03-17T17:14:57.359Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 1340
+    },
+    {
+      "path": "technical/deployment.md",
+      "lastModified": "2025-03-17T06:30:29.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 2519
+    },
+    {
+      "path": "technical/machine-management.md",
+      "lastModified": "2025-03-17T06:30:29.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 2782
+    },
+    {
+      "path": "technical/maintenance.md",
+      "lastModified": "2025-03-17T17:11:42.251Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 2484
+    },
+    {
+      "path": "technical/node-network-summary.md",
+      "lastModified": "2025-03-17T03:57:27.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 9028
+    },
+    {
+      "path": "technical/performance.md",
+      "lastModified": "2025-03-17T06:27:52.000Z",
+      "daysSinceUpdate": 0,
+      "status": "up-to-date",
+      "size": 10223
+    }
+  ],
+  "issues": [
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vZG9jdW1lbnRhdGlvbi1zdHJ1Y3R1cmUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./documentation-structure.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL0NPTlRSSUJVVElORy5tZCNkb2N1bWVudGF0aW9uLXN0YW5kYXJkcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../CONTRIBUTING.md#documentation-standards",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNnZXR0aW5nLXN0YXJ0ZWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #getting-started",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNjb3JlLWRvY3VtZW50YXRpb24=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #core-documentation",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNndWlkZXM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #guides",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCN0ZWNobmljYWwtZG9jdW1lbnRhdGlvbg==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #technical-documentation",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNsZWFybmluZy1yZXNvdXJjZXM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #learning-resources",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNwZXJmb3JtYW5jZQ==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #performance",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNyZWZlcmVuY2U=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #reference",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNkZXZlbG9wbWVudA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #development",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNzY3JpcHRz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #scripts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZCNjb25maWd1cmF0aW9u",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: #configuration",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../README.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL0NPTlRSSUJVVElORy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../CONTRIBUTING.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL1JVTEVTLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../RULES.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vcXVpY2stc3RhcnQubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./quick-start.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vbWFjaGluZS1tYW5hZ2VtZW50Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./machine-management.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vZG9jdW1lbnRhdGlvbi1zdHJ1Y3R1cmUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./documentation-structure.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vZG9jdW1lbnRhdGlvbi1zdHJ1Y3R1cmUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./documentation-structure.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL0NPTlRSSUJVVElORy5tZCNkb2N1bWVudGF0aW9uLXN0YW5kYXJkcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../CONTRIBUTING.md#documentation-standards",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vZGlhZ3JhbXMvcHJvamVjdC1zdHJ1Y3R1cmUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./diagrams/project-structure.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vZGlhZ3JhbXMvYXJjaGl0ZWN0dXJlLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./diagrams/architecture.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL1JVTEVTLm1kI2RldmVsb3BtZW50LXByb2Nlc3M=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../RULES.md#development-process",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vdGVjaG5pY2FsL2FyY2hpdGVjdHVyZS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./technical/architecture.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL1JVTEVTLm1kI3BlcmZvcm1hbmNlLXN0YW5kYXJkcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../RULES.md#performance-standards",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vbGVhcm5pbmcvUkVBRE1FLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./learning/README.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vbGVhcm5pbmcvbGVhcm5pbmctam91cm5hbC5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./learning/learning-journal.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vbGVhcm5pbmcvYWR2YW5jZWQtYXV0b21hdGlvbi5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./learning/advanced-automation.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vbGVhcm5pbmcvZG9jdW1lbnRhdGlvbi1hdXRvbWF0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./learning/documentation-automation.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vcGVyZm9ybWFuY2UvUkVBRE1FLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./performance/README.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vcGVyZm9ybWFuY2UvbW9uaXRvcmluZy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./performance/monitoring.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vcGVyZm9ybWFuY2Uvb3B0aW1pemF0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./performance/optimization.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL1JVTEVTLm1kI3BlcmZvcm1hbmNlLXN0YW5kYXJkcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../RULES.md#performance-standards",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vbGVhcm5pbmcvbGVhcm5pbmctam91cm5hbC5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./learning/learning-journal.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vbGVhcm5pbmcvZG9jdW1lbnRhdGlvbi1hdXRvbWF0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./learning/documentation-automation.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NyYy8=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../src/",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NyYy9jb21wb25lbnRzLw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../src/components/",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NyYy91dGlscy8=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../src/utils/",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NyYy90eXBlcy8=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../src/types/",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NyYy9zdHlsZXMv",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../src/styles/",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvZG9jcy9saW5rLWNoZWNrZXIudHM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/docs/link-checker.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvZG9jcy9saW5rLWZpeGVyLnRz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/docs/link-fixer.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvZG9jcy9jb3ZlcmFnZS50cw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/docs/coverage.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvZG9jcy9kaWFncmFtcy50cw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/docs/diagrams.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvZG9jcy9yZW9yZ2FuaXplLnRz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/docs/reorganize.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvc2V0dXAtbWFjaGluZS50cw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/setup-machine.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvY2hlY2stZW52aXJvbm1lbnQudHM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/check-environment.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvaW5pdC1tYWNoaW5lLW1hbmFnZW1lbnQudHM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/init-machine-management.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvZml4LWxpbmtzLnRz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/fix-links.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3NjcmlwdHMvdGVzdHMvdGVzdC1tYWNoaW5lLWRldGVjdGlvbi50cw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../scripts/tests/test-machine-detection.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3BhY2thZ2UuanNvbg==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../package.json",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3RzY29uZmlnLmpzb24=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../tsconfig.json",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL3ZpdGUuY29uZmlnLnRz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../vite.config.ts",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uLy5lbnYuZXhhbXBsZQ==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../.env.example",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uLy5naXRpZ25vcmU=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../.gitignore",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uLy5lc2xpbnRyYy5qc29u",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../.eslintrc.json",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uLy5wcmV0dGllcnJj",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../.prettierrc",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL2Rpc3Qv",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../dist/",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL2NvdmVyYWdlLw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../coverage/",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4vZGlhZ3JhbXMvcHJvamVjdC1zdHJ1Y3R1cmUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ./diagrams/project-structure.md",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-ZG9jdW1lbnRhdGlvbi1vdmVydmlldy5tZC4uLy4uL0NPTlRSSUJVVElORy5tZCNkb2N1bWVudGF0aW9uLXN0YW5kYXJkcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in documentation-overview.md: ../../CONTRIBUTING.md#documentation-standards",
+      "severity": "low",
+      "file": "documentation-overview.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL1NPUC1haS5tZC4uL1JVTEVTLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/SOP-ai.md: ../RULES.md",
+      "severity": "low",
+      "file": "guides/SOP-ai.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL1NPUC1odW1hbi5tZC4uL1JVTEVTLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/SOP-human.md: ../RULES.md",
+      "severity": "low",
+      "file": "guides/SOP-human.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2NvYWNoLW1pY2hhZWwtc3RvbGFyei1ndWlkZS5tZC4uLy4uL1NFU1NJT05TLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/coach-michael-stolarz-guide.md: ../../SESSIONS.md",
+      "severity": "low",
+      "file": "guides/coach-michael-stolarz-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2NvYWNoLW1pY2hhZWwtc3RvbGFyei1ndWlkZS5tZC4uL3RlY2huaWNhbC9hcmNoaXRlY3R1cmUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/coach-michael-stolarz-guide.md: ../technical/architecture.md",
+      "severity": "low",
+      "file": "guides/coach-michael-stolarz-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2NvYWNoLW1pY2hhZWwtc3RvbGFyei1ndWlkZS5tZC4uL3RlY2huaWNhbC9hcmNoaXRlY3R1cmUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/coach-michael-stolarz-guide.md: ../technical/architecture.md",
+      "severity": "low",
+      "file": "guides/coach-michael-stolarz-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2NvYWNoLW1pY2hhZWwtc3RvbGFyei1ndWlkZS5tZC4uL2xlYXJuaW5nL2FpLWludGVyYWN0aW9uLXBhdHRlcm5zLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/coach-michael-stolarz-guide.md: ../learning/ai-interaction-patterns.md",
+      "severity": "low",
+      "file": "guides/coach-michael-stolarz-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2NvbW11bmljYXRpb24ubWQuL2RldmVsb3BtZW50LXdvcmtmbG93Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/communication.md: ./development-workflow.md",
+      "severity": "low",
+      "file": "guides/communication.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2NvbW11bmljYXRpb24ubWQuL3Byb2plY3Qtc3RhbmRhcmRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/communication.md: ./project-standards.md",
+      "severity": "low",
+      "file": "guides/communication.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2NvbW11bmljYXRpb24ubWQuL2xlYXJuaW5nL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/communication.md: ./learning/README.md",
+      "severity": "low",
+      "file": "guides/communication.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2ludGVyYWN0aW9uLXR5cGVz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #interaction-types",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2NvbW11bmljYXRpb24tcHJvdG9jb2xz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #communication-protocols",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI3Jlc3BvbnNlLWhhbmRsaW5n",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #response-handling",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2Vycm9yLW1hbmFnZW1lbnQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #error-management",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI3BlcmZvcm1hbmNlLW9wdGltaXphdGlvbg==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #performance-optimization",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI3NlY3VyaXR5LWNvbnNpZGVyYXRpb25z",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #security-considerations",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2Jlc3QtcHJhY3RpY2Vz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #best-practices",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2ludGVncmF0aW9uLWd1aWRlbGluZXM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #integration-guidelines",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9sZWFybmluZy1qb3VybmFsLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./learning-journal.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9hZHZhbmNlZC1hdXRvbWF0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./advanced-automation.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9kb2N1bWVudGF0aW9uLWF1dG9tYXRpb24ubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./documentation-automation.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi4vcHJvamVjdC1zdGFuZGFyZHMubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ../project-standards.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ../errors/README.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2F1dG9tYXRpb24tY2F0ZWdvcmllcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #automation-categories",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2ltcGxlbWVudGF0aW9uLXN0cmF0ZWdpZXM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #implementation-strategies",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2ludGVncmF0aW9uLXBvaW50cw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #integration-points",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI21vbml0b3JpbmctYW5kLWFuYWx5dGljcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #monitoring-and-analytics",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2Jlc3QtcHJhY3RpY2Vz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #best-practices",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI21haW50ZW5hbmNlLWd1aWRlbGluZXM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #maintenance-guidelines",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9haS1pbnRlcmFjdGlvbi1wYXR0ZXJucy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./ai-interaction-patterns.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9kb2N1bWVudGF0aW9uLWF1dG9tYXRpb24ubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./documentation-automation.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9sZWFybmluZy1qb3VybmFsLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./learning-journal.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi4vcHJvamVjdC1zdGFuZGFyZHMubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ../project-standards.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ../errors/README.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2F1dG9tYXRpb24tdG9vbHM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #automation-tools",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2RvY3VtZW50YXRpb24tcHJvY2Vzc2Vz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #documentation-processes",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2ludGVncmF0aW9uLXBvaW50cw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #integration-points",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI3F1YWxpdHktYXNzdXJhbmNl",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #quality-assurance",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI21haW50ZW5hbmNl",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #maintenance",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kI2Jlc3QtcHJhY3RpY2Vz",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: #best-practices",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9haS1pbnRlcmFjdGlvbi1wYXR0ZXJucy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./ai-interaction-patterns.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9hZHZhbmNlZC1hdXRvbWF0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./advanced-automation.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9sZWFybmluZy1qb3VybmFsLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./learning-journal.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi4vcHJvamVjdC1zdGFuZGFyZHMubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ../project-standards.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ../errors/README.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9sZWFybmluZy9sZWFybmluZy1qb3VybmFsLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./learning/learning-journal.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9lZHVjYXRpb25hbC1zdXBwb3J0Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./educational-support.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9kb2N1bWVudGF0aW9uLWJlc3QtcHJhY3RpY2VzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./documentation-best-practices.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL2RldmVsb3BtZW50LWd1aWRlLm1kLi9wcm9qZWN0LXN0YW5kYXJkcy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/development-guide.md: ./project-standards.md",
+      "severity": "low",
+      "file": "guides/development-guide.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL3Nlc3Npb24tbWFuYWdlbWVudC5tZC4vcGVyZm9ybWFuY2UvbW9uaXRvcmluZy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/session-management.md: ./performance/monitoring.md",
+      "severity": "low",
+      "file": "guides/session-management.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL3Nlc3Npb24tbWFuYWdlbWVudC5tZC4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/session-management.md: ./errors/README.md",
+      "severity": "low",
+      "file": "guides/session-management.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL3Nlc3Npb24tbWFuYWdlbWVudC5tZC4vZGV2ZWxvcG1lbnQtd29ya2Zsb3cubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/session-management.md: ./development-workflow.md",
+      "severity": "low",
+      "file": "guides/session-management.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL3VzZXItaW50ZXJhY3Rpb24ubWQuL2xlYXJuaW5nL2xlYXJuaW5nLWpvdXJuYWwubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/user-interaction.md: ./learning/learning-journal.md",
+      "severity": "low",
+      "file": "guides/user-interaction.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL3VzZXItaW50ZXJhY3Rpb24ubWQuL2VkdWNhdGlvbmFsLXN1cHBvcnQubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/user-interaction.md: ./educational-support.md",
+      "severity": "low",
+      "file": "guides/user-interaction.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL3VzZXItaW50ZXJhY3Rpb24ubWQuL2RvY3VtZW50YXRpb24tYmVzdC1wcmFjdGljZXMubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/user-interaction.md: ./documentation-best-practices.md",
+      "severity": "low",
+      "file": "guides/user-interaction.md"
+    },
+    {
+      "id": "broken-link-Z3VpZGVzL3VzZXItaW50ZXJhY3Rpb24ubWQuL3Byb2plY3Qtc3RhbmRhcmRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in guides/user-interaction.md: ./project-standards.md",
+      "severity": "low",
+      "file": "guides/user-interaction.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL2dsb3NzYXJ5Lm1kLi9wcm9qZWN0LXN0YW5kYXJkcy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/glossary.md: ./project-standards.md",
+      "severity": "low",
+      "file": "reference/glossary.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL2dsb3NzYXJ5Lm1kLi9kb2N1bWVudGF0aW9uLWJlc3QtcHJhY3RpY2VzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/glossary.md: ./documentation-best-practices.md",
+      "severity": "low",
+      "file": "reference/glossary.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL2dsb3NzYXJ5Lm1kLi9wZXJmb3JtYW5jZS9tb25pdG9yaW5nLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/glossary.md: ./performance/monitoring.md",
+      "severity": "low",
+      "file": "reference/glossary.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL2dsb3NzYXJ5Lm1kLi9sZWFybmluZy9SRUFETUUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/glossary.md: ./learning/README.md",
+      "severity": "low",
+      "file": "reference/glossary.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Rvb2xzL3Rlc3RpbmcubWQuLi9hc3NldHMvaW50ZXJhY3RpdmUtbm9kZS1uZXR3b3JrLnBvc3RtYW5fY29sbGVjdGlvbi5qc29u",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/tools/testing.md: ../assets/interactive-node-network.postman_collection.json",
+      "severity": "low",
+      "file": "reference/tools/testing.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vZGV0ZWN0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./detection.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vcmVjb3ZlcnkubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./recovery.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vcHJldmVudGlvbi5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./prevention.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3BlcmZvcm1hbmNlL21vbml0b3JpbmcubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../performance/monitoring.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL2RldmVsb3BtZW50LXdvcmtmbG93Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../development-workflow.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3Byb2plY3Qtc3RhbmRhcmRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../project-standards.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3BlcmZvcm1hbmNlL21vbml0b3JpbmcubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../performance/monitoring.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3Nlc3Npb24tbWFuYWdlbWVudC5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../session-management.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL21hY2hpbmUtbWFuYWdlbWVudC5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../machine-management.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vZGV0ZWN0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./detection.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vcmVjb3ZlcnkubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./recovery.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vcHJldmVudGlvbi5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./prevention.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL2xlYXJuaW5nL2xlYXJuaW5nLWpvdXJuYWwubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../learning/learning-journal.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL2dsb3NzYXJ5Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../glossary.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vcmVjb3ZlcnkubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./recovery.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vcHJldmVudGlvbi5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./prevention.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3BlcmZvcm1hbmNlL21vbml0b3JpbmcubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../performance/monitoring.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3Byb2plY3Qtc3RhbmRhcmRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../project-standards.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vZGV0ZWN0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./detection.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vcmVjb3ZlcnkubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./recovery.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3Byb2plY3Qtc3RhbmRhcmRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../project-standards.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL2RldmVsb3BtZW50LXdvcmtmbG93Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../development-workflow.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vZGV0ZWN0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./detection.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4vcHJldmVudGlvbi5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ./prevention.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3BlcmZvcm1hbmNlL21vbml0b3JpbmcubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../performance/monitoring.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-cmVmZXJlbmNlL3Ryb3VibGVzaG9vdGluZy5tZC4uL3Byb2plY3Qtc3RhbmRhcmRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in reference/troubleshooting.md: ../project-standards.md",
+      "severity": "low",
+      "file": "reference/troubleshooting.md"
+    },
+    {
+      "id": "broken-link-c2Vzc2lvbnMvUkVBRE1FLm1kLi4vbGVhcm5pbmcvbGVhcm5pbmctam91cm5hbC5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in sessions/README.md: ../learning/learning-journal.md",
+      "severity": "low",
+      "file": "sessions/README.md"
+    },
+    {
+      "id": "broken-link-c2Vzc2lvbnMvUkVBRE1FLm1kLi4vbGVhcm5pbmcvZG9jdW1lbnRhdGlvbi1hdXRvbWF0aW9uLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in sessions/README.md: ../learning/documentation-automation.md",
+      "severity": "low",
+      "file": "sessions/README.md"
+    },
+    {
+      "id": "broken-link-c2Vzc2lvbnMvUkVBRE1FLm1kLi4vLi4vUlVMRVMubWQjZGV2ZWxvcG1lbnQtcHJvY2Vzcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in sessions/README.md: ../../RULES.md#development-process",
+      "severity": "low",
+      "file": "sessions/README.md"
+    },
+    {
+      "id": "broken-link-c2Vzc2lvbnMvUkVBRE1FLm1kLi4vZG9jdW1lbnRhdGlvbi1zdHJ1Y3R1cmUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in sessions/README.md: ../documentation-structure.md",
+      "severity": "low",
+      "file": "sessions/README.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL2RlcGxveW1lbnQubWQuL2RldmVsb3BtZW50LXdvcmtmbG93Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/deployment.md: ./development-workflow.md",
+      "severity": "low",
+      "file": "technical/deployment.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL2RlcGxveW1lbnQubWQuL3Byb2plY3Qtc3RhbmRhcmRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/deployment.md: ./project-standards.md",
+      "severity": "low",
+      "file": "technical/deployment.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL2RlcGxveW1lbnQubWQuL3BlcmZvcm1hbmNlL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/deployment.md: ./performance/README.md",
+      "severity": "low",
+      "file": "technical/deployment.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL2RlcGxveW1lbnQubWQuL2Vycm9ycy9SRUFETUUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/deployment.md: ./errors/README.md",
+      "severity": "low",
+      "file": "technical/deployment.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZCNyZXNvdXJjZS1hbGxvY2F0aW9u",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: #resource-allocation",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZCNtZW1vcnktbWFuYWdlbWVudA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: #memory-management",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZCNjcHUtdXRpbGl6YXRpb24=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: #cpu-utilization",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZCNzdG9yYWdlLW1hbmFnZW1lbnQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: #storage-management",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZCNuZXR3b3JrLXJlc291cmNlcw==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: #network-resources",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZCNtb25pdG9yaW5nLWFuZC1hbGVydHM=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: #monitoring-and-alerts",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZC4vcGVyZm9ybWFuY2UvbW9uaXRvcmluZy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: ./performance/monitoring.md",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZC4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: ./errors/README.md",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZC4vc2Vzc2lvbi1tYW5hZ2VtZW50Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: ./session-management.md",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21hY2hpbmUtbWFuYWdlbWVudC5tZC4vbGVhcm5pbmcvUkVBRE1FLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/machine-management.md: ./learning/README.md",
+      "severity": "low",
+      "file": "technical/machine-management.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21haW50ZW5hbmNlLm1kLi9kZXZlbG9wbWVudC13b3JrZmxvdy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/maintenance.md: ./development-workflow.md",
+      "severity": "low",
+      "file": "technical/maintenance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21haW50ZW5hbmNlLm1kLi9wcm9qZWN0LXN0YW5kYXJkcy5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/maintenance.md: ./project-standards.md",
+      "severity": "low",
+      "file": "technical/maintenance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21haW50ZW5hbmNlLm1kLi9wZXJmb3JtYW5jZS9SRUFETUUubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/maintenance.md: ./performance/README.md",
+      "severity": "low",
+      "file": "technical/maintenance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL21haW50ZW5hbmNlLm1kLi9lcnJvcnMvUkVBRE1FLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/maintenance.md: ./errors/README.md",
+      "severity": "low",
+      "file": "technical/maintenance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi9tb25pdG9yaW5nLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./monitoring.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi90aHJlc2hvbGRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./thresholds.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi9vcHRpbWl6YXRpb24ubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./optimization.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vcHJvamVjdC1zdGFuZGFyZHMubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../project-standards.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vZGV2ZWxvcG1lbnQtd29ya2Zsb3cubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../development-workflow.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../errors/README.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vc2Vzc2lvbi1tYW5hZ2VtZW50Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../session-management.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vbWFjaGluZS1tYW5hZ2VtZW50Lm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../machine-management.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vbGVhcm5pbmcvbGVhcm5pbmctam91cm5hbC5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../learning/learning-journal.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vZ2xvc3NhcnkubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../glossary.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi90aHJlc2hvbGRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./thresholds.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi9vcHRpbWl6YXRpb24ubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./optimization.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../errors/README.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vcHJvamVjdC1zdGFuZGFyZHMubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../project-standards.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi9tb25pdG9yaW5nLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./monitoring.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi90aHJlc2hvbGRzLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./thresholds.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../errors/README.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi9tb25pdG9yaW5nLm1k",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./monitoring.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi9vcHRpbWl6YXRpb24ubWQ=",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ./optimization.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    },
+    {
+      "id": "broken-link-dGVjaG5pY2FsL3BlcmZvcm1hbmNlLm1kLi4vZXJyb3JzL1JFQURNRS5tZA==",
+      "title": "Broken Cross-References",
+      "description": "Invalid link found in technical/performance.md: ../errors/README.md",
+      "severity": "low",
+      "file": "technical/performance.md"
+    }
+  ]
+}

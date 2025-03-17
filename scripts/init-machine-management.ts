@@ -15,25 +15,14 @@ class ProjectInitializer {
   private sourceDir: string;
   private targetDir: string;
   private requiredFiles = [
-    // Machine management
-    '.machine-config.json',
     'scripts/setup-machine.ts',
-    'scripts/tests/test-machine-detection.ts',
-    'docs/machine-management.md',
-    
-    // Documentation system
-    'docs/README.md',
-    'docs/quick-start.md',
-    'docs/automation-rules.md',
-    'docs/glossary.md',
-    'docs/learning/README.md',
-    'docs/learning/learning-journal.md',
-    'docs/sessions/README.md',
-    'SESSIONS.md',
-    
-    // Automation scripts
-    'scripts/docs/automation.ts',
-    'scripts/docs/diagrams.ts'
+    'scripts/check-environment.ts',
+    'scripts/fix-links.ts',
+    'scripts/docs/link-checker.ts',
+    'scripts/docs/link-fixer.ts',
+    'scripts/docs/reorganize.ts',
+    'scripts/docs/diagrams.ts',
+    'scripts/docs/coverage.ts'
   ];
 
   private directories = [
@@ -44,6 +33,20 @@ class ProjectInitializer {
     'docs/sessions',
     'docs/diagrams'
   ];
+
+  private requiredScripts = {
+    'check-env': 'ts-node scripts/check-environment.ts',
+    'setup-machine': 'ts-node scripts/setup-machine.ts',
+    'verify-machine': 'ts-node scripts/setup-machine.ts verify',
+    'test:machine-detection': 'ts-node scripts/tests/test-machine-detection.ts',
+    'init:machine-management': 'ts-node scripts/init-machine-management.ts',
+    'fix-links': 'ts-node scripts/fix-links.ts',
+    'docs:check-links': 'node --loader ts-node/esm scripts/docs/link-checker.ts',
+    'docs:fix-links': 'node --loader ts-node/esm scripts/docs/link-fixer.ts',
+    'docs:reorganize': 'node --loader ts-node/esm scripts/docs/reorganize.ts',
+    'docs:coverage': 'node --loader ts-node/esm scripts/docs/coverage.ts',
+    'generate-diagrams': 'node --import \'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"));\' scripts/docs/diagrams.ts'
+  };
 
   constructor(targetDir: string) {
     this.sourceDir = process.cwd();
@@ -83,17 +86,7 @@ class ProjectInitializer {
       // Add all required scripts
       packageJson.scripts = {
         ...packageJson.scripts,
-        // Machine management
-        'setup-machine': 'ts-node scripts/setup-machine.ts',
-        'verify-machine': 'ts-node scripts/setup-machine.ts verify',
-        'test:machine-detection': 'ts-node scripts/tests/test-machine-detection.ts',
-        
-        // Documentation system
-        'docs:check': 'ts-node scripts/docs/automation.ts check',
-        'docs:learn': 'ts-node scripts/docs/automation.ts learn',
-        'docs:session': 'ts-node scripts/docs/automation.ts session',
-        'docs:update': 'npm run docs:check && npm run generate-diagrams',
-        'generate-diagrams': 'ts-node scripts/docs/diagrams.ts'
+        ...this.requiredScripts
       };
 
       // Add required dependencies

@@ -5,6 +5,7 @@
   "type": "module",
   "main": "postcss.config.js",
   "dependencies": {
+    "@types/express": "^5.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.0.4",
@@ -15,6 +16,7 @@
     "debug": "^4.3.4",
     "electron-to-chromium": "^1.4.477",
     "escalade": "^3.1.1",
+    "express": "^4.21.2",
     "gensync": "^1.0.0-beta.2",
     "globals": "^11.12.0",
     "js-tokens": "^4.0.0",
@@ -36,10 +38,13 @@
     "tailwindcss": "^3.3.3",
     "update-browserslist-db": "^1.0.11",
     "vite": "^6.2.2",
-    "yallist": "^3.1.1"
+    "yallist": "^3.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
+    "serve": "^14.2.4",
     "terser": "^5.19.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
@@ -58,11 +63,9 @@
     "check-env": "ts-node scripts/check-environment.ts",
     "docs:check": "ts-node scripts/docs/automation.ts check",
     "docs:coverage": "node --loader ts-node/esm scripts/docs/coverage.ts",
-    "docs:update-checksums": "ts-node scripts/docs/automation.ts update-checksums",
-    "docs:monitor": "ts-node scripts/docs/automation.ts monitor",
+    "docs:update": "npm run docs:check && npm run generate-diagrams",
     "docs:learn": "ts-node scripts/docs/automation.ts learn",
     "docs:session": "ts-node scripts/docs/automation.ts session",
-    "docs:update": "npm run docs:check && npm run generate-diagrams",
     "setup-machine": "ts-node scripts/setup-machine.ts",
     "verify-machine": "ts-node scripts/setup-machine.ts verify",
     "test:machine-detection": "ts-node scripts/tests/test-machine-detection.ts",
@@ -71,7 +74,13 @@
     "docs:check-links": "node --loader ts-node/esm scripts/docs/link-checker.ts",
     "docs:fix-links": "node --loader ts-node/esm scripts/docs/link-fixer.ts",
     "docs:reorganize": "node --loader ts-node/esm scripts/docs/reorganize.ts",
-    "docs:reorganize:phase2": "node --loader ts-node/esm scripts/docs/reorganize-phase2.ts"
+    "docs:health": "NODE_OPTIONS=--experimental-specifier-resolution=node ts-node scripts/docs/generate-health-report.ts",
+    "docs:health:watch": "nodemon --watch docs --ext md --exec 'npm run docs:health'",
+    "docs:dashboard": "NODE_OPTIONS=--experimental-specifier-resolution=node ts-node scripts/docs/serve-dashboard.ts",
+    "docs:update-timestamps": "ts-node scripts/docs/update-timestamps.ts",
+    "docs:generate-changelog": "ts-node scripts/docs/generate-changelog.ts",
+    "docs:check-coverage": "ts-node scripts/docs/coverage.ts",
+    "docs:maintain": "npm run docs:health && npm run docs:update-timestamps && npm run docs:check-coverage"
   },
   "keywords": [],
   "author": "",

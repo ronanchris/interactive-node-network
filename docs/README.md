@@ -1,73 +1,81 @@
 # Project Documentation
 
-This directory contains the project's documentation, rules, and best practices.
+This directory contains the project's documentation, organized for easy navigation and maintenance.
 
 ## Quick Links
 
-1. [Documentation Structure](./documentation-structure.md) - Complete overview of documentation organization
-2. [Quick Start Guide](./quick-start.md) - Get started with the project
-3. [Machine Management](./machine-management.md) - Machine configuration system
-4. [Automation Rules](./automation-rules.md) - Documentation automation guidelines
-5. [Glossary](./glossary.md) - Project terminology and definitions
-
-## Core Documentation
-
-1. [Educational Support](./educational-support.md) - Learning and knowledge sharing
-2. [User Interaction](./user-interaction.md) - User interface guidelines
-3. [Development Workflow](./development-workflow.md) - Development processes
-4. [Project Standards](./project-standards.md) - Coding and documentation standards
-5. [Deployment](./deployment.md) - Deployment procedures
-6. [Communication](./communication.md) - Team communication guidelines
-7. [Maintenance](./maintenance.md) - Project maintenance procedures
-
-## Technical Documentation
-
-1. [Performance](./performance/README.md) - Performance documentation
-   - [Monitoring](./performance/monitoring.md) - Performance monitoring
-   - [Thresholds](./performance/thresholds.md) - Performance thresholds
-   - [Optimization](./performance/optimization.md) - Performance optimization
-
-2. [Error Handling](./errors/README.md) - Error handling documentation
-   - [Detection](./errors/detection.md) - Error detection
-   - [Recovery](./errors/recovery.md) - Error recovery
-   - [Prevention](./errors/prevention.md) - Error prevention
-
-3. [Learning System](./learning/README.md) - Learning documentation
-   - [Learning Journal](./learning/learning-journal.md) - Captured learnings
-   - [Advanced Automation](./learning/advanced-automation.md) - Advanced automation
-   - [Documentation Automation](./learning/documentation-automation.md) - Documentation tools
-
-4. [Session Management](./sessions/README.md) - Session management
-   - [Active Sessions](../SESSIONS.md) - Current session tracking
+1. [Project Rules](../RULES.md) - Main project rules and guidelines (root level)
+2. [Session Management](./sessions/README.md) - Current development sessions and context
+3. [Development Guide](./guides/development-guide.md) - Development workflow and standards
+4. [Cursor Setup](./guides/cursor-setup.md) - AI assistant interaction guidelines
+5. [Human SOP](./guides/SOP-human.md) - Human developer procedures
+6. [AI SOP](./guides/SOP-ai.md) - AI assistant procedures
 
 ## Documentation Structure
 
-For a complete overview of how our documentation is organized, including:
-- File organization principles
-- Documentation types
-- Automation systems
-- Maintenance guidelines
-- Best practices
+```
+docs/
+├── README.md (this file)
+├── guides/           # User-facing documentation
+│   ├── cursor-setup.md
+│   ├── development-guide.md
+│   ├── SOP-human.md
+│   ├── SOP-ai.md
+│   └── ...
+├── reference/        # Reference materials
+│   ├── glossary.md
+│   └── troubleshooting.md
+├── sessions/         # Session tracking
+│   └── README.md
+└── technical/        # Technical documentation
+    ├── deployment.md
+    └── performance.md
+```
 
-Please see the [Documentation Structure Guide](./documentation-structure.md).
+## Documentation Types
+
+### 1. Rules and Guidelines
+- Main rules file: `../RULES.md` (root level)
+- Contains all project rules and guidelines
+- Primary reference for AI assistants and developers
+
+### 2. Session Management
+- Location: `./sessions/README.md`
+- Tracks current development sessions
+- Maintains project context and history
+
+### 3. Guides
+- Location: `./guides/`
+- User-facing documentation
+- Setup instructions and workflows
+- Best practices and standards
+- Standard Operating Procedures (SOPs)
+  - Human developer procedures
+  - AI assistant procedures
+
+### 4. Reference Materials
+- Location: `./reference/`
+- Glossary and terminology
+- Troubleshooting guides
+- Common solutions
+
+### 5. Technical Documentation
+- Location: `./technical/`
+- Implementation details
+- Performance guidelines
+- Deployment procedures
 
 ## Using This Documentation
 
-1. **First Time Setup**
-   - Start with the [Quick Start Guide](./quick-start.md)
-   - Review the [Machine Management](./machine-management.md) documentation
-   - Set up your development environment
+### For AI Assistants
+1. Start with `../RULES.md` (root level)
+2. Check `./sessions/README.md` for context
+3. Review relevant section docs based on task
 
-2. **Regular Development**
-   - Check [Session Management](./sessions/README.md) for context
-   - Use [Learning System](./learning/README.md) to capture knowledge
-   - Follow [Development Workflow](./development-workflow.md)
-
-3. **Documentation Updates**
-   - Follow [Automation Rules](./automation-rules.md)
-   - Use provided automation scripts
-   - Maintain cross-references
-   - Keep diagrams updated
+### For Developers
+1. Begin with `./guides/development-guide.md`
+2. Reference `./reference/` for common issues
+3. Check `./technical/` for implementation details
 
 ## Maintenance
 
@@ -83,20 +91,16 @@ Please see the [Documentation Structure Guide](./documentation-structure.md).
    npm run docs:update
    ```
 
-2. **Machine Configuration**
-   ```bash
-   # Verify machine setup
-   npm run verify-machine
-   
-   # Update machine configuration
-   npm run setup-machine
-   ```
+2. **Documentation Updates**
+   - Keep cross-references current
+   - Update session notes regularly
+   - Maintain documentation health
 
 ## Getting Help
 
-1. Check the [Glossary](./glossary.md) for terminology
-2. Review [Learning Journal](./learning/learning-journal.md) for solutions
-3. Consult [Error Handling](./errors/README.md) for issues
-4. See [Communication](./communication.md) for support channels
+1. Check the [Glossary](./reference/glossary.md)
+2. Review [Troubleshooting](./reference/troubleshooting.md)
+3. See [Development Guide](./guides/development-guide.md)
+4. Consult [Cursor Setup](./guides/cursor-setup.md)
 
 Remember: Documentation is a living system. Keep it updated, accurate, and useful for the team. 

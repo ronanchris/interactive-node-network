@@ -10,14 +10,14 @@ Following up on our Discord conversation, I wanted to share how I've structured 
 - [`CONTRIBUTING.md`](../../CONTRIBUTING.md) - Development guidelines and documentation standards
 - [`SESSIONS.md`](../../SESSIONS.md) - Tracks development sessions and decisions
 - [`RULES.md`](../../RULES.md) - Core development rules and guidelines
-- [`NOTES.md`](../../NOTES.md) - Project notes and architectural decisions
+- [`docs/technical/architecture.md`](../technical/architecture.md) - Project notes and architectural decisions
 
 ### 2. Guides
 - [`docs/guides/user-interaction.md`](../guides/user-interaction.md) - User interaction guidelines
 - [`docs/guides/communication.md`](../guides/communication.md) - Communication protocols
 - [`docs/guides/session-management.md`](../guides/session-management.md) - Session handling
 - [`docs/guides/development-guide.md`](../guides/development-guide.md) - Comprehensive development guide
-- [`docs/guides/cursor-instructions.md`](../guides/cursor-instructions.md) - Guidelines for using Cursor AI
+- [`docs/guides/cursor-setup.md`](../guides/cursor-setup.md) - Guidelines for using Cursor AI
 - [`docs/guides/permissions-guide.md`](../guides/permissions-guide.md) - Access and security rules
 
 ### 3. Technical Documentation
@@ -26,6 +26,7 @@ Following up on our Discord conversation, I wanted to share how I've structured 
 - [`docs/technical/machine-management.md`](../technical/machine-management.md) - Machine configuration
 - [`docs/technical/deployment.md`](../technical/deployment.md) - Deployment procedures
 - [`docs/technical/maintenance.md`](../technical/maintenance.md) - Maintenance guidelines
+- [`docs/technical/architecture.md`](../technical/architecture.md) - Project notes and architectural decisions
 
 ### 4. Reference Materials
 - [`docs/reference/glossary.md`](../reference/glossary.md) - Terms and definitions
@@ -39,7 +40,7 @@ I've organized the documentation with a few key principles:
    - Core rules and guidelines (`RULES.md`)
    - Project overview (`README.md`)
    - Session tracking (`SESSIONS.md`)
-   - Project notes (`NOTES.md`)
+   - Project notes (`docs/technical/architecture.md`)
 
 2. **Organized Documentation**
    - Guides in `docs/guides/` - User-facing documentation and guides
@@ -72,7 +73,7 @@ graph TD
     %% Root Level Documents
     ROOT[Project Root] --> RULES[RULES.md]
     ROOT --> README[README.md]
-    ROOT --> NOTES[NOTES.md]
+    ROOT --> ARCH[docs/technical/architecture.md]
     ROOT --> SESSIONS[SESSIONS.md]
     ROOT --> CONTRIBUTING[CONTRIBUTING.md]
     
@@ -92,7 +93,7 @@ graph TD
     GUIDES --> COMM[communication.md]
     GUIDES --> SESSION_MNG[session-management.md]
     GUIDES --> COACH[coach-michael-stolarz-guide.md]
-    GUIDES --> CURSOR[cursor-instructions.md]
+    GUIDES --> CURSOR[cursor-setup.md]
     GUIDES --> PERMS[permissions-guide.md]
     
     %% Technical Documentation
@@ -101,6 +102,7 @@ graph TD
     TECHNICAL --> MACHINE[machine-management.md]
     TECHNICAL --> DEPLOY[deployment.md]
     TECHNICAL --> MAINT[maintenance.md]
+    TECHNICAL --> ARCH[architecture.md]
     
     %% Reference
     REFERENCE --> GLOSSARY[glossary.md]
@@ -151,7 +153,7 @@ graph TD
 
 1. **Root Level Documents**
    - Core project files remain in root for easy access
-   - `RULES.md`, `README.md`, `SESSIONS.md`, and `NOTES.md`
+   - `RULES.md`, `README.md`, `SESSIONS.md`, and `docs/technical/architecture.md`
    - Direct links to organized documentation sections
 
 2. **Documentation Organization**
@@ -240,7 +242,7 @@ graph TD
     P1 --> SESSIONS[Recent SESSIONS.md<br>entries]
     
     P2[Priority 2:<br>Referenced Docs] --> MACHINE[technical/machine-management.md]
-    P2 --> CURSOR[guides/cursor-instructions.md]
+    P2 --> CURSOR[guides/cursor-setup.md]
     P2 --> CURRENT[Current task<br>related docs]
     
     P3[Priority 3:<br>On-Demand Load] --> DEV_GUIDE[guides/development-guide.md]

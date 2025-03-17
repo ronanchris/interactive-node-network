@@ -1,5 +1,59 @@
 # Setting Up Interactive Node Network in Cursor.ai
 
+## Standard Session Initialization
+
+### Template and Example
+
+When starting a new Cursor session, use this template:
+
+```
+New chat. This is on [MACHINE_NAME].
+Please review:
+1. RULES.md
+2. SESSIONS.md
+3. docs/README.md
+4. [ANY_SPECIFIC_DOCS_RELEVANT_TO_CURRENT_TASK]
+```
+
+For example, on your M3 Pro Max:
+```
+New chat. This is on my main macbook pro M3 Pro Max.
+Please review:
+1. RULES.md
+2. SESSIONS.md
+3. docs/README.md
+4. docs/guides/cursor-instructions.md
+```
+
+### Documentation Review Order
+
+Always review documentation in this order:
+1. `RULES.md` - Main router for all project rules and guidelines
+2. `SESSIONS.md` - Current context and recent changes
+3. `docs/README.md` - Documentation structure and organization
+4. Relevant section docs based on current task
+
+### Environment Verification
+
+After documentation review, verify:
+1. Development environment:
+   ```bash
+   npm run check-env
+   ```
+2. Machine configuration:
+   ```bash
+   npm run verify-machine
+   ```
+3. Running services (if applicable)
+
+### Benefits of Standard Initialization
+
+1. **Consistency**: Ensures all necessary context is reviewed
+2. **Efficiency**: Reduces time spent on setup
+3. **Clarity**: Provides clear structure for new sessions
+4. **Reproducibility**: Makes it easy to start new projects
+5. **Context Preservation**: Maintains project knowledge across sessions
+
 This guide provides detailed instructions for implementing the Interactive Node Network visualization component in Cursor.ai, designed specifically for design professionals with limited coding experience.
 
 ## Dealing with Terminal Permission Issues

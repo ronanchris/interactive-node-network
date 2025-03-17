@@ -222,20 +222,6 @@ async function generateDiagrams() {
     join(projectRoot, 'docs/diagrams/doc-relationships.md'),
     relationshipsDiagram
   );
-  
-  // Generate report
-  const report = {
-    timestamp: new Date().toISOString(),
-    diagrams: {
-      structure: 'docs/diagrams/project-structure.md',
-      relationships: 'docs/diagrams/doc-relationships.md'
-    }
-  };
-  
-  writeFileSync(
-    join(projectRoot, 'diagram-report.json'),
-    JSON.stringify(report, null, 2)
-  );
 }
 
 // Run diagram generation

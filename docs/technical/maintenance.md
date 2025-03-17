@@ -14,7 +14,7 @@ This document outlines the maintenance procedures and best practices for the Int
 2. **Documentation Health**
    - Update README files
    - Review and update RULES.md
-   - Maintain NOTES.md
+   - Maintain technical documentation
    - Check documentation coverage
    - Generate updated diagrams
 

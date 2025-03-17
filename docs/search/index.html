@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Search</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .search-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .results {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .result-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-title {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .result-title:hover {
+            text-decoration: underline;
+        }
+        .result-path {
+            color: #666;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .result-preview {
+            color: #333;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .no-results {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search documentation..." id="searchInput">
+        <ul class="results" id="results"></ul>
+    </div>
+
+    <script>
+        // Documentation index
+        const docsIndex = {
+            "documentation overview": {
+                path: "documentation-overview.md",
+                title: "Documentation Overview",
+                preview: "Comprehensive overview of all documentation in the Interactive Node Network project."
+            },
+            "getting started": {
+                path: "quick-start.md",
+                title: "Quick Start Guide",
+                preview: "Step-by-step guide for initial setup and configuration."
+            },
+            "machine management": {
+                path: "machine-management.md",
+                title: "Machine Management",
+                preview: "Environment setup and configuration guide."
+            },
+            "documentation structure": {
+                path: "documentation-structure.md",
+                title: "Documentation Structure",
+                preview: "Understanding how our documentation is organized."
+            },
+            "documentation relationships": {
+                path: "diagrams/documentation-relationships.md",
+                title: "Documentation Relationships",
+                preview: "Visual guide to documentation connections and flows."
+            },
+            "coach guide": {
+                path: "guides/coach-michael-stolarz-guide.md",
+                title: "Coach's Guide",
+                preview: "Project overview and educational aspects."
+            },
+            "permissions": {
+                path: "guides/permissions-guide.md",
+                title: "Permissions Guide",
+                preview: "Access and security rules documentation."
+            },
+            "cursor setup": {
+                path: "guides/cursor-setup.md",
+                title: "Cursor Setup",
+                preview: "AI interaction guidelines and setup instructions."
+            },
+            "development guide": {
+                path: "guides/development-guide.md",
+                title: "Development Guide",
+                preview: "Development workflow and standards documentation."
+            },
+            "architecture": {
+                path: "technical/architecture.md",
+                title: "Architecture Documentation",
+                preview: "System architecture and design decisions."
+            },
+            "node network": {
+                path: "technical/node-network-summary.md",
+                title: "Node Network Summary",
+                preview: "Network implementation details and specifications."
+            },
+            "maintenance": {
+                path: "technical/maintenance.md",
+                title: "Maintenance Guide",
+                preview: "System maintenance procedures and guidelines."
+            },
+            "performance": {
+                path: "technical/performance.md",
+                title: "Performance Guide",
+                preview: "Performance optimization guidelines and best practices."
+            },
+            "learning journal": {
+                path: "learning/learning-journal.md",
+                title: "Learning Journal",
+                preview: "Progress tracking and learnings documentation."
+            },
+            "documentation automation": {
+                path: "learning/documentation-automation.md",
+                title: "Documentation Automation",
+                preview: "Documentation management and automation features."
+            },
+            "troubleshooting": {
+                path: "reference/troubleshooting.md",
+                title: "Troubleshooting Guide",
+                preview: "Common issues and solutions documentation."
+            },
+            "api": {
+                path: "reference/api.md",
+                title: "API Documentation",
+                preview: "API reference and usage guidelines."
+            },
+            "glossary": {
+                path: "reference/glossary.md",
+                title: "Glossary",
+                preview: "Project terminology and definitions."
+            }
+        };
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const resultsList = document.getElementById('results');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const results = Object.entries(docsIndex)
+                .filter(([key, value]) => 
+                    key.includes(query) || 
+                    value.title.toLowerCase().includes(query) ||
+                    value.preview.toLowerCase().includes(query)
+                )
+                .map(([_, value]) => value);
+
+            displayResults(results);
+        });
+
+        function displayResults(results) {
+            if (results.length === 0) {
+                resultsList.innerHTML = '<li class="no-results">No results found</li>';
+                return;
+            }
+
+            resultsList.innerHTML = results
+                .map(result => `
+                    <li class="result-item">
+                        <a href="${result.path}" class="result-title">${result.title}</a>
+                        <div class="result-path">${result.path}</div>
+                        <div class="result-preview">${result.preview}</div>
+                    </li>
+                `)
+                .join('');
+        }
+    </script>
+</body>
+</html> 

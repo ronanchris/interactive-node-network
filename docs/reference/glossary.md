@@ -176,13 +176,20 @@ Common patterns of user behavior and system responses that inform the design and
 - **ESM (ECMAScript Modules)**: JavaScript module system used in the project.
 - **TypeScript Configuration**: Settings that control TypeScript compilation and behavior.
 - **Vite** (v6.2.2): Next-generation frontend build tool that offers faster development server startup and hot module replacement (HMR). Used as our primary development and build tool.
+- **check-env**: A utility script that verifies all required environment variables are set and valid before starting the application.
 
 ### Build Tools
-- **ts-node** (v10.9.2): TypeScript execution environment for running TypeScript files directly.
+- **npm**: Node Package Manager, the default package manager for Node.js. Used for installing dependencies, running scripts, and managing project packages.
 - **npx**: npm package runner, used to execute package binaries (comes with npm).
+- **ts-node** (v10.9.2): TypeScript execution environment for running TypeScript files directly.
+- **tsx**: A Node.js runtime for TypeScript and ESM, providing faster execution than ts-node. Used for running TypeScript files directly.
+- **.ts**: File extension for TypeScript files, indicating source code written in TypeScript.
 - **ESLint**: JavaScript/TypeScript code linting tool for maintaining code quality.
 - **Prettier**: Code formatter for maintaining consistent code style.
 - **esbuild** (v0.25.1): An extremely fast JavaScript bundler and minifier used by Vite.
+
+### Command Line Tools
+- **curl**: Command-line tool for transferring data using various protocols. Used for testing APIs and downloading files.
 
 ### IDE and Extensions
 - **Cursor**: Our primary IDE for development, built on modern AI capabilities.

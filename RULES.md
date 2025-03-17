@@ -52,7 +52,7 @@ When any rules document is updated:
 1. Update relevant section in `docs/`
 2. Update cross-references if needed
 3. Update this index if new sections added
-4. Record changes in `SESSIONS.md`
+4. Record changes in `docs/sessions/README.md`
 5. Update `.checksums.json`
 
 ## Required Reading Order
@@ -60,8 +60,141 @@ When any rules document is updated:
 AI assistants must read documents in this order at session start:
 1. `RULES.md` (this file) - Main router
 2. `docs/session-management.md` - Session handling
-3. `SESSIONS.md` - Current context
+3. `docs/sessions/README.md` - Current context
 4. Relevant section docs based on current task
+
+## Documentation Health
+
+### 1. File Size Management
+- Keep file sizes manageable:
+  * RULES.md should stay under 100KB
+  * docs/sessions/README.md can grow larger but should be split by month if exceeding 1MB
+  * Consider archiving old sessions to docs/sessions_ARCHIVE/YYYY-MM.md
+- Monitor file sizes regularly
+- Split large files when they approach size limits
+
+### 2. Link Health Checks
+- AI must perform link health checks when:
+  * Reading through documentation
+  * Following cross-references
+  * Accessing section documentation
+- If broken or outdated links are found:
+  * Fix immediately if the correct path is known
+  * Report to user if the correct path is unclear
+  * Update all affected cross-references
+  * Document the fix in docs/sessions/README.md
+- Common link issues to check:
+  * Moved files (e.g., SESSIONS.md → docs/sessions/README.md)
+  * Renamed sections or files
+  * Outdated references to archived content
+  * Incorrect relative paths
+  * Missing anchor links (#section-name)
+
+### 3. Cross-Reference Maintenance
+- Verify cross-references when:
+  * Moving files between directories
+  * Renaming files or sections
+  * Adding new documentation
+  * Updating existing content
+- Update the cross-reference map in RULES.md when:
+  * Adding new sections
+  * Moving sections between categories
+  * Splitting or merging documentation files
+
+### 4. Documentation Structure
+- Maintain clear section breaks between sessions
+- Use consistent formatting and templates
+- Include links to relevant commits and PRs
+- Keep related content together
+- Use clear, descriptive section names
+
+### 5. Comprehensive Rules Review
+- AI must perform a complete review of RULES.md at least once per session:
+  * Initial scan: Read through all sections quickly to identify critical rules
+  * Detailed review: Focus on sections relevant to current task
+  * Cross-reference check: Verify all linked documentation exists and is accessible
+  * Rules validation: Ensure no rules conflict with each other
+  * Update verification: Check if any rules have been modified since last session
+- Key sections that must be reviewed:
+  * Required Reading Order
+  * Documentation Health
+  * User Interaction Rules
+  * Development Workflow
+  * Project Standards
+  * Session Management
+- Performance considerations:
+  * For large files, use section-based indexing:
+    - First pass: Quick scan of all section headers to build index
+    - Second pass: Read each section in sequence, but process in chunks
+    - Third pass: Cross-reference validation between sections
+    - Final pass: Verify all rules are consistent
+  * Cache frequently accessed sections
+  * Use checksums to avoid re-scanning unchanged sections
+  * Prioritize critical sections first
+- Document review findings:
+  * Note any missing or outdated documentation
+  * Flag any conflicting rules
+  * Report any unclear or ambiguous guidelines
+  * Suggest improvements to rule organization
+- Example: "I've completed a comprehensive review of RULES.md. I noticed that the TypeScript error handling guidelines in the Development Workflow section could be more specific. Would you like me to propose an update?"
+
+### 6. Systematic Review Process
+```mermaid
+graph TD
+    A[1. Initial RULES.md Review] --> B[2. Documentation Health Check]
+    B --> C[3. Session Context Review]
+    C --> D[4. Performance Optimization]
+    D --> E[5. Documentation Maintenance]
+    E --> F[6. Recent Changes Review]
+    F --> G[7. Current Status Assessment]
+
+    subgraph "1. Initial RULES.md Review"
+        A1[First Pass: Section Headers]
+        A2[Verify Structure]
+        A3[Check Hierarchy]
+    end
+
+    subgraph "2. Documentation Health Check"
+        B1[Verify File References]
+        B2[Check Cross-References]
+        B3[Validate Links]
+    end
+
+    subgraph "3. Session Context Review"
+        C1[Read Recent Sessions]
+        C2[Check Current Status]
+        C3[Review Pending Tasks]
+    end
+
+    subgraph "4. Performance Optimization"
+        D1[First Pass: Section Headers]
+        D2[Second Pass: Sequential Read]
+        D3[Third Pass: Cross-Reference Check]
+        D4[Final Pass: Rule Consistency]
+    end
+
+    subgraph "5. Documentation Maintenance"
+        E1[Check File Sizes]
+        E2[Verify Link Health]
+        E3[Update Cross-References]
+        E4[Review Structure]
+    end
+
+    subgraph "6. Recent Changes Review"
+        F1[Check Documentation Updates]
+        F2[Verify Tool Additions]
+        F3[Confirm Environment Setup]
+        F4[Validate Authentication]
+    end
+
+    subgraph "7. Current Status Assessment"
+        G1[Working Items]
+        G2[Pending Tasks]
+        G3[Known Issues]
+    end
+```
+
+This diagram shows the systematic process for reviewing and maintaining documentation health. Each step builds upon the previous ones, ensuring comprehensive coverage of all documentation aspects.
 
 ## Cross-Reference Map
 
@@ -89,7 +222,7 @@ graph TD
 
 - Main Rules: `/RULES.md`
 - Documentation: `/docs/*`
-- Sessions: `/SESSIONS.md`
+- Sessions: `/docs/sessions/README.md`
 - Checksums: `/.checksums.json`
 
 ## Educational Support
@@ -170,7 +303,7 @@ graph TD
 - Document any workarounds used (e.g., @ts-nocheck)
 
 ### 3. Documentation
-- Update NOTES.md for architectural decisions
+- Update technical documentation for architectural decisions
 - Document workarounds and technical debt
 - Keep README.md current with setup instructions
 - Add comments for complex code sections
@@ -233,7 +366,7 @@ graph TD
 
 ### 2. Documentation Updates
 - Keep RULES.md current with new learnings
-- Update NOTES.md with new architectural decisions
+- Update technical documentation for architectural decisions
 - Maintain clear commit history
 - Document breaking changes
 
@@ -253,6 +386,84 @@ graph TD
 
 ## Session Management
 
+### 1. Session Initialization
+* AI must automatically scan both RULES.md and docs/sessions/README.md first
+* AI should maintain context throughout the session
+* AI should reference any relevant previous decisions or context from docs/sessions/README.md when appropriate
+
+### 2. Session Documentation
+* For docs/sessions/README.md:
+  - Load content progressively as needed
+  - For docs/sessions/README.md larger than 1MB:
+    - Load only recent entries
+    - Load full content only when needed
+
+### 3. Documentation Organization
+- Store session summaries in docs/sessions/README.md
+- Keep file sizes manageable:
+  * RULES.md should stay under 100KB
+  * docs/sessions/README.md can grow larger but should be split by month if exceeding 1MB
+  * Consider archiving old sessions to docs/sessions_ARCHIVE/YYYY-MM.md
+- Maintain clear section breaks between sessions
+- Use consistent formatting and templates
+- Include links to relevant commits and PRs
+
+### 4. Chat History Navigation
+- Access previous chats through Cursor's history feature
+- Use descriptive commit messages as session markers
+- Reference specific chat sessions by date or milestone
+- Keep related work in the same chat when practical
+- Example: "Let's check our TypeScript error discussion in the previous chat session"
+
+### 5. Session Transitions
+- Document current status before ending session
+- List any pending tasks or known issues
+- Note any environment-specific settings
+- Record any temporary workarounds in place
+- Example: "Current status: GitHub Actions deployment pending, temporary TypeScript bypass in place"
+
+### 6. Session Resume
+- Review recent changes from last session
+- Verify working directory and branch status
+- Check if previously pending operations completed
+- Confirm environment variables and configurations
+- Example: "Let's check if the GitHub Actions workflow completed from our last session"
+
+### 7. Context Preservation
+- Summarize key decisions made in previous sessions
+- Keep track of attempted solutions
+- Document any failed approaches to avoid repetition
+- Note any external resources or references used
+- Example: "In our last session, we decided to use @ts-nocheck instead of fixing individual TypeScript errors"
+
+### 8. Common Scenarios
+- Handling interrupted deployments
+  * Check GitHub Actions status
+  * Verify last successful commit
+  * Review error logs if available
+- Resuming development work
+  * Check git status and branch
+  * Review pending changes
+  * Verify development server status
+- Managing multiple fixes
+  * Track which fixes were applied
+  * Note which fixes are pending
+  * Document any dependencies between fixes 
+
+## Session Summary Format
+
+* Save summary to docs/sessions/README.md in the following format:
+  ```markdown
+  ## Session Summary - [DATE] - [TITLE]
+  ```
+
+## Session Management
+
+* Store session summaries in docs/sessions/README.md
+* docs/sessions/README.md can grow larger but should be split by month if exceeding 1MB
+
+## Session Management
+
 ### 1. Chat Window Management
 - Starting a new chat creates a fresh context
 - Previous chats remain accessible in history
@@ -263,16 +474,16 @@ graph TD
   * When chat history becomes very long
 - Example: "Let's start a fresh chat for the new feature implementation"
 - At the start of each new chat:
-  * AI must automatically scan both RULES.md and SESSIONS.md first
+  * AI must automatically scan both RULES.md and docs/sessions/README.md first
   * This ensures all project guidelines are followed consistently
   * This provides necessary context from previous sessions
   * No user prompt needed - this is AI's responsibility
   * If either file cannot be accessed, AI should notify the user
   * AI should acknowledge having reviewed both documents
-  * AI should reference any relevant previous decisions or context from SESSIONS.md when appropriate
+  * AI should reference any relevant previous decisions or context from docs/sessions/README.md when appropriate
 - Efficient Document Scanning:
   * For RULES.md: Load and process the entire document as it contains critical guidelines
-  * For SESSIONS.md: 
+  * For docs/sessions/README.md: 
     - Focus on the most recent session summary first
     - Only load older sessions if directly relevant to current task
     - Prioritize scanning "Current Status", "Technical Debt", and "Next Steps" sections
@@ -281,10 +492,10 @@ graph TD
     - Provide option to scan older sessions if needed
   * Document scanning should not noticeably impact chat start time
     - If scanning is taking too long, prioritize RULES.md first
-    - Load SESSIONS.md content progressively as needed
+    - Load docs/sessions/README.md content progressively as needed
   * Specific Performance Guidelines:
     - "Too long" for initial scanning is defined as > 5 seconds
-    - For SESSIONS.md larger than 1MB:
+    - For docs/sessions/README.md larger than 1MB:
       * Only scan the last 3 sessions by default
       * Implement lazy loading for older sessions
       * Cache frequently accessed sections
@@ -330,9 +541,9 @@ graph TD
     * Live updates section:
       - Track ongoing changes and decisions
       - Update in real-time during session
-      - Merge into SESSIONS.md at session end
+      - Merge into docs/sessions/README.md at session end
     * Keep only one active session
-    * Archive to SESSIONS.md when starting new session
+    * Archive to docs/sessions/README.md when starting new session
 
   - Additional Performance Considerations:
     * Cache parsed markdown AST for faster searching
@@ -1254,6 +1465,630 @@ graph TD
           }
           ```
 
+        * Threshold Violation Error Codes:
+          ```json
+          {
+            "error_codes": {
+              "resource_violations": {
+                "CPU001": {
+                  "description": "CPU usage exceeded warning threshold",
+                  "severity": "warning",
+                  "message_template": "CPU usage at {value}% (threshold: {threshold}%)",
+                  "remediation": "reduce_concurrent_operations"
+                },
+                "CPU002": {
+                  "description": "CPU thermal throttling activated",
+                  "severity": "critical",
+                  "message_template": "CPU temperature critical: {temp}°C",
+                  "remediation": "pause_non_essential"
+                },
+                "MEM001": {
+                  "description": "Memory usage spike detected",
+                  "severity": "warning",
+                  "message_template": "Memory usage at {usage}%",
+                  "remediation": "garbage_collection"
+                },
+                "IO001": {
+                  "description": "I/O latency exceeded threshold",
+                  "severity": "warning",
+                  "message_template": "I/O latency: {latency}ms",
+                  "remediation": "reduce_batch_size"
+                }
+              },
+              "operation_failures": {
+                "OP001": {
+                  "description": "Operation timeout",
+                  "severity": "error",
+                  "message_template": "Operation {op_id} timed out after {duration}ms",
+                  "remediation": "retry_with_backoff"
+                },
+                "OP002": {
+                  "description": "Concurrent operation limit reached",
+                  "severity": "warning",
+                  "message_template": "Too many concurrent operations: {count}",
+                  "remediation": "queue_operations"
+                }
+              },
+              "data_integrity": {
+                "DI001": {
+                  "description": "Checksum mismatch",
+                  "severity": "critical",
+                  "message_template": "Checksum validation failed for {file}",
+                  "remediation": "restore_backup"
+                },
+                "DI002": {
+                  "description": "Corrupted index entry",
+                  "severity": "error",
+                  "message_template": "Index corruption in {section}",
+                  "remediation": "rebuild_section"
+                }
+              }
+            },
+            "error_aggregation": {
+              "grouping_rules": {
+                "time_window": "5m",
+                "max_similar_errors": 3,
+                "correlation_threshold": 0.8
+              },
+              "escalation_rules": {
+                "warning_to_error": {
+                  "count_threshold": 5,
+                  "time_window": "15m"
+                },
+                "error_to_critical": {
+                  "count_threshold": 3,
+                  "time_window": "5m"
+                }
+              }
+            }
+          }
+          ```
+
+        * Advanced Visualization Types:
+          ```json
+          {
+            "visualization_config": {
+              "advanced_plots": {
+                "system_health": {
+                  "type": "radar_chart",
+                  "metrics": [
+                    "cpu_health",
+                    "memory_health",
+                    "io_health",
+                    "network_health",
+                    "storage_health"
+                  ],
+                  "thresholds": {
+                    "warning": 0.7,
+                    "critical": 0.4
+                  },
+                  "update_frequency_ms": 5000
+                },
+                "error_clustering": {
+                  "type": "force_directed_graph",
+                  "node_types": {
+                    "error": {"size": "frequency"},
+                    "component": {"size": "error_count"},
+                    "user": {"size": "impact_score"}
+                  },
+                  "edge_types": {
+                    "causes": {"width": "correlation_strength"},
+                    "affects": {"style": "dashed"}
+                  },
+                  "layout": {
+                    "algorithm": "force_atlas_2",
+                    "iterations": 1000
+                  }
+                },
+                "performance_surface": {
+                  "type": "3d_surface",
+                  "x_axis": "time",
+                  "y_axis": "operation_type",
+                  "z_axis": "response_time",
+                  "colormap": "plasma",
+                  "interactive": {
+                    "rotation": true,
+                    "slice_view": true
+                  }
+                },
+                "anomaly_detection": {
+                  "type": "candlestick",
+                  "metrics": ["response_time", "error_rate"],
+                  "overlay": {
+                    "type": "bollinger_bands",
+                    "period": 20,
+                    "std_dev": 2
+                  },
+                  "annotations": {
+                    "anomalies": {"style": "point"},
+                    "thresholds": {"style": "line"}
+                  }
+                }
+              },
+              "composite_views": {
+                "system_dashboard": {
+                  "layout": "grid_3x3",
+                  "panels": [
+                    {"type": "radar_chart", "position": [0, 0]},
+                    {"type": "line_chart", "position": [1, 0]},
+                    {"type": "heatmap", "position": [2, 0]}
+                  ],
+                  "shared_legend": true,
+                  "synchronized_time": true
+                }
+              }
+            }
+          }
+          ```
+
+        * Threshold Violation Error Codes:
+          ```json
+          {
+            "error_codes": {
+              "resource_violations": {
+                "CPU001": {
+                  "description": "CPU usage exceeded warning threshold",
+                  "severity": "warning",
+                  "message_template": "CPU usage at {value}% (threshold: {threshold}%)",
+                  "remediation": "reduce_concurrent_operations"
+                },
+                "CPU002": {
+                  "description": "CPU thermal throttling activated",
+                  "severity": "critical",
+                  "message_template": "CPU temperature critical: {temp}°C",
+                  "remediation": "pause_non_essential"
+                },
+                "MEM001": {
+                  "description": "Memory usage spike detected",
+                  "severity": "warning",
+                  "message_template": "Memory usage at {usage}%",
+                  "remediation": "garbage_collection"
+                },
+                "IO001": {
+                  "description": "I/O latency exceeded threshold",
+                  "severity": "warning",
+                  "message_template": "I/O latency: {latency}ms",
+                  "remediation": "reduce_batch_size"
+                }
+              },
+              "operation_failures": {
+                "OP001": {
+                  "description": "Operation timeout",
+                  "severity": "error",
+                  "message_template": "Operation {op_id} timed out after {duration}ms",
+                  "remediation": "retry_with_backoff"
+                },
+                "OP002": {
+                  "description": "Concurrent operation limit reached",
+                  "severity": "warning",
+                  "message_template": "Too many concurrent operations: {count}",
+                  "remediation": "queue_operations"
+                }
+              },
+              "data_integrity": {
+                "DI001": {
+                  "description": "Checksum mismatch",
+                  "severity": "critical",
+                  "message_template": "Checksum validation failed for {file}",
+                  "remediation": "restore_backup"
+                },
+                "DI002": {
+                  "description": "Corrupted index entry",
+                  "severity": "error",
+                  "message_template": "Index corruption in {section}",
+                  "remediation": "rebuild_section"
+                }
+              }
+            },
+            "error_aggregation": {
+              "grouping_rules": {
+                "time_window": "5m",
+                "max_similar_errors": 3,
+                "correlation_threshold": 0.8
+              },
+              "escalation_rules": {
+                "warning_to_error": {
+                  "count_threshold": 5,
+                  "time_window": "15m"
+                },
+                "error_to_critical": {
+                  "count_threshold": 3,
+                  "time_window": "5m"
+                }
+              }
+            }
+          }
+          ```
+
+        * Advanced Visualization Types:
+          ```json
+          {
+            "visualization_config": {
+              "advanced_plots": {
+                "system_health": {
+                  "type": "radar_chart",
+                  "metrics": [
+                    "cpu_health",
+                    "memory_health",
+                    "io_health",
+                    "network_health",
+                    "storage_health"
+                  ],
+                  "thresholds": {
+                    "warning": 0.7,
+                    "critical": 0.4
+                  },
+                  "update_frequency_ms": 5000
+                },
+                "error_clustering": {
+                  "type": "force_directed_graph",
+                  "node_types": {
+                    "error": {"size": "frequency"},
+                    "component": {"size": "error_count"},
+                    "user": {"size": "impact_score"}
+                  },
+                  "edge_types": {
+                    "causes": {"width": "correlation_strength"},
+                    "affects": {"style": "dashed"}
+                  },
+                  "layout": {
+                    "algorithm": "force_atlas_2",
+                    "iterations": 1000
+                  }
+                },
+                "performance_surface": {
+                  "type": "3d_surface",
+                  "x_axis": "time",
+                  "y_axis": "operation_type",
+                  "z_axis": "response_time",
+                  "colormap": "plasma",
+                  "interactive": {
+                    "rotation": true,
+                    "slice_view": true
+                  }
+                },
+                "anomaly_detection": {
+                  "type": "candlestick",
+                  "metrics": ["response_time", "error_rate"],
+                  "overlay": {
+                    "type": "bollinger_bands",
+                    "period": 20,
+                    "std_dev": 2
+                  },
+                  "annotations": {
+                    "anomalies": {"style": "point"},
+                    "thresholds": {"style": "line"}
+                  }
+                }
+              },
+              "composite_views": {
+                "system_dashboard": {
+                  "layout": "grid_3x3",
+                  "panels": [
+                    {"type": "radar_chart", "position": [0, 0]},
+                    {"type": "line_chart", "position": [1, 0]},
+                    {"type": "heatmap", "position": [2, 0]}
+                  ],
+                  "shared_legend": true,
+                  "synchronized_time": true
+                }
+              }
+            }
+          }
+          ```
+
+        * Threshold Violation Error Codes:
+          ```json
+          {
+            "error_codes": {
+              "resource_violations": {
+                "CPU001": {
+                  "description": "CPU usage exceeded warning threshold",
+                  "severity": "warning",
+                  "message_template": "CPU usage at {value}% (threshold: {threshold}%)",
+                  "remediation": "reduce_concurrent_operations"
+                },
+                "CPU002": {
+                  "description": "CPU thermal throttling activated",
+                  "severity": "critical",
+                  "message_template": "CPU temperature critical: {temp}°C",
+                  "remediation": "pause_non_essential"
+                },
+                "MEM001": {
+                  "description": "Memory usage spike detected",
+                  "severity": "warning",
+                  "message_template": "Memory usage at {usage}%",
+                  "remediation": "garbage_collection"
+                },
+                "IO001": {
+                  "description": "I/O latency exceeded threshold",
+                  "severity": "warning",
+                  "message_template": "I/O latency: {latency}ms",
+                  "remediation": "reduce_batch_size"
+                }
+              },
+              "operation_failures": {
+                "OP001": {
+                  "description": "Operation timeout",
+                  "severity": "error",
+                  "message_template": "Operation {op_id} timed out after {duration}ms",
+                  "remediation": "retry_with_backoff"
+                },
+                "OP002": {
+                  "description": "Concurrent operation limit reached",
+                  "severity": "warning",
+                  "message_template": "Too many concurrent operations: {count}",
+                  "remediation": "queue_operations"
+                }
+              },
+              "data_integrity": {
+                "DI001": {
+                  "description": "Checksum mismatch",
+                  "severity": "critical",
+                  "message_template": "Checksum validation failed for {file}",
+                  "remediation": "restore_backup"
+                },
+                "DI002": {
+                  "description": "Corrupted index entry",
+                  "severity": "error",
+                  "message_template": "Index corruption in {section}",
+                  "remediation": "rebuild_section"
+                }
+              }
+            },
+            "error_aggregation": {
+              "grouping_rules": {
+                "time_window": "5m",
+                "max_similar_errors": 3,
+                "correlation_threshold": 0.8
+              },
+              "escalation_rules": {
+                "warning_to_error": {
+                  "count_threshold": 5,
+                  "time_window": "15m"
+                },
+                "error_to_critical": {
+                  "count_threshold": 3,
+                  "time_window": "5m"
+                }
+              }
+            }
+          }
+          ```
+
+        * Advanced Visualization Types:
+          ```json
+          {
+            "visualization_config": {
+              "advanced_plots": {
+                "system_health": {
+                  "type": "radar_chart",
+                  "metrics": [
+                    "cpu_health",
+                    "memory_health",
+                    "io_health",
+                    "network_health",
+                    "storage_health"
+                  ],
+                  "thresholds": {
+                    "warning": 0.7,
+                    "critical": 0.4
+                  },
+                  "update_frequency_ms": 5000
+                },
+                "error_clustering": {
+                  "type": "force_directed_graph",
+                  "node_types": {
+                    "error": {"size": "frequency"},
+                    "component": {"size": "error_count"},
+                    "user": {"size": "impact_score"}
+                  },
+                  "edge_types": {
+                    "causes": {"width": "correlation_strength"},
+                    "affects": {"style": "dashed"}
+                  },
+                  "layout": {
+                    "algorithm": "force_atlas_2",
+                    "iterations": 1000
+                  }
+                },
+                "performance_surface": {
+                  "type": "3d_surface",
+                  "x_axis": "time",
+                  "y_axis": "operation_type",
+                  "z_axis": "response_time",
+                  "colormap": "plasma",
+                  "interactive": {
+                    "rotation": true,
+                    "slice_view": true
+                  }
+                },
+                "anomaly_detection": {
+                  "type": "candlestick",
+                  "metrics": ["response_time", "error_rate"],
+                  "overlay": {
+                    "type": "bollinger_bands",
+                    "period": 20,
+                    "std_dev": 2
+                  },
+                  "annotations": {
+                    "anomalies": {"style": "point"},
+                    "thresholds": {"style": "line"}
+                  }
+                }
+              },
+              "composite_views": {
+                "system_dashboard": {
+                  "layout": "grid_3x3",
+                  "panels": [
+                    {"type": "radar_chart", "position": [0, 0]},
+                    {"type": "line_chart", "position": [1, 0]},
+                    {"type": "heatmap", "position": [2, 0]}
+                  ],
+                  "shared_legend": true,
+                  "synchronized_time": true
+                }
+              }
+            }
+          }
+          ```
+
+        * Threshold Violation Error Codes:
+          ```json
+          {
+            "error_codes": {
+              "resource_violations": {
+                "CPU001": {
+                  "description": "CPU usage exceeded warning threshold",
+                  "severity": "warning",
+                  "message_template": "CPU usage at {value}% (threshold: {threshold}%)",
+                  "remediation": "reduce_concurrent_operations"
+                },
+                "CPU002": {
+                  "description": "CPU thermal throttling activated",
+                  "severity": "critical",
+                  "message_template": "CPU temperature critical: {temp}°C",
+                  "remediation": "pause_non_essential"
+                },
+                "MEM001": {
+                  "description": "Memory usage spike detected",
+                  "severity": "warning",
+                  "message_template": "Memory usage at {usage}%",
+                  "remediation": "garbage_collection"
+                },
+                "IO001": {
+                  "description": "I/O latency exceeded threshold",
+                  "severity": "warning",
+                  "message_template": "I/O latency: {latency}ms",
+                  "remediation": "reduce_batch_size"
+                }
+              },
+              "operation_failures": {
+                "OP001": {
+                  "description": "Operation timeout",
+                  "severity": "error",
+                  "message_template": "Operation {op_id} timed out after {duration}ms",
+                  "remediation": "retry_with_backoff"
+                },
+                "OP002": {
+                  "description": "Concurrent operation limit reached",
+                  "severity": "warning",
+                  "message_template": "Too many concurrent operations: {count}",
+                  "remediation": "queue_operations"
+                }
+              },
+              "data_integrity": {
+                "DI001": {
+                  "description": "Checksum mismatch",
+                  "severity": "critical",
+                  "message_template": "Checksum validation failed for {file}",
+                  "remediation": "restore_backup"
+                },
+                "DI002": {
+                  "description": "Corrupted index entry",
+                  "severity": "error",
+                  "message_template": "Index corruption in {section}",
+                  "remediation": "rebuild_section"
+                }
+              }
+            },
+            "error_aggregation": {
+              "grouping_rules": {
+                "time_window": "5m",
+                "max_similar_errors": 3,
+                "correlation_threshold": 0.8
+              },
+              "escalation_rules": {
+                "warning_to_error": {
+                  "count_threshold": 5,
+                  "time_window": "15m"
+                },
+                "error_to_critical": {
+                  "count_threshold": 3,
+                  "time_window": "5m"
+                }
+              }
+            }
+          }
+          ```
+
+        * Advanced Visualization Types:
+          ```json
+          {
+            "visualization_config": {
+              "advanced_plots": {
+                "system_health": {
+                  "type": "radar_chart",
+                  "metrics": [
+                    "cpu_health",
+                    "memory_health",
+                    "io_health",
+                    "network_health",
+                    "storage_health"
+                  ],
+                  "thresholds": {
+                    "warning": 0.7,
+                    "critical": 0.4
+                  },
+                  "update_frequency_ms": 5000
+                },
+                "error_clustering": {
+                  "type": "force_directed_graph",
+                  "node_types": {
+                    "error": {"size": "frequency"},
+                    "component": {"size": "error_count"},
+                    "user": {"size": "impact_score"}
+                  },
+                  "edge_types": {
+                    "causes": {"width": "correlation_strength"},
+                    "affects": {"style": "dashed"}
+                  },
+                  "layout": {
+                    "algorithm": "force_atlas_2",
+                    "iterations": 1000
+                  }
+                },
+                "performance_surface": {
+                  "type": "3d_surface",
+                  "x_axis": "time",
+                  "y_axis": "operation_type",
+                  "z_axis": "response_time",
+                  "colormap": "plasma",
+                  "interactive": {
+                    "rotation": true,
+                    "slice_view": true
+                  }
+                },
+                "anomaly_detection": {
+                  "type": "candlestick",
+                  "metrics": ["response_time", "error_rate"],
+                  "overlay": {
+                    "type": "bollinger_bands",
+                    "period": 20,
+                    "std_dev": 2
+                  },
+                  "annotations": {
+                    "anomalies": {"style": "point"},
+                    "thresholds": {"style": "line"}
+                  }
+                }
+              },
+              "composite_views": {
+                "system_dashboard": {
+                  "layout": "grid_3x3",
+                  "panels": [
+                    {"type": "radar_chart", "position": [0, 0]},
+                    {"type": "line_chart", "position": [1, 0]},
+                    {"type": "heatmap", "position": [2, 0]}
+                  ],
+                  "shared_legend": true,
+                  "synchronized_time": true
+                }
+              }
+            }
+          }
+          ```
+
         * Recovery Validation Criteria:
           ```json
           {
@@ -1824,120 +2659,3 @@ graph TD
             }
           }
           ```
-
-### 2. Memory Management
-- Start new chat sessions periodically to prevent memory issues
-- AI will proactively remind user when to start fresh sessions:
-  * After extended chat duration (1-2 hours)
-  * When complex operations are complete
-  * Before starting new major features
-  * When memory usage may impact performance
-
-- Recommended breakpoints for new sessions:
-  * After completing major features
-  * When chat history exceeds 1-2 hours of work
-  * Before starting complex new tasks
-  * When switching context to different parts of the project
-
-- Session Closure Protocol:
-  * AI will offer to generate session summary
-  * Save summary to SESSIONS.md in the following format:
-
-```markdown
-## Session Summary - [Date] - [Main Topic/Feature]
-
-### Duration
-- Start: [Time]
-- End: [Time]
-- Total: [Duration]
-
-### Key Accomplishments
-- [Major change/feature implemented]
-- [Important decision made]
-- [Problem solved]
-
-### Current Status
-- [What's working]
-- [What's pending]
-- [Known issues]
-
-### Environment State
-- Branch: [current git branch]
-- Last Commit: [commit hash or message]
-- Environment Variables Changed: [Yes/No]
-- Services Running: [list of active services]
-
-### Technical Debt / Workarounds
-- [List of temporary solutions]
-- [Areas needing refactoring]
-- [Performance concerns]
-
-### Next Steps
-- [Immediate next actions]
-- [Pending decisions]
-- [Future considerations]
-
-### Resources
-- [Links to relevant documentation]
-- [Related PRs or issues]
-- [External references used]
-```
-
-- Benefits of regular session breaks:
-  * Improved performance
-  * Clearer context separation
-  * Better organization of work
-  * Reduced risk of memory-related issues
-- Example: "I notice our chat has been running for over an hour. Would you like me to generate a session summary before we start a fresh chat?"
-
-### 3. Documentation Organization
-- Store session summaries in SESSIONS.md
-- Keep file sizes manageable:
-  * RULES.md should stay under 100KB
-  * SESSIONS.md can grow larger but should be split by month if exceeding 1MB
-  * Consider archiving old sessions to SESSIONS_ARCHIVE/YYYY-MM.md
-- Maintain clear section breaks between sessions
-- Use consistent formatting and templates
-- Include links to relevant commits and PRs
-
-### 4. Chat History Navigation
-- Access previous chats through Cursor's history feature
-- Use descriptive commit messages as session markers
-- Reference specific chat sessions by date or milestone
-- Keep related work in the same chat when practical
-- Example: "Let's check our TypeScript error discussion in the previous chat session"
-
-### 5. Session Transitions
-- Document current status before ending session
-- List any pending tasks or known issues
-- Note any environment-specific settings
-- Record any temporary workarounds in place
-- Example: "Current status: GitHub Actions deployment pending, temporary TypeScript bypass in place"
-
-### 6. Session Resume
-- Review recent changes from last session
-- Verify working directory and branch status
-- Check if previously pending operations completed
-- Confirm environment variables and configurations
-- Example: "Let's check if the GitHub Actions workflow completed from our last session"
-
-### 7. Context Preservation
-- Summarize key decisions made in previous sessions
-- Keep track of attempted solutions
-- Document any failed approaches to avoid repetition
-- Note any external resources or references used
-- Example: "In our last session, we decided to use @ts-nocheck instead of fixing individual TypeScript errors"
-
-### 8. Common Scenarios
-- Handling interrupted deployments
-  * Check GitHub Actions status
-  * Verify last successful commit
-  * Review error logs if available
-- Resuming development work
-  * Check git status and branch
-  * Review pending changes
-  * Verify development server status
-- Managing multiple fixes
-  * Track which fixes were applied
-  * Note which fixes are pending
-  * Document any dependencies between fixes 
