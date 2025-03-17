@@ -6,38 +6,30 @@ Following up on our Discord conversation, I wanted to share how I've structured 
 ## Key Documentation Files
 
 ### 1. Root Level Documents
-- [`RULES.md`](../../RULES.md) - Core development rules and guidelines
-- [`README.md`](../../README.md) - Project overview and setup instructions
-- [`NOTES.md`](../../NOTES.md) - Project notes and architectural decisions
+- [`README.md`](../../README.md) - Project overview, quick start, and setup instructions
+- [`CONTRIBUTING.md`](../../CONTRIBUTING.md) - Development guidelines and documentation standards
 - [`SESSIONS.md`](../../SESSIONS.md) - Tracks development sessions and decisions
+- [`RULES.md`](../../RULES.md) - Core development rules and guidelines
+- [`NOTES.md`](../../NOTES.md) - Project notes and architectural decisions
 
-### 2. Guides and Documentation
+### 2. Guides
+- [`docs/guides/user-interaction.md`](../guides/user-interaction.md) - User interaction guidelines
+- [`docs/guides/communication.md`](../guides/communication.md) - Communication protocols
+- [`docs/guides/session-management.md`](../guides/session-management.md) - Session handling
+- [`docs/guides/development-guide.md`](../guides/development-guide.md) - Comprehensive development guide
 - [`docs/guides/cursor-instructions.md`](../guides/cursor-instructions.md) - Guidelines for using Cursor AI
 - [`docs/guides/permissions-guide.md`](../guides/permissions-guide.md) - Access and security rules
-- [`docs/guides/coach-michael-stolarz-guide.md`](../guides/coach-michael-stolarz-guide.md) - This guide
 
 ### 3. Technical Documentation
 - [`docs/technical/node-network-summary.md`](../technical/node-network-summary.md) - Network visualization details
-- [`docs/documentation-structure.md`](../documentation-structure.md) - Documentation organization
-- [`docs/diagrams/`](../diagrams/) - Visual documentation and relationships
-  - [`doc-relationships.md`](../diagrams/doc-relationships.md) - Documentation connections
-  - [`project-structure.md`](../diagrams/project-structure.md) - Project organization
+- [`docs/technical/performance.md`](../technical/performance.md) - Performance monitoring and optimization
+- [`docs/technical/machine-management.md`](../technical/machine-management.md) - Machine configuration
+- [`docs/technical/deployment.md`](../technical/deployment.md) - Deployment procedures
+- [`docs/technical/maintenance.md`](../technical/maintenance.md) - Maintenance guidelines
 
-### 4. Documentation Automation
-- [`scripts/docs/link-checker.ts`](../../scripts/docs/link-checker.ts) - Validates documentation links
-- [`scripts/docs/link-fixer.ts`](../../scripts/docs/link-fixer.ts) - Automatically fixes common link issues
-- [`scripts/docs/coverage.ts`](../../scripts/docs/coverage.ts) - Checks documentation coverage
-- [`.github/workflows/docs-check.yml`](../../.github/workflows/docs-check.yml) - GitHub Actions for doc checks
-
-### 5. Learning and Development
-- [`docs/learning/README.md`](../learning/README.md) - Learning resources index
-- [`docs/learning/learning-journal.md`](../learning/learning-journal.md) - Progress tracking
-- [`docs/learning/advanced-automation.md`](../learning/advanced-automation.md) - Advanced features
-- [`docs/learning/documentation-automation.md`](../learning/documentation-automation.md) - Doc management
-
-### 6. Performance and Monitoring
-- [`docs/performance/README.md`](../performance/README.md) - Performance metrics
-- [`docs/performance/monitoring.md`](../performance/monitoring.md) - System monitoring
+### 4. Reference Materials
+- [`docs/reference/glossary.md`](../reference/glossary.md) - Terms and definitions
+- [`docs/reference/troubleshooting.md`](../reference/troubleshooting.md) - Error handling and troubleshooting
 
 ## Documentation Structure
 
@@ -84,6 +76,7 @@ graph TD
     ROOT --> README[README.md]
     ROOT --> NOTES[NOTES.md]
     ROOT --> SESSIONS[SESSIONS.md]
+    ROOT --> CONTRIBUTING[CONTRIBUTING.md]
     
     %% Main Directories
     ROOT --> DOCS[docs/]
@@ -93,33 +86,27 @@ graph TD
     %% Documentation Directory
     DOCS --> GUIDES[guides/]
     DOCS --> TECHNICAL[technical/]
-    DOCS --> DIAGRAMS[diagrams/]
-    DOCS --> LEARNING[learning/]
-    DOCS --> PERF[performance/]
-    DOCS --> ERRORS[errors/]
-    DOCS --> MACHINE[machine-management.md]
+    DOCS --> REFERENCE[reference/]
     
     %% Guides
+    GUIDES --> DEV_GUIDE[development-guide.md]
+    GUIDES --> USER_INT[user-interaction.md]
+    GUIDES --> COMM[communication.md]
+    GUIDES --> SESSION_MNG[session-management.md]
     GUIDES --> COACH[coach-michael-stolarz-guide.md]
     GUIDES --> CURSOR[cursor-instructions.md]
     GUIDES --> PERMS[permissions-guide.md]
     
     %% Technical Documentation
     TECHNICAL --> NETWORK[node-network-summary.md]
+    TECHNICAL --> PERF[performance.md]
+    TECHNICAL --> MACHINE[machine-management.md]
+    TECHNICAL --> DEPLOY[deployment.md]
+    TECHNICAL --> MAINT[maintenance.md]
     
-    %% Diagrams
-    DIAGRAMS --> DOC_REL[doc-relationships.md]
-    DIAGRAMS --> PROJ_STR[project-structure.md]
-    
-    %% Learning Documentation
-    LEARNING --> JOURNAL[learning-journal.md]
-    LEARNING --> LEARN_README[README.md]
-    LEARNING --> ADV_AUTO[advanced-automation.md]
-    LEARNING --> DOC_AUTO[documentation-automation.md]
-    
-    %% Performance Documentation
-    PERF --> PERF_README[README.md]
-    PERF --> MONITOR[monitoring.md]
+    %% Reference
+    REFERENCE --> GLOSSARY[glossary.md]
+    REFERENCE --> TROUBLE[troubleshooting.md]
     
     %% Source Code
     SRC --> COMPONENTS[components/]
@@ -135,21 +122,12 @@ graph TD
     %% Documentation Scripts
     DOC_SCRIPTS --> LINK_CHECK[link-checker.ts]
     DOC_SCRIPTS --> LINK_FIX[link-fixer.ts]
-    DOC_SCRIPTS --> DOC_COV[coverage.ts]
-    
-    %% GitHub Actions
-    ROOT --> GITHUB[.github/]
-    GITHUB --> WORKFLOWS[workflows/]
-    WORKFLOWS --> DOC_CHECK[docs-check.yml]
+    DOC_SCRIPTS --> REORG[reorganize.ts]
     
     %% Relationships and Dependencies
     RULES -.-> |references| DOCS
-    SESSIONS -.-> |updates| JOURNAL
+    SESSIONS -.-> |updates| DEV_GUIDE
     DOC_SCRIPTS -.-> |manages| DOCS
-    LINK_CHECK -.-> |validates| DOCS
-    LINK_FIX -.-> |fixes| DOCS
-    DOC_COV -.-> |analyzes| DOCS
-    DOC_CHECK -.-> |monitors| DOCS
     SETUP -.-> |configures| MACHINE
     
     %% Styling
@@ -158,17 +136,17 @@ graph TD
     classDef docs fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
     classDef guides fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
     classDef technical fill:#fce4ec,stroke:#c2185b,stroke-width:2px;
+    classDef reference fill:#e0f7fa,stroke:#006064,stroke-width:2px;
     classDef src fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
     classDef scripts fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px;
-    classDef github fill:#f1f8e9,stroke:#558b2f,stroke-width:2px;
     
     class ROOT root;
-    class DOCS,LEARNING,PERF,ERRORS docs;
-    class GUIDES,COACH,CURSOR,PERMS guides;
-    class TECHNICAL,NETWORK technical;
+    class DOCS docs;
+    class GUIDES,DEV_GUIDE,USER_INT,COMM,SESSION_MNG,COACH,CURSOR,PERMS guides;
+    class TECHNICAL,NETWORK,PERF,MACHINE,DEPLOY,MAINT technical;
+    class REFERENCE,GLOSSARY,TROUBLE reference;
     class SRC,COMPONENTS src;
-    class SCRIPTS,DOC_SCRIPTS,SETUP,TESTS,LINK_CHECK,LINK_FIX,DOC_COV scripts;
-    class GITHUB,WORKFLOWS,DOC_CHECK github;
+    class SCRIPTS,DOC_SCRIPTS,SETUP,TESTS,LINK_CHECK,LINK_FIX,REORG scripts;
 ```
 
 ### Key File Relationships

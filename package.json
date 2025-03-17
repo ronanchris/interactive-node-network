@@ -70,7 +70,8 @@
     "fix-links": "ts-node scripts/fix-links.ts",
     "docs:check-links": "node --loader ts-node/esm scripts/docs/link-checker.ts",
     "docs:fix-links": "node --loader ts-node/esm scripts/docs/link-fixer.ts",
-    "docs:reorganize": "node --loader ts-node/esm scripts/docs/reorganize.ts"
+    "docs:reorganize": "node --loader ts-node/esm scripts/docs/reorganize.ts",
+    "docs:reorganize:phase2": "node --loader ts-node/esm scripts/docs/reorganize-phase2.ts"
   },
   "keywords": [],
   "author": "",
