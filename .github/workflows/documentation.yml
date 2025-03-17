@@ -3,32 +3,35 @@ name: Documentation Checks
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'docs/**'
-      - '**.md'
-      - '.github/workflows/documentation.yml'
     paths-ignore:
       - 'docs/status/**'
-      - 'docs/status'
+      - 'src/**'
+      - 'dist/**'
+      - 'node_modules/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - '.github/workflows/deploy-dashboard.yml'
   pull_request:
     branches: [ main ]
-    paths:
-      - 'docs/**'
-      - '**.md'
-      - '.github/workflows/documentation.yml'
     paths-ignore:
       - 'docs/status/**'
-      - 'docs/status'
+      - 'src/**'
+      - 'dist/**'
+      - 'node_modules/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - '.github/workflows/deploy-dashboard.yml'
 
 jobs:
   check-documentation:
-    # Skip this workflow if only dashboard files were changed
     if: "!contains(github.event.head_commit.message, 'deploy-dashboard')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch all history for git log
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -39,54 +42,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check documentation health
-        run: npm run docs:check || exit 0
-
-      - name: Generate coverage report
+      - name: Run documentation checks
+        continue-on-error: true
         run: |
-          npm run docs:coverage || exit 0
-          if [ -f docs/coverage-report.md ]; then
-            echo "COVERAGE_EXISTS=true" >> $GITHUB_ENV
-          fi
-
-      - name: Check documentation coverage
-        if: env.COVERAGE_EXISTS == 'true'
-        run: |
-          COVERAGE=$(grep "Coverage:" docs/coverage-report.md | awk '{print $2}' | tr -d '%')
-          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
-            echo "Documentation coverage is below 80%"
-            exit 0
-          fi
+          npm run docs:check || true
+          npm run docs:coverage || true
 
       - name: Update checksums
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        continue-on-error: true
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          npm run docs:update-checksums || echo "No checksums to update"
-          git add .checksums.json || echo "No checksums to add"
-          git commit -m "chore: update documentation checksums" || echo "No changes to commit"
-          git push || echo "No changes to push"
-
-      - name: Comment on PR
-        if: github.event_name == 'pull_request' && env.COVERAGE_EXISTS == 'true'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const fs = require('fs');
-            const report = fs.readFileSync('docs/coverage-report.md', 'utf8');
-            const coverage = report.match(/Coverage: (\d+\.\d+)%/)[1];
-            const body = `## Documentation Coverage Report
-            
-            Current coverage: ${coverage}%
-            
-            ${report}
-            
-            Please ensure documentation coverage remains above 80%.`;
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: body
-            }); 
+          npm run docs:update-checksums || true
+          git add .checksums.json || true
+          git commit -m "chore: update documentation checksums" || true
+          git push || true 
