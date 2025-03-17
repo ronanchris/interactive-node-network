@@ -45,6 +45,11 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   },
+  "overrides": {
+    "vite": {
+      "esbuild": "^0.25.1"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
