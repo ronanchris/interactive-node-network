@@ -576,4 +576,88 @@ npm run test:machine-detection  # Run machine detection tests
 - [Memory Management Guidelines](docs/automation-rules.md#during-session)
 
 For detailed guidance on working with this project, please refer to [Coach Michael's Guide](docs/guides/coach-michael-stolarz-guide.md).
-The [Coach's Guide](docs/guides/coach-michael-stolarz-guide.md) contains detailed information about AI interaction patterns and automation rules. 
+The [Coach's Guide](docs/guides/coach-michael-stolarz-guide.md) contains detailed information about AI interaction patterns and automation rules.
+
+## Cross-Machine Development Guidelines
+
+### Using Multiple Machines
+When switching between different computers:
+
+1. **Dropbox-Based Workflow**
+   - Project is stored in Dropbox at: `/Team Ronan Dropbox/chris ronan/cursor projects/interactive-node-network`
+   - No need to clone - Dropbox handles synchronization
+   - Ensure Dropbox sync is complete before starting work
+   - Avoid running project simultaneously on multiple machines
+
+2. **Starting a New Session**
+   - Open the project directory in Cursor
+   - Ask AI to initialize by reviewing rules and documentation
+   - AI will follow the initialization process:
+     * Load `RULES.md` and `README.md` for core context
+     * Check recent `SESSIONS.md` entries
+     * Scan relevant documentation
+     * Verify machine configuration
+
+3. **Best Practices**
+   - Stop development server before switching machines
+   - Commit changes before ending a session
+   - Document any machine-specific configurations
+   - Note any ongoing tasks in session summaries
+
+### Current Session Summary - 2024-03-17 - Documentation and AI Pattern Analysis
+
+### Duration
+- Start: Previous session end
+- End: Current time
+- Total: ~2 hours
+
+### Key Accomplishments
+1. **AI Interaction Pattern Analysis**
+   - Created comprehensive analysis of AI patterns
+   - Distinguished common vs sophisticated approaches
+   - Documented in `docs/learning/ai-interaction-patterns.md`
+   - Updated learning directory structure
+
+2. **Documentation Updates**
+   - Refined coach guide terminology
+   - Updated "Novel" to "Advanced" AI patterns
+   - Added sophistication explanations
+   - Enhanced cross-referencing
+
+3. **Cross-Machine Development**
+   - Documented Dropbox-based workflow
+   - Added session initialization process
+   - Created machine switching guidelines
+   - Updated documentation structure
+
+### Current Status
+- Working:
+  * Complete AI pattern analysis
+  * Updated documentation structure
+  * Cross-machine development guide
+  * All changes committed and pushed
+- Pending:
+  * Testing on different machines
+  * Gathering feedback on AI patterns
+- Known Issues:
+  * None identified
+
+### Environment State
+- Branch: main
+- Last Commit: "docs: update coach guide with refined AI interaction patterns analysis"
+- Environment Variables Changed: No
+- Services Running: Development server (Vite)
+
+### Technical Debt / Workarounds
+- None identified - clean implementation of documentation updates
+
+### Next Steps
+1. Test cross-machine development process
+2. Gather feedback on AI pattern analysis
+3. Monitor documentation health on different machines
+4. Consider adding automated machine detection
+
+### Resources
+- [AI Interaction Patterns](docs/learning/ai-interaction-patterns.md)
+- [Coach Guide](docs/guides/coach-michael-stolarz-guide.md)
+- [Learning Documentation](docs/learning/README.md) 
