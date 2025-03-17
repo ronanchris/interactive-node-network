@@ -1,102 +1,170 @@
-# Interactive Node Network
+# Interactive Node Network Project
 
-An interactive node network visualization with customizable themes and controls, built with React, TypeScript, and Canvas.
+Welcome to the Interactive Node Network project! This guide will help you get started and understand our comprehensive documentation system.
 
-## Live Demo
+## 🚀 Quick Start
 
-Visit the live demo at: [https://yourusername.github.io/interactive-node-network](https://yourusername.github.io/interactive-node-network)
+1. **First Time Setup**
+   ```bash
+   # Clone the repository
+   git clone [repository-url]
+   cd interactive-node-network
 
-## Features
+   # Install dependencies
+   npm install
 
-- Real-time interactive node network visualization
-- Multiple theme variants (default, warm, cool, night, high contrast, neon)
-- Customizable colors and network parameters
-- Mobile-responsive design
-- Performance optimized for smooth animations
-- Accessibility features including contrast ratio checking
+   # Run environment check
+   npm run check-env
+   ```
 
-## Technology Stack
+2. **Verify Your Environment**
+   ```bash
+   # Check your machine configuration
+   npm run verify-machine
+   ```
 
-- React 18
-- TypeScript 5
-- Vite
-- Tailwind CSS
-- HTML5 Canvas
+## 📚 Documentation Guide
 
-## Getting Started
+Our documentation is structured to guide you from setup to advanced topics. Here's how to navigate it:
 
-### Prerequisites
+### 1. Getting Started
+1. [Quick Start Guide](docs/quick-start.md) - Begin here for initial setup
+2. [Machine Management](docs/machine-management.md) - Configure your development environment
+3. [Documentation Structure](docs/documentation-structure.md) - Understand how our docs are organized
+4. [Documentation Relationships](docs/diagrams/documentation-relationships.md) - Visual guide to documentation
 
-- Node.js 16.0 or higher
-- npm or yarn
+### 2. Core Documentation
+All core documentation is in the `docs/` directory:
+- [Documentation Overview](docs/README.md) - Complete documentation index
+- [Automation Rules](docs/automation-rules.md) - How our automation works
+- [Glossary](docs/glossary.md) - Project terminology
 
-### Installation
+### 3. Development Workflow
+1. Start a new development session:
+   ```bash
+   npm run docs:session start
+   ```
+2. Follow our [Session Management](docs/sessions/README.md) guidelines
+3. Document learnings in the [Learning System](docs/learning/README.md)
 
-1. Clone the repository:
+## 🔧 Key Features
+
+- **Machine Configuration Management**
+  - Automated environment setup
+  - Cross-machine synchronization
+  - Configuration verification
+
+- **Documentation Automation**
+  - Automated documentation updates
+  - Learning capture system
+  - Session management
+  - Diagram generation
+
+- **Development Tools**
+  - Performance monitoring
+  - Error handling
+  - Testing framework
+  - Development utilities
+
+## 📋 Project Structure
+
+```
+/
+├── docs/                    # Documentation root
+│   ├── README.md           # Documentation index
+│   ├── quick-start.md      # Getting started guide
+│   ├── machine-management.md # Environment setup
+│   ├── documentation-structure.md # Documentation organization
+│   ├── diagrams/          # Visual documentation
+│   │   └── documentation-relationships.md # Doc connections
+│   └── ...                # Other documentation
+├── scripts/                # Automation scripts
+│   ├── setup-machine.ts    # Machine setup
+│   └── ...                # Other scripts
+├── src/                    # Source code
+├── SESSIONS.md            # Active session tracking
+└── README.md             # This file
+```
+
+## 🛠 Available Commands
+
+### Environment Setup
 ```bash
-git clone https://github.com/yourusername/interactive-node-network.git
-cd interactive-node-network
+npm run check-env          # Check environment
+npm run setup-machine      # Setup development environment
+npm run verify-machine     # Verify configuration
 ```
 
-2. Install dependencies:
+### Documentation
 ```bash
-npm install
+npm run docs:check         # Check documentation health
+npm run docs:learn         # Add learning entry
+npm run docs:session       # Manage development session
+npm run generate-diagrams  # Update documentation diagrams
 ```
 
-3. Start the development server:
-```bash
-npm run dev
-```
+## 🤝 Contributing
 
-The application will be available at `http://localhost:5173/interactive-node-network/`
+1. Start with our [Quick Start Guide](docs/quick-start.md)
+2. Review [Machine Management](docs/machine-management.md)
+3. Follow [Session Management](docs/sessions/README.md)
+4. Document learnings and decisions
 
-## Project Structure
+## 🆘 Getting Help
 
-```
-src/
-  components/           # React components
-    NodeNetworkWrapper.tsx
-    InteractiveNodeNetwork.tsx
-  types/               # TypeScript type definitions
-  utils/               # Utility functions
-  index.css           # Global styles
-```
+1. **Documentation Issues**
+   - Check [Error Handling](docs/errors/README.md)
+   - Review [Learning Journal](docs/learning/learning-journal.md)
+   - See [Documentation Structure](docs/documentation-structure.md)
 
-## Documentation
+2. **Performance Issues**
+   - See [Performance Documentation](docs/performance/README.md)
+   - Check monitoring guides
 
-- [Learning Journal](./docs/learning/learning-journal.md) - Documentation of concepts and learnings
-- [Project Rules](./RULES.md) - Development guidelines and best practices
-- [Session Notes](./SESSIONS.md) - Development session summaries
-- [Technical Notes](./NOTES.md) - Technical decisions and architecture
+3. **Environment Issues**
+   - Review [Machine Management](docs/machine-management.md)
+   - Run environment checks
 
-## Contributing
+## 📝 Best Practices
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. **Always Start Sessions**
+   ```bash
+   npm run docs:session start
+   ```
 
-## License
+2. **Document Learnings**
+   ```bash
+   npm run docs:learn
+   ```
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+3. **Verify Environment**
+   ```bash
+   npm run verify-machine
+   ```
 
-## Deployment
+## 🔄 Regular Maintenance
 
-The project is automatically deployed to GitHub Pages using GitHub Actions. Every push to the `main` branch triggers a new deployment.
+1. **Documentation Health**
+   ```bash
+   npm run docs:check
+   ```
 
-### Manual Deployment
+2. **Update Diagrams**
+   ```bash
+   npm run generate-diagrams
+   ```
 
-If you want to deploy manually:
+Remember: This documentation system is designed to evolve. If you find areas for improvement, follow our [Contributing Guidelines](docs/quick-start.md#contributing) to help make it better.
 
-1. Build the project:
-```bash
-npm run build
-```
+## 📊 Project Status
 
-2. Preview the build locally:
-```bash
-npm run preview
-```
+- [Active Sessions](SESSIONS.md)
+- [Recent Changes](docs/learning/learning-journal.md)
+- [Known Issues](docs/errors/README.md)
 
-3. The built files will be in the `dist` directory, ready for deployment to any static hosting service.
+---
+
+For a complete overview of our documentation:
+1. Start with the [Documentation Structure Guide](docs/documentation-structure.md)
+2. View the [Documentation Relationships](docs/diagrams/documentation-relationships.md)
+3. Check the [Documentation Overview](docs/README.md)

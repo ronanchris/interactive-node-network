@@ -1,0 +1,61 @@
+{
+  "machines": {
+    "home-mbp": {
+      "identifier": "home-mbp",
+      "osVersion": "darwin 24.3.0",
+      "shell": "/bin/zsh",
+      "workspacePath": "/Users/cronan/Team Ronan Dropbox/chris ronan/cursor projects/interactive node network",
+      "nodeVersion": "16.0.0",
+      "requiredTools": [
+        "node",
+        "npm",
+        "git",
+        "typescript",
+        "homebrew"
+      ],
+      "configurations": {
+        "shell": {
+          "type": "zsh",
+          "configFile": "~/.zshrc",
+          "required": true
+        },
+        "node": {
+          "manager": "nvm",
+          "version": "16.0.0",
+          "configFile": ".nvmrc",
+          "required": true
+        },
+        "git": {
+          "configFile": "~/.gitconfig",
+          "required": true
+        },
+        "ide": {
+          "name": "cursor",
+          "required": true
+        }
+      },
+      "environmentVariables": {
+        "required": [
+          "NODE_ENV",
+          "PATH"
+        ],
+        "optional": []
+      },
+      "lastVerified": "2024-03-17T00:00:00Z"
+    }
+  },
+  "shared": {
+    "requiredFiles": [
+      "package.json",
+      "tsconfig.json",
+      "tsconfig.docs.json",
+      ".gitignore",
+      "README.md"
+    ],
+    "syncExclude": [
+      "node_modules",
+      "dist",
+      ".git"
+    ]
+  }
+} 
