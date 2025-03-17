@@ -6,6 +6,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '../../');
 
+console.log('ROOT_DIR:', ROOT_DIR);
+
 interface FileGroup {
   targetFile: string;
   sourceFiles: string[];
@@ -71,62 +73,117 @@ const CLEANUP_DIRS: string[] = [
   'docs/learning'
 ];
 
+async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    const fullPath = path.join(ROOT_DIR, filePath);
+    await fs.access(fullPath);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 async function readFileIfExists(filePath: string): Promise<string> {
   try {
     const fullPath = path.join(ROOT_DIR, filePath);
+    console.log(`Reading file: ${fullPath}`);
+    
+    // Check if file exists first
+    const exists = await fileExists(filePath);
+    if (!exists) {
+      console.warn(`File does not exist: ${fullPath}`);
+      return '';
+    }
+    
     const content = await fs.readFile(fullPath, 'utf8');
+    console.log(`Successfully read file: ${fullPath}`);
     // Remove the first heading if it exists (we'll use our own)
     return content.replace(/^#[^\n]*\n/, '').trim();
   } catch (error) {
-    console.warn(`Warning: Could not read ${filePath}`);
+    console.warn(`Warning: Could not read ${filePath}`, error);
     return '';
   }
 }
 
 async function ensureDirectoryExists(filePath: string): Promise<void> {
   const dir = path.dirname(path.join(ROOT_DIR, filePath));
-  await fs.mkdir(dir, { recursive: true });
+  console.log(`Ensuring directory exists: ${dir}`);
+  try {
+    await fs.mkdir(dir, { recursive: true });
+    console.log(`Directory created or already exists: ${dir}`);
+  } catch (error) {
+    console.error(`Error creating directory ${dir}:`, error);
+    throw error;
+  }
 }
 
 async function mergeFiles(group: FileGroup): Promise<void> {
   console.log(`Merging files into ${group.targetFile}...`);
   
-  await ensureDirectoryExists(group.targetFile);
-  
-  let mergedContent = group.sectionHeader || '';
-  
-  for (const sourceFile of group.sourceFiles) {
-    const content = await readFileIfExists(sourceFile);
-    if (content) {
-      const fileName = path.basename(sourceFile, '.md');
-      mergedContent += `\n## ${fileName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}\n\n`;
-      mergedContent += content + '\n\n';
+  try {
+    await ensureDirectoryExists(group.targetFile);
+    
+    let mergedContent = group.sectionHeader || '';
+    let contentAdded = false;
+    
+    for (const sourceFile of group.sourceFiles) {
+      console.log(`Processing source file: ${sourceFile}`);
+      const content = await readFileIfExists(sourceFile);
+      if (content) {
+        const fileName = path.basename(sourceFile, '.md');
+        mergedContent += `\n## ${fileName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}\n\n`;
+        mergedContent += content + '\n\n';
+        console.log(`Added content from ${sourceFile}`);
+        contentAdded = true;
+      } else {
+        console.log(`No content found in ${sourceFile}`);
+      }
     }
+    
+    if (contentAdded) {
+      const targetPath = path.join(ROOT_DIR, group.targetFile);
+      console.log(`Writing merged content to: ${targetPath}`);
+      await fs.writeFile(targetPath, mergedContent.trim() + '\n');
+      console.log(`Successfully wrote to ${targetPath}`);
+    } else {
+      console.warn(`No content to write to ${group.targetFile}`);
+    }
+  } catch (error) {
+    console.error(`Error merging files for ${group.targetFile}:`, error);
   }
-  
-  await fs.writeFile(
-    path.join(ROOT_DIR, group.targetFile),
-    mergedContent.trim() + '\n'
-  );
 }
 
 async function updateReadme(): Promise<void> {
   console.log('Updating README.md...');
   
-  const currentReadme = await readFileIfExists('README.md');
-  let newContent = currentReadme + '\n\n';
-  
-  for (const section of README_SECTIONS) {
-    const content = await readFileIfExists(section);
-    if (content) {
-      newContent += content + '\n\n';
+  try {
+    const currentReadme = await readFileIfExists('README.md');
+    let newContent = currentReadme + '\n\n';
+    let contentAdded = false;
+    
+    for (const section of README_SECTIONS) {
+      console.log(`Processing README section: ${section}`);
+      const content = await readFileIfExists(section);
+      if (content) {
+        newContent += content + '\n\n';
+        console.log(`Added content from ${section} to README`);
+        contentAdded = true;
+      } else {
+        console.log(`No content found in ${section}`);
+      }
     }
+    
+    if (contentAdded) {
+      const targetPath = path.join(ROOT_DIR, 'README.md');
+      console.log(`Writing updated README to: ${targetPath}`);
+      await fs.writeFile(targetPath, newContent.trim() + '\n');
+      console.log(`Successfully updated README.md`);
+    } else {
+      console.warn('No new content to add to README.md');
+    }
+  } catch (error) {
+    console.error('Error updating README:', error);
   }
-  
-  await fs.writeFile(
-    path.join(ROOT_DIR, 'README.md'),
-    newContent.trim() + '\n'
-  );
 }
 
 async function cleanup(): Promise<void> {
@@ -134,32 +191,48 @@ async function cleanup(): Promise<void> {
   
   for (const dir of CLEANUP_DIRS) {
     try {
-      await fs.rm(path.join(ROOT_DIR, dir), { recursive: true, force: true });
+      const fullPath = path.join(ROOT_DIR, dir);
+      console.log(`Checking if directory exists: ${fullPath}`);
+      
+      // Check if directory exists first
+      const exists = await fileExists(dir);
+      if (!exists) {
+        console.log(`Directory does not exist, skipping: ${fullPath}`);
+        continue;
+      }
+      
+      console.log(`Attempting to remove: ${fullPath}`);
+      await fs.rm(fullPath, { recursive: true, force: true });
       console.log(`Removed ${dir}`);
     } catch (error) {
-      console.warn(`Warning: Could not remove ${dir}`);
+      console.warn(`Warning: Could not remove ${dir}`, error);
     }
   }
 }
 
 async function main() {
+  console.log('Starting documentation reorganization...');
   try {
     // Create new directory structure
+    console.log('Creating new directory structure...');
     await Promise.all([
-      fs.mkdir(path.join(ROOT_DIR, 'docs/guides'), { recursive: true }),
-      fs.mkdir(path.join(ROOT_DIR, 'docs/technical'), { recursive: true }),
-      fs.mkdir(path.join(ROOT_DIR, 'docs/reference'), { recursive: true })
+      ensureDirectoryExists('docs/guides/placeholder.md'),
+      ensureDirectoryExists('docs/technical/placeholder.md'),
+      ensureDirectoryExists('docs/reference/placeholder.md')
     ]);
     
     // Merge files according to plan
+    console.log('Merging files according to plan...');
     for (const group of REORGANIZATION_PLAN) {
       await mergeFiles(group);
     }
     
     // Update README.md with quick start and standards
+    console.log('Updating README.md...');
     await updateReadme();
     
     // Clean up old directories
+    console.log('Cleaning up old directories...');
     await cleanup();
     
     console.log('Documentation reorganization complete!');
@@ -170,6 +243,13 @@ async function main() {
 }
 
 // Only run if this is the main module
-if (import.meta.url === `file://${__filename}`) {
-  main();
-} 
+console.log('import.meta.url:', import.meta.url);
+console.log('__filename:', __filename);
+console.log('file://${__filename}:', `file://${__filename}`);
+
+// Always run main() for now
+console.log('Running main() function');
+main().catch(error => {
+  console.error('Unhandled error:', error);
+  process.exit(1);
+}); 
