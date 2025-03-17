@@ -31,21 +31,30 @@ Our documentation is structured to guide you from setup to advanced topics. Here
 1. [Quick Start Guide](docs/quick-start.md) - Begin here for initial setup
 2. [Machine Management](docs/machine-management.md) - Configure your development environment
 3. [Documentation Structure](docs/documentation-structure.md) - Understand how our docs are organized
-4. [Documentation Relationships](docs/diagrams/documentation-relationships.md) - Visual guide to documentation
+4. [Documentation Relationships](docs/diagrams/doc-relationships.md) - Visual guide to documentation
 
 ### 2. Core Documentation
 All core documentation is in the `docs/` directory:
 - [Documentation Overview](docs/README.md) - Complete documentation index
-- [Automation Rules](docs/automation-rules.md) - How our automation works
-- [Glossary](docs/glossary.md) - Project terminology
+- [Documentation Structure](docs/documentation-structure.md) - Understand how our docs are organized
+- [Documentation Relationships](docs/diagrams/doc-relationships.md) - Visual guide to documentation
+- [Project Structure](docs/diagrams/project-structure.md) - Visual guide to codebase organization
 
-### 3. Development Workflow
-1. Start a new development session:
-   ```bash
-   npm run docs:session start
-   ```
-2. Follow our [Session Management](docs/sessions/README.md) guidelines
-3. Document learnings in the [Learning System](docs/learning/README.md)
+### 3. Guides and Technical Documentation
+- [Coach's Guide](docs/guides/coach-michael-stolarz-guide.md) - Project overview and educational aspects
+- [Permissions Guide](docs/guides/permissions-guide.md) - Access and security rules
+- [Cursor Instructions](docs/guides/cursor-instructions.md) - AI interaction guidelines
+- [Network Summary](docs/technical/node-network-summary.md) - Technical implementation details
+
+### 4. Learning and Development
+- [Learning Overview](docs/learning/README.md) - Educational resources index
+- [Advanced Automation](docs/learning/advanced-automation.md) - Advanced automation features
+- [Documentation Automation](docs/learning/documentation-automation.md) - Documentation management
+- [Learning Journal](docs/learning/learning-journal.md) - Progress tracking
+
+### 5. Performance and Monitoring
+- [Performance Overview](docs/performance/README.md) - Performance metrics and standards
+- [Monitoring Guide](docs/performance/monitoring.md) - System monitoring
 
 ## 🔧 Key Features
 

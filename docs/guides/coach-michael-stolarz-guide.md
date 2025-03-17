@@ -5,42 +5,61 @@ Following up on our Discord conversation, I wanted to share how I've structured 
 
 ## Key Documentation Files
 
-### 1. Project Overview and Rules
-- [`RULES.md`](./RULES.md) - Core development rules and guidelines
-- [`README.md`](./README.md) - Project overview and setup instructions
-- [`NOTES.md`](./NOTES.md) - Project notes and architectural decisions
+### 1. Root Level Documents
+- [`RULES.md`](../../RULES.md) - Core development rules and guidelines
+- [`README.md`](../../README.md) - Project overview and setup instructions
+- [`NOTES.md`](../../NOTES.md) - Project notes and architectural decisions
+- [`SESSIONS.md`](../../SESSIONS.md) - Tracks development sessions and decisions
 
-### 2. Development Process
-- [`SESSIONS.md`](./SESSIONS.md) - Tracks development sessions and decisions
-- [`cursor-instructions.md`](./cursor-instructions.md) - Guidelines for using Cursor AI
-- [`permissions-guide.md`](./permissions-guide.md) - Access and security rules
+### 2. Guides and Documentation
+- [`docs/guides/cursor-instructions.md`](../guides/cursor-instructions.md) - Guidelines for using Cursor AI
+- [`docs/guides/permissions-guide.md`](../guides/permissions-guide.md) - Access and security rules
+- [`docs/guides/coach-michael-stolarz-guide.md`](../guides/coach-michael-stolarz-guide.md) - This guide
 
 ### 3. Technical Documentation
-- [`node-network-summary.md`](./node-network-summary.md) - Network visualization details
-- [`docs/`](./docs/) directory - Detailed technical documentation
-  - Learning documentation
-  - Performance guidelines
-  - Error handling
-  - Machine configuration
+- [`docs/technical/node-network-summary.md`](../technical/node-network-summary.md) - Network visualization details
+- [`docs/documentation-structure.md`](../documentation-structure.md) - Documentation organization
+- [`docs/diagrams/`](../diagrams/) - Visual documentation and relationships
+  - [`doc-relationships.md`](../diagrams/doc-relationships.md) - Documentation connections
+  - [`project-structure.md`](../diagrams/project-structure.md) - Project organization
+
+### 4. Learning and Development
+- [`docs/learning/README.md`](../learning/README.md) - Learning resources index
+- [`docs/learning/learning-journal.md`](../learning/learning-journal.md) - Progress tracking
+- [`docs/learning/advanced-automation.md`](../learning/advanced-automation.md) - Advanced features
+- [`docs/learning/documentation-automation.md`](../learning/documentation-automation.md) - Doc management
+
+### 5. Performance and Monitoring
+- [`docs/performance/README.md`](../performance/README.md) - Performance metrics
+- [`docs/performance/monitoring.md`](../performance/monitoring.md) - System monitoring
 
 ## Documentation Structure
 
 I've organized the documentation with a few key principles:
 
-1. **Separation of Concerns**
-   - Core rules and guidelines in root directory
-   - Detailed technical docs in `docs/` directory
-   - Session tracking and progress in `SESSIONS.md`
+1. **Root Level Documents**
+   - Core rules and guidelines (`RULES.md`)
+   - Project overview (`README.md`)
+   - Session tracking (`SESSIONS.md`)
+   - Project notes (`NOTES.md`)
 
-2. **Learning Focus**
-   - Documented my learning process
-   - Captured non-developer perspective
-   - Created clear instructions for AI interactions
+2. **Organized Documentation**
+   - Guides in `docs/guides/`
+   - Technical docs in `docs/technical/`
+   - Learning resources in `docs/learning/`
+   - Performance docs in `docs/performance/`
+   - Visual docs in `docs/diagrams/`
 
-3. **Project Evolution**
+3. **Learning Focus**
+   - Documented learning process in `docs/learning/`
+   - Clear guides for different aspects
+   - Comprehensive technical documentation
+
+4. **Project Evolution**
    - Session-based development tracking
    - Decision documentation
    - Progress monitoring
+   - Automated documentation updates
 
 ## File Relationship Diagram
 
@@ -51,9 +70,6 @@ graph TD
     ROOT --> README[README.md]
     ROOT --> NOTES[NOTES.md]
     ROOT --> SESSIONS[SESSIONS.md]
-    ROOT --> CURSOR[cursor-instructions.md]
-    ROOT --> PERMS[permissions-guide.md]
-    ROOT --> NETWORK[node-network-summary.md]
     
     %% Main Directories
     ROOT --> DOCS[docs/]
@@ -61,14 +77,35 @@ graph TD
     ROOT --> SCRIPTS[scripts/]
     
     %% Documentation Directory
+    DOCS --> GUIDES[guides/]
+    DOCS --> TECHNICAL[technical/]
+    DOCS --> DIAGRAMS[diagrams/]
     DOCS --> LEARNING[learning/]
     DOCS --> PERF[performance/]
     DOCS --> ERRORS[errors/]
     DOCS --> MACHINE[machine-management.md]
     
+    %% Guides
+    GUIDES --> COACH[coach-michael-stolarz-guide.md]
+    GUIDES --> CURSOR[cursor-instructions.md]
+    GUIDES --> PERMS[permissions-guide.md]
+    
+    %% Technical Documentation
+    TECHNICAL --> NETWORK[node-network-summary.md]
+    
+    %% Diagrams
+    DIAGRAMS --> DOC_REL[doc-relationships.md]
+    DIAGRAMS --> PROJ_STR[project-structure.md]
+    
     %% Learning Documentation
     LEARNING --> JOURNAL[learning-journal.md]
     LEARNING --> LEARN_README[README.md]
+    LEARNING --> ADV_AUTO[advanced-automation.md]
+    LEARNING --> DOC_AUTO[documentation-automation.md]
+    
+    %% Performance Documentation
+    PERF --> PERF_README[README.md]
+    PERF --> MONITOR[monitoring.md]
     
     %% Source Code
     SRC --> COMPONENTS[components/]
@@ -77,51 +114,56 @@ graph TD
     COMPONENTS --> NET_CTRL[NetworkVisualizationController.tsx]
     
     %% Scripts
-    SCRIPTS --> DOC_AUTO[docs/automation.ts]
+    SCRIPTS --> DOC_SCRIPTS[docs/]
     SCRIPTS --> SETUP[setup-machine.ts]
     SCRIPTS --> TESTS[tests/]
     
     %% Relationships and Dependencies
     RULES -.-> |references| DOCS
     SESSIONS -.-> |updates| JOURNAL
-    DOC_AUTO -.-> |manages| DOCS
+    DOC_SCRIPTS -.-> |manages| DOCS
     SETUP -.-> |configures| MACHINE
     
     %% Styling
     classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
     classDef root fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
     classDef docs fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
-    classDef src fill:#fce4ec,stroke:#c2185b,stroke-width:2px;
-    classDef scripts fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
+    classDef guides fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
+    classDef technical fill:#fce4ec,stroke:#c2185b,stroke-width:2px;
+    classDef src fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef scripts fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px;
     
     class ROOT root;
     class DOCS,LEARNING,PERF,ERRORS docs;
+    class GUIDES,COACH,CURSOR,PERMS guides;
+    class TECHNICAL,NETWORK technical;
     class SRC,COMPONENTS src;
-    class SCRIPTS,DOC_AUTO,SETUP,TESTS scripts;
+    class SCRIPTS,DOC_SCRIPTS,SETUP,TESTS scripts;
 ```
 
 ### Key File Relationships
 
-1. **Core Documentation**
-   - `RULES.md` serves as the main entry point
-   - `README.md` provides project overview
-   - `SESSIONS.md` tracks development progress
-   - `NOTES.md` captures architectural decisions
+1. **Root Level Documents**
+   - Core project files remain in root for easy access
+   - `RULES.md`, `README.md`, `SESSIONS.md`, and `NOTES.md`
+   - Direct links to organized documentation sections
 
-2. **Source Code Organization**
-   - `src/components/` contains the core visualization components
+2. **Documentation Organization**
+   - `docs/guides/` for user and process guides
+   - `docs/technical/` for implementation details
+   - `docs/diagrams/` for visual documentation
+   - `docs/learning/` for educational resources
+   - `docs/performance/` for monitoring and metrics
+
+3. **Source Code Organization**
+   - `src/components/` contains core visualization components
    - Each component has a specific responsibility
-   - Components are designed for reusability
+   - Components designed for reusability
 
-3. **Automation and Scripts**
+4. **Automation and Scripts**
    - `scripts/` directory manages automation
    - Documentation is automatically maintained
-   - Machine configuration is handled systematically
-
-4. **Learning and Evolution**
-   - `docs/learning/` captures knowledge growth
-   - Documentation evolves with the project
-   - Cross-references maintain relationships
+   - Machine configuration handled systematically
 
 ## AI Initialization and File Review Process
 

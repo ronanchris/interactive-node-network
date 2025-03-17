@@ -7,9 +7,18 @@ This guide explains how our documentation is organized and how different pieces 
 ```
 Root (/)
 ├── README.md                    # Entry point & quick reference
+├── RULES.md                     # Core rules and guidelines
+├── SESSIONS.md                  # Active session tracking
+├── NOTES.md                     # Project-level notes
 ├── docs/                        # Main documentation directory
 │   ├── README.md               # Documentation index
 │   ├── quick-start.md          # Getting started guide
+│   ├── guides/                 # Guidance documentation
+│   │   ├── coach-michael-stolarz-guide.md  # Coach's guide
+│   │   ├── permissions-guide.md            # Access rules
+│   │   └── cursor-instructions.md          # Cursor AI usage
+│   ├── technical/             # Technical documentation
+│   │   └── node-network-summary.md        # Network details
 │   ├── machine-management.md   # Environment setup guide
 │   ├── automation-rules.md     # Automation documentation
 │   ├── documentation-structure.md  # This file
@@ -22,7 +31,6 @@ Root (/)
 │   │   └── README.md       # Session management guide
 │   └── learning/           # Learning system
 │       └── README.md      # Learning documentation
-├── SESSIONS.md            # Active session tracking
 └── scripts/              # Automation scripts
     └── docs/            # Documentation automation
 ```
@@ -54,23 +62,24 @@ Root (/)
 
 ### 3. Core Systems
 
-#### Documentation Automation
-- **[Automation Rules](./automation-rules.md)**
-  - When documentation updates
-  - How updates happen
-  - Automation triggers
+#### Documentation Types
 
-#### Session Management
-- **[Sessions Guide](./sessions/README.md)**
-  - Session tracking
-  - Progress documentation
-  - Context preservation
+1. **Guides**
+   - Coach's guide for project overview and educational aspects
+   - Permission guide for access control
+   - Cursor instructions for AI interaction
+   
+2. **Technical Documentation**
+   - Network visualization details
+   - Performance considerations
+   - Error handling
+   - Machine configuration
 
-#### Learning System
-- **[Learning Documentation](./learning/README.md)**
-  - Knowledge capture
-  - Best practices
-  - Learning triggers
+3. **Learning Resources**
+   - Session tracking
+   - Knowledge capture
+   - Best practices
+   - Process documentation
 
 ### 4. Technical Documentation
 
