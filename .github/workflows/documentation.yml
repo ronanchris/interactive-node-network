@@ -3,7 +3,11 @@ name: Documentation Checks
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'docs/**'
+      - '**.md'
     paths-ignore:
+      - '.github/**'
       - 'docs/status/**'
       - 'src/**'
       - 'dist/**'
@@ -11,10 +15,13 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - 'vite.config.ts'
-      - '.github/workflows/deploy-dashboard.yml'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'docs/**'
+      - '**.md'
     paths-ignore:
+      - '.github/**'
       - 'docs/status/**'
       - 'src/**'
       - 'dist/**'
@@ -22,11 +29,17 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - 'vite.config.ts'
-      - '.github/workflows/deploy-dashboard.yml'
 
 jobs:
   check-documentation:
-    if: "!contains(github.event.head_commit.message, 'deploy-dashboard')"
+    # Only run if:
+    # 1. Not a workflow file change
+    # 2. Not a dashboard deployment
+    # 3. Actually has documentation changes
+    if: |
+      !contains(github.event.head_commit.modified, '.github/workflows') &&
+      !contains(github.event.head_commit.message, 'deploy-dashboard') &&
+      (contains(github.event.head_commit.modified, 'docs/') || contains(github.event.head_commit.modified, '.md'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
