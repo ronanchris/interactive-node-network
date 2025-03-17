@@ -71,39 +71,14 @@
 ### Development Tools
 - **ESM (ECMAScript Modules)**: JavaScript module system used in the project.
 - **TypeScript Configuration**: Settings that control TypeScript compilation and behavior.
-- **Vite**: Build tool used for development and production builds.
-
-## Maintenance and Review
-
-### Quality Assurance
-- **Documentation Review**: Process of evaluating and improving documentation quality.
-- **Health Metrics**: Measurements used to assess documentation quality and completeness.
-- **Audit Cycle**: Regular schedule for reviewing and updating documentation.
-
-### Best Practices
-- **Style Guide**: Standards for writing and formatting documentation.
-- **Review Checklist**: List of items to verify during documentation review.
-- **Version Control Practices**: Guidelines for managing documentation in version control.
-
-## System Requirements and Tools
-
-### Package Managers
-- **npm (Node Package Manager)**: The default package manager for Node.js, used to install and manage JavaScript dependencies.
-- **Homebrew**: A package manager for macOS, used to install development tools and software.
-- **yarn**: An alternative to npm, offering faster package installation and deterministic dependency resolution.
-
-### Development Environment
-- **Node.js**: JavaScript runtime environment required to run the project (version 16.0 or higher).
-- **nvm (Node Version Manager)**: Tool for managing multiple Node.js versions.
-- **Git**: Version control system required for source code management and collaboration.
-- **Terminal**: Command-line interface for executing development commands (Terminal.app on macOS).
-- **zsh**: The Z shell, an extended version of Bash with additional features (default shell on macOS).
+- **Vite** (v6.2.2): Next-generation frontend build tool that offers faster development server startup and hot module replacement (HMR). Used as our primary development and build tool.
 
 ### Build Tools
-- **ts-node**: TypeScript execution environment for running TypeScript files directly.
+- **ts-node** (v10.9.2): TypeScript execution environment for running TypeScript files directly.
 - **npx**: npm package runner, used to execute package binaries (comes with npm).
 - **ESLint**: JavaScript/TypeScript code linting tool for maintaining code quality.
 - **Prettier**: Code formatter for maintaining consistent code style.
+- **esbuild** (v0.25.1): An extremely fast JavaScript bundler and minifier used by Vite.
 
 ### IDE and Extensions
 - **Cursor**: Our primary IDE for development, built on modern AI capabilities.
@@ -156,4 +131,10 @@
 - Terms are organized by category for easier reference
 - Each term includes a brief, clear definition
 - Technical terms are linked to their detailed documentation where applicable
-- This glossary is maintained alongside code changes and updated regularly 
+- This glossary is maintained alongside code changes and updated regularly
+
+### Core Dependencies
+- **React** (v18.2.0): JavaScript library for building user interfaces.
+- **TypeScript** (v5.8.2): Typed superset of JavaScript that compiles to plain JavaScript.
+- **Tailwind CSS** (v3.3.3): Utility-first CSS framework for rapid UI development.
+- **React Colorful** (v5.6.1): A tiny color picker component for modern React apps. 
