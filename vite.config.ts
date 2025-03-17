@@ -22,7 +22,7 @@ export default defineConfig({
   },
   // Optimize build settings
   build: {
-    outDir: 'dist',
+    outDir: 'dist/app',
     emptyOutDir: true,
     // Reduce disk writes during development
     write: true,

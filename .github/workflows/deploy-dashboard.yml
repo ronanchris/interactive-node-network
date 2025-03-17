@@ -26,13 +26,27 @@ jobs:
           npm install -D terser
         
       - name: Generate health report
-        run: npm run docs:health
+        run: npm run build:health
+        env:
+          NODE_OPTIONS: --experimental-specifier-resolution=node
         
-      - name: Build dashboard
-        run: npm run build:dashboard
+      - name: Build main app
+        run: npm run build:app
         env:
           BASE_URL: /interactive-node-network/
-          NODE_OPTIONS: --experimental-specifier-resolution=node
+          NODE_ENV: production
+        
+      - name: Prepare status dashboard
+        run: npm run build:status
+        
+      - name: List build outputs
+        run: |
+          echo "Contents of dist directory:"
+          ls -la dist/
+          echo "\nContents of dist/app directory:"
+          ls -la dist/app || echo "dist/app not found"
+          echo "\nContents of dist/status directory:"
+          ls -la dist/status || echo "dist/status not found"
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
