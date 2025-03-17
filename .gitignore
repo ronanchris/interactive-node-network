@@ -37,4 +37,37 @@ lerna-debug.log*
 
 # Build output
 build
-out 
+out
+
+# Cursor-specific
+.cursor
+.cursor-cache
+.cursor-index
+
+# Development artifacts
+.DS_Store
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Documentation build artifacts
+docs/status/data/*
+!docs/status/data/.gitkeep 

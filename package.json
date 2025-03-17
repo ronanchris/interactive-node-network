@@ -84,9 +84,8 @@
     "docs:maintain": "npm run docs:health && npm run docs:update-timestamps && npm run docs:check-coverage",
     "build:health": "NODE_OPTIONS=--experimental-specifier-resolution=node ts-node scripts/docs/generate-health-report.ts",
     "build:app": "tsc && vite build --outDir dist/app",
-    "build:status": "npm run build:health && mkdir -p dist/status && cp -r docs/status/* dist/status/",
-    "build:dashboard": "npm run build:app && npm run build:status",
-    "predeploy": "npm run build:dashboard",
+    "build:status": "mkdir -p dist/status && cp -r docs/status/* dist/status/",
+    "predeploy": "npm run build && npm run build:status",
     "deploy": "gh-pages -d dist"
   },
   "keywords": [],

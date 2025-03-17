@@ -3,12 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'src/**'
-      - 'docs/status/**'
-      - 'vite.config.ts'
-      - 'package.json'
-      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
@@ -27,50 +21,16 @@ jobs:
           cache: 'npm'
           
       - name: Install dependencies
-        run: |
-          npm ci
-          npm install -D terser
+        run: npm ci
         
-      - name: Build dashboard
-        run: |
-          echo "Building dashboard..."
-          npm run predeploy
-          
-          echo "Verifying build output:"
-          echo "\nMain app files (dist/app):"
-          ls -la dist/app/
-          
-          echo "\nStatus dashboard files (dist/status):"
-          ls -la dist/status/
+      - name: Build
+        run: npm run predeploy
         env:
-          BASE_URL: /interactive-node-network/
           NODE_ENV: production
-          NODE_OPTIONS: --experimental-specifier-resolution=node
-        
-      - name: Verify deployment files
-        run: |
-          echo "Final dist directory structure:"
-          tree dist || ls -R dist/
-          
-          echo "\nChecking key files:"
-          for file in app/index.html status/index.html; do
-            if [ -f "dist/$file" ]; then
-              echo "✓ $file exists"
-            else
-              echo "✗ $file missing!"
-            fi
-          done
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: gh-pages
-          force_orphan: true
-          
-      - name: Output deployment URLs
-        run: |
-          echo "Deployment complete!"
-          echo "Main app should be available at: https://ronanchris.github.io/interactive-node-network/app/"
-          echo "Status dashboard should be available at: https://ronanchris.github.io/interactive-node-network/status/" 
+          force_orphan: true 
