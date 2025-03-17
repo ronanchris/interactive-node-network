@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: process.env.BASE_URL || '/interactive-node-network/',
+  base: process.env.BASE_URL || '/interactive-node-network/app/',
   server: {
     watch: {
       // Don't watch node_modules
@@ -22,8 +22,8 @@ export default defineConfig({
   },
   // Optimize build settings
   build: {
-    outDir: 'dist',
-    emptyOutDir: true,
+    outDir: 'dist/app',
+    emptyOutDir: false,
     // Reduce disk writes during development
     write: true,
     // Minimize CSS extraction

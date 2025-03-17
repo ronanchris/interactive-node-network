@@ -31,34 +31,35 @@ jobs:
           npm ci
           npm install -D terser
         
-      - name: Build main app
-        run: npm run build
+      - name: Build dashboard
+        run: |
+          echo "Building dashboard..."
+          npm run predeploy
+          
+          echo "Verifying build output:"
+          echo "\nMain app files (dist/app):"
+          ls -la dist/app/
+          
+          echo "\nStatus dashboard files (dist/status):"
+          ls -la dist/status/
         env:
           BASE_URL: /interactive-node-network/
           NODE_ENV: production
-        
-      - name: Build status dashboard
-        run: |
-          # Generate health report
-          npm run docs:health || true
-          
-          # Copy status dashboard files
-          mkdir -p dist/status
-          cp -r docs/status/* dist/status/ || true
-          
-          # Ensure index.html exists in root
-          if [ ! -f dist/index.html ]; then
-            cp dist/status/index.html dist/index.html || true
-          fi
-        env:
           NODE_OPTIONS: --experimental-specifier-resolution=node
         
-      - name: List files
+      - name: Verify deployment files
         run: |
-          echo "Contents of dist directory:"
-          ls -la dist/
-          echo "\nContents of dist/status directory:"
-          ls -la dist/status/ || echo "status directory not found"
+          echo "Final dist directory structure:"
+          tree dist || ls -R dist/
+          
+          echo "\nChecking key files:"
+          for file in app/index.html status/index.html; do
+            if [ -f "dist/$file" ]; then
+              echo "✓ $file exists"
+            else
+              echo "✗ $file missing!"
+            fi
+          done
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -66,4 +67,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages
-          force_orphan: true 
+          force_orphan: true
+          
+      - name: Output deployment URLs
+        run: |
+          echo "Deployment complete!"
+          echo "Main app should be available at: https://ronanchris.github.io/interactive-node-network/app/"
+          echo "Status dashboard should be available at: https://ronanchris.github.io/interactive-node-network/status/" 
