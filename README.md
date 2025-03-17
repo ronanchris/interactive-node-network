@@ -64,7 +64,7 @@ src/
 
 ## Documentation
 
-- [Learning Journal](./learning-journal.md) - Documentation of concepts and learnings
+- [Learning Journal](./docs/learning/learning-journal.md) - Documentation of concepts and learnings
 - [Project Rules](./RULES.md) - Development guidelines and best practices
 - [Session Notes](./SESSIONS.md) - Development session summaries
 - [Technical Notes](./NOTES.md) - Technical decisions and architecture

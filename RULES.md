@@ -102,7 +102,7 @@ graph TD
 - Example: "I see we're using TypeScript for the first time. Would you like me to explain what it is and why we're using it? (y/n)"
 
 ### 2. Knowledge Documentation
-- Maintain learning-journal.md as our primary learning documentation
+- Maintain [learning journal](./docs/learning/learning-journal.md) as our primary learning documentation
 - Structure entries with:
   * Date first encountered
   * Brief description
@@ -938,6 +938,162 @@ graph TD
                   "include_raw_data": true
                 }
               ]
+            }
+          }
+          ```
+
+        * Threshold Violation Error Codes:
+          ```json
+          {
+            "error_codes": {
+              "resource_violations": {
+                "CPU001": {
+                  "description": "CPU usage exceeded warning threshold",
+                  "severity": "warning",
+                  "message_template": "CPU usage at {value}% (threshold: {threshold}%)",
+                  "remediation": "reduce_concurrent_operations"
+                },
+                "CPU002": {
+                  "description": "CPU thermal throttling activated",
+                  "severity": "critical",
+                  "message_template": "CPU temperature critical: {temp}°C",
+                  "remediation": "pause_non_essential"
+                },
+                "MEM001": {
+                  "description": "Memory usage spike detected",
+                  "severity": "warning",
+                  "message_template": "Memory usage at {usage}%",
+                  "remediation": "garbage_collection"
+                },
+                "IO001": {
+                  "description": "I/O latency exceeded threshold",
+                  "severity": "warning",
+                  "message_template": "I/O latency: {latency}ms",
+                  "remediation": "reduce_batch_size"
+                }
+              },
+              "operation_failures": {
+                "OP001": {
+                  "description": "Operation timeout",
+                  "severity": "error",
+                  "message_template": "Operation {op_id} timed out after {duration}ms",
+                  "remediation": "retry_with_backoff"
+                },
+                "OP002": {
+                  "description": "Concurrent operation limit reached",
+                  "severity": "warning",
+                  "message_template": "Too many concurrent operations: {count}",
+                  "remediation": "queue_operations"
+                }
+              },
+              "data_integrity": {
+                "DI001": {
+                  "description": "Checksum mismatch",
+                  "severity": "critical",
+                  "message_template": "Checksum validation failed for {file}",
+                  "remediation": "restore_backup"
+                },
+                "DI002": {
+                  "description": "Corrupted index entry",
+                  "severity": "error",
+                  "message_template": "Index corruption in {section}",
+                  "remediation": "rebuild_section"
+                }
+              }
+            },
+            "error_aggregation": {
+              "grouping_rules": {
+                "time_window": "5m",
+                "max_similar_errors": 3,
+                "correlation_threshold": 0.8
+              },
+              "escalation_rules": {
+                "warning_to_error": {
+                  "count_threshold": 5,
+                  "time_window": "15m"
+                },
+                "error_to_critical": {
+                  "count_threshold": 3,
+                  "time_window": "5m"
+                }
+              }
+            }
+          }
+          ```
+
+        * Advanced Visualization Types:
+          ```json
+          {
+            "visualization_config": {
+              "advanced_plots": {
+                "system_health": {
+                  "type": "radar_chart",
+                  "metrics": [
+                    "cpu_health",
+                    "memory_health",
+                    "io_health",
+                    "network_health",
+                    "storage_health"
+                  ],
+                  "thresholds": {
+                    "warning": 0.7,
+                    "critical": 0.4
+                  },
+                  "update_frequency_ms": 5000
+                },
+                "error_clustering": {
+                  "type": "force_directed_graph",
+                  "node_types": {
+                    "error": {"size": "frequency"},
+                    "component": {"size": "error_count"},
+                    "user": {"size": "impact_score"}
+                  },
+                  "edge_types": {
+                    "causes": {"width": "correlation_strength"},
+                    "affects": {"style": "dashed"}
+                  },
+                  "layout": {
+                    "algorithm": "force_atlas_2",
+                    "iterations": 1000
+                  }
+                },
+                "performance_surface": {
+                  "type": "3d_surface",
+                  "x_axis": "time",
+                  "y_axis": "operation_type",
+                  "z_axis": "response_time",
+                  "colormap": "plasma",
+                  "interactive": {
+                    "rotation": true,
+                    "slice_view": true
+                  }
+                },
+                "anomaly_detection": {
+                  "type": "candlestick",
+                  "metrics": ["response_time", "error_rate"],
+                  "overlay": {
+                    "type": "bollinger_bands",
+                    "period": 20,
+                    "std_dev": 2
+                  },
+                  "annotations": {
+                    "anomalies": {"style": "point"},
+                    "thresholds": {"style": "line"}
+                  }
+                }
+              },
+              "composite_views": {
+                "system_dashboard": {
+                  "layout": "grid_3x3",
+                  "panels": [
+                    {"type": "radar_chart", "position": [0, 0]},
+                    {"type": "line_chart", "position": [1, 0]},
+                    {"type": "heatmap", "position": [2, 0]}
+                  ],
+                  "shared_legend": true,
+                  "synchronized_time": true
+                }
+              }
             }
           }
           ```

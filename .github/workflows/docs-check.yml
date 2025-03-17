@@ -1,0 +1,49 @@
+name: Documentation Checks
+
+on:
+  push:
+    paths:
+      - '**/*.md'
+      - 'docs/**'
+  pull_request:
+    paths:
+      - '**/*.md'
+      - 'docs/**'
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          npm install -g markdownlint-cli
+          npm install -g markdown-link-check
+      
+      - name: Check Markdown style
+        run: markdownlint '**/*.md' || true
+      
+      - name: Check links
+        run: |
+          echo "Checking links in Markdown files..."
+          find . -name '*.md' -exec markdown-link-check {} \; || true
+      
+      - name: Generate documentation report
+        run: |
+          echo "# Documentation Check Report" > docs-report.md
+          echo "## Style Check Results" >> docs-report.md
+          markdownlint '**/*.md' >> docs-report.md 2>&1 || true
+          echo "## Link Check Results" >> docs-report.md
+          find . -name '*.md' -exec markdown-link-check {} \; >> docs-report.md 2>&1 || true
+      
+      - name: Upload documentation report
+        uses: actions/upload-artifact@v3
+        with:
+          name: documentation-report
+          path: docs-report.md 
