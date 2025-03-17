@@ -4,18 +4,38 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/interactive-node-network/',
+  base: process.env.BASE_URL || '/interactive-node-network/',
+  server: {
+    watch: {
+      // Don't watch node_modules
+      ignored: ['**/node_modules/**', '**/docs/status/**'],
+      // Reduce file system events
+      usePolling: false,
+      interval: 1000,
+    },
+    // Reduce HMR frequency
+    hmr: {
+      overlay: false,
+      // Increase HMR timeout
+      timeout: 5000,
+    }
+  },
+  // Optimize build settings
   build: {
-    minify: 'esbuild',
+    outDir: 'dist',
+    emptyOutDir: true,
+    // Reduce disk writes during development
+    write: true,
+    // Minimize CSS extraction
+    cssCodeSplit: false,
+    // Reduce source map generation
+    sourcemap: false,
+    minify: 'terser',
     target: 'esnext',  // Modern browsers for better optimization
-    cssCodeSplit: true,  // Enable CSS code splitting
     reportCompressedSize: false,  // Skip reporting compressed size for faster builds
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          vendor: ['react-colorful']
-        }
+        manualChunks: undefined
       }
     }
   },
