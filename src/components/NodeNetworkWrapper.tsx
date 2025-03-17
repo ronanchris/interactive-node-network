@@ -1,23 +1,62 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import InteractiveNodeNetwork from './InteractiveNodeNetwork';
 
-// Define variants as an enum
 export const VARIANTS = {
-  FULLSCREEN: 'FULLSCREEN',
-  BACKGROUND: 'BACKGROUND',
-  HERO: 'HERO',
-  CARD: 'CARD',
-  INTERACTIVE_DEMO: 'INTERACTIVE_DEMO'
+  INTERACTIVE_DEMO: 'interactive-demo',
+  BACKGROUND: 'background'
 } as const;
 
-interface NodeNetworkWrapperProps {
-  variant: keyof typeof VARIANTS;
-  themeVariant?: string;
+export const THEME_VARIANTS = {
+  default: {
+    background: '#0a1929',
+    nodeColor: '#4dabf5',
+    connectionColor: '#4dabf5',
+    pulseColor: 'rgba(77, 171, 245, 0.5)',
+    nodeBrightness: 1.0
+  },
+  warm: {
+    background: '#271a10',
+    nodeColor: '#ffb74d',
+    connectionColor: '#ffb74d',
+    pulseColor: 'rgba(255, 183, 77, 0.5)',
+    nodeBrightness: 1.0
+  },
+  cool: {
+    background: '#092a2e',
+    nodeColor: '#4dd0e1',
+    connectionColor: '#4dd0e1',
+    pulseColor: 'rgba(77, 208, 225, 0.5)',
+    nodeBrightness: 1.0
+  },
+  night: {
+    background: '#0d0a29',
+    nodeColor: '#b39ddb',
+    connectionColor: '#b39ddb',
+    pulseColor: 'rgba(179, 157, 219, 0.5)',
+    nodeBrightness: 1.0
+  },
+  highContrast: {
+    background: '#000000',
+    nodeColor: '#ffffff',
+    connectionColor: '#ffffff',
+    pulseColor: 'rgba(255, 255, 255, 0.5)',
+    nodeBrightness: 1.0
+  },
+  neon: {
+    background: '#0a0a0a',
+    nodeColor: '#39ff14',
+    connectionColor: '#39ff14',
+    pulseColor: 'rgba(57, 255, 20, 0.5)',
+    nodeBrightness: 1.0
+  }
+};
+
+interface Props {
+  variant: 'interactive-demo' | 'background';
+  themeVariant: string;
   height?: string;
-  className?: string;
   mouseInteractionRadius?: number;
   nodeCount?: number;
-  nodeSize?: number;
   customTheme?: {
     background: string;
     nodeColor: string | { from: string; to: string };
@@ -25,77 +64,37 @@ interface NodeNetworkWrapperProps {
     pulseColor: string;
     nodeBrightness: number;
   } | null;
+  nodeSize?: number;
+  connectionCapacity?: number;
+  connectionOpacity?: number;
+  lineThickness?: number;
 }
 
-const NodeNetworkWrapper: React.FC<NodeNetworkWrapperProps> = ({
+const NodeNetworkWrapper: React.FC<Props> = ({
   variant,
-  themeVariant = 'default',
+  themeVariant,
   height = '100%',
-  className = '',
   mouseInteractionRadius = 200,
   nodeCount = 30,
+  customTheme = null,
   nodeSize = 4,
-  customTheme = null
+  connectionCapacity = 300,
+  connectionOpacity = 20,
+  lineThickness = 1
 }) => {
-  // Get variant-specific styles
-  const getVariantStyles = () => {
-    switch (variant) {
-      case VARIANTS.BACKGROUND:
-        return 'fixed top-0 left-0 w-full h-full -z-10';
-      case VARIANTS.HERO:
-        return 'absolute top-0 left-0 w-full h-full -z-10';
-      case VARIANTS.CARD:
-        return 'absolute top-0 left-0 w-full h-full';
-      case VARIANTS.INTERACTIVE_DEMO:
-        return 'relative w-full h-full';
-      default:
-        return 'w-full h-full';
-    }
-  };
-
-  // Get variant-specific node count
-  const getNodeCount = () => {
-    switch (variant) {
-      case VARIANTS.CARD:
-        return 15;
-      case VARIANTS.BACKGROUND:
-        return 50;
-      default:
-        return nodeCount;
-    }
-  };
-
-  const classNameMemo = useMemo(() => getVariantStyles(), [variant]);
-  const showOverlay = variant === VARIANTS.HERO || variant === VARIANTS.CARD;
-
   return (
-    <div className={`${classNameMemo} ${className}`} style={{ height }}>
-      {variant === VARIANTS.INTERACTIVE_DEMO ? (
-        <InteractiveNodeNetwork 
-          themeVariant={themeVariant}
-          height={height}
-          mouseInteractionRadius={mouseInteractionRadius}
-          nodeCount={nodeCount}
-          nodeSize={nodeSize}
-          customTheme={customTheme}
-        />
-      ) : (
-        <InteractiveNodeNetwork 
-          nodeCount={getNodeCount()}
-          themeVariant={themeVariant}
-          height={height}
-          mouseInteractionRadius={mouseInteractionRadius}
-          customTheme={customTheme}
-        />
-      )}
-      {showOverlay && (
-        <div className="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4">Interactive Node Network</h1>
-            <p className="text-lg">A beautiful and interactive visualization</p>
-          </div>
-        </div>
-      )}
+    <div className="w-full" style={{ height }}>
+      <InteractiveNodeNetwork
+        variant={variant}
+        themeVariant={themeVariant}
+        customTheme={customTheme}
+        mouseInteractionRadius={mouseInteractionRadius}
+        nodeCount={nodeCount}
+        nodeSize={nodeSize}
+        connectionCapacity={connectionCapacity}
+        connectionOpacity={connectionOpacity}
+        lineThickness={lineThickness}
+      />
     </div>
   );
 };

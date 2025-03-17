@@ -54,6 +54,20 @@ interface UserProfile {
   presets: SavedPreset[];
 }
 
+interface NetworkConfig {
+  theme: string;
+  nodeCount: number;
+  interactionRadius: number;
+  interactionEnabled: boolean;
+  customTheme: CustomTheme | null;
+  nodeSize: number;
+}
+
+interface NetworkVisualizationControllerProps {
+  config: NetworkConfig;
+  onConfigChange: (config: NetworkConfig) => void;
+}
+
 const ColorPickerPopover: React.FC<ColorPickerPopoverProps> = ({ color, onChange, isOpen, onClose }) => {
   const popoverRef = useRef<HTMLDivElement>(null);
 
@@ -94,7 +108,8 @@ const FullScreenPreview: React.FC<{
   interactionRadius: number;
   interactionEnabled: boolean;
   customTheme: CustomTheme | null;
-}> = ({ onClose, theme, nodeCount, interactionRadius, interactionEnabled, customTheme }) => {
+  nodeSize: number;
+}> = ({ onClose, theme, nodeCount, interactionRadius, interactionEnabled, customTheme, nodeSize }) => {
   return (
     <div className="fixed inset-0 bg-black z-50 flex flex-col">
       <div className="absolute top-4 right-4 z-10">
@@ -110,11 +125,12 @@ const FullScreenPreview: React.FC<{
       </div>
       <div className="flex-1">
         <NodeNetworkWrapper 
-          variant={VARIANTS.INTERACTIVE_DEMO}
+          variant="interactive-demo"
           themeVariant={theme}
           height="100vh"
           mouseInteractionRadius={interactionEnabled ? interactionRadius : 0}
           nodeCount={nodeCount}
+          nodeSize={nodeSize}
           customTheme={customTheme}
         />
       </div>
@@ -122,27 +138,28 @@ const FullScreenPreview: React.FC<{
   );
 };
 
-const NetworkVisualizationController: React.FC = () => {
-  const [nodeCount, setNodeCount] = useState(30);
-  const [theme, setTheme] = useState('default');
-  const [interactionRadius, setInteractionRadius] = useState(200);
-  const [interactionEnabled, setInteractionEnabled] = useState(true);
+const NetworkVisualizationController: React.FC<NetworkVisualizationControllerProps> = ({
+  config,
+  onConfigChange
+}) => {
+  const [nodeCount, setNodeCount] = useState(config.nodeCount);
+  const [theme, setTheme] = useState(config.theme);
+  const [interactionRadius, setInteractionRadius] = useState(config.interactionRadius);
+  const [interactionEnabled, setInteractionEnabled] = useState(config.interactionEnabled);
   const [customMode, setCustomMode] = useState(false);
-  const [nodeSize, setNodeSize] = useState(4);
+  const [nodeSize, setNodeSize] = useState(config.nodeSize);
+  const [connectionCapacity, setConnectionCapacity] = useState(300);
+  const [connectionOpacity, setConnectionOpacity] = useState(20);
+  const [nodeBrightness, setNodeBrightness] = useState(100);
+  const [lineThickness, setLineThickness] = useState(1);
   
   // Custom color controls
   const [backgroundColor, setBackgroundColor] = useState('#0a1929');
   const [nodeColor, setNodeColor] = useState('#4dabf5');
   const [connectionColor, setConnectionColor] = useState('#4dabf5');
-  const [connectionOpacity, setConnectionOpacity] = useState(20);
-  const [nodeBrightness, setNodeBrightness] = useState(100);
-  
-  // Add state for gradient mode
   const [isGradientMode, setIsGradientMode] = useState(false);
-  const [gradientColors, setGradientColors] = useState<GradientColors>({
-    from: '#4dabf5',
-    to: '#2196f3'
-  });
+  const [gradientStart, setGradientStart] = useState('#4dabf5');
+  const [gradientEnd, setGradientEnd] = useState('#2196f3');
   
   // Computed custom theme that overrides the selected theme when custom mode is active
   const [customTheme, setCustomTheme] = useState<CustomTheme>({
@@ -153,20 +170,44 @@ const NetworkVisualizationController: React.FC = () => {
     nodeBrightness: nodeBrightness/100
   });
   
-  // Update custom theme when color values change
+  // Update customTheme when values change
   useEffect(() => {
-    if (customMode) {
-      const rgbConnection = hexToRgb(connectionColor);
-      const opacity = connectionOpacity / 100;
-      setCustomTheme({
-        background: backgroundColor,
-        nodeColor: isGradientMode ? gradientColors : nodeColor,
-        connectionColor: `rgba(${rgbConnection[0]}, ${rgbConnection[1]}, ${rgbConnection[2]}, ${opacity})`,
-        pulseColor: `rgba(${hexToRgb(isGradientMode ? gradientColors.from : nodeColor).join(', ')}, 0.5)`,
-        nodeBrightness: nodeBrightness/100
-      });
-    }
-  }, [backgroundColor, nodeColor, connectionColor, connectionOpacity, nodeBrightness, customMode, isGradientMode, gradientColors]);
+    const rgbConnection = hexToRgb(connectionColor);
+    const opacity = connectionOpacity / 100;
+    const customTheme = {
+      background: backgroundColor,
+      nodeColor: isGradientMode ? { from: gradientStart, to: gradientEnd } : nodeColor,
+      connectionColor: `rgba(${rgbConnection[0]}, ${rgbConnection[1]}, ${rgbConnection[2]}, ${opacity})`,
+      pulseColor: `rgba(${hexToRgb(isGradientMode ? gradientStart : nodeColor).join(', ')}, 0.5)`,
+      nodeBrightness: nodeBrightness/100
+    };
+    onConfigChange({
+      ...config,
+      theme,
+      nodeCount,
+      interactionRadius,
+      interactionEnabled,
+      nodeSize,
+      customTheme: customMode ? customTheme : null
+    });
+  }, [
+    backgroundColor,
+    nodeColor,
+    connectionColor,
+    connectionOpacity,
+    nodeBrightness,
+    isGradientMode,
+    gradientStart,
+    gradientEnd,
+    customMode,
+    theme,
+    nodeCount,
+    interactionRadius,
+    interactionEnabled,
+    nodeSize,
+    config,
+    onConfigChange
+  ]);
   
   const themes = ['default', 'warm', 'cool', 'night', 'highContrast', 'neon'];
   
@@ -358,7 +399,7 @@ const NetworkVisualizationController: React.FC = () => {
           connectionOpacity,
           nodeBrightness,
           isGradientMode,
-          gradientColors
+          gradientColors: { from: gradientStart, to: gradientEnd }
         },
         presets: []
       };
@@ -385,7 +426,7 @@ const NetworkVisualizationController: React.FC = () => {
       connectionOpacity,
       nodeBrightness,
       isGradientMode,
-      gradientColors
+      gradientColors: { from: gradientStart, to: gradientEnd }
     };
 
     setProfiles(prevProfiles => {
@@ -416,7 +457,8 @@ const NetworkVisualizationController: React.FC = () => {
     connectionOpacity,
     nodeBrightness,
     isGradientMode,
-    gradientColors
+    gradientStart,
+    gradientEnd
   ]);
 
   // Handle creating new profile
@@ -440,7 +482,7 @@ const NetworkVisualizationController: React.FC = () => {
         connectionOpacity,
         nodeBrightness,
         isGradientMode,
-        gradientColors
+        gradientColors: { from: gradientStart, to: gradientEnd }
       },
       presets: []
     };
@@ -463,7 +505,8 @@ const NetworkVisualizationController: React.FC = () => {
     setConnectionOpacity(profile.currentState.connectionOpacity);
     setNodeBrightness(profile.currentState.nodeBrightness);
     setIsGradientMode(profile.currentState.isGradientMode);
-    setGradientColors(profile.currentState.gradientColors);
+    setGradientStart(profile.currentState.gradientColors.from);
+    setGradientEnd(profile.currentState.gradientColors.to);
     setPresets(profile.presets);
     setActiveProfileId(profile.id);
     localStorage.setItem('lastActiveProfile', profile.id);
@@ -551,7 +594,7 @@ const NetworkVisualizationController: React.FC = () => {
       connectionOpacity,
       nodeBrightness,
       isGradientMode,
-      gradientColors
+      gradientColors: { from: gradientStart, to: gradientEnd }
     };
 
     // Update presets in the active profile
@@ -584,7 +627,8 @@ const NetworkVisualizationController: React.FC = () => {
     setConnectionOpacity(preset.connectionOpacity);
     setNodeBrightness(preset.nodeBrightness);
     setIsGradientMode(preset.isGradientMode);
-    setGradientColors(preset.gradientColors);
+    setGradientStart(preset.gradientColors.from);
+    setGradientEnd(preset.gradientColors.to);
     setActivePresetId(preset.id);
   };
 
@@ -610,475 +654,250 @@ const NetworkVisualizationController: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black w-full">
-      {isPreviewMode && (
-        <FullScreenPreview
-          onClose={() => setIsPreviewMode(false)}
-          theme={theme}
-          nodeCount={nodeCount}
-          interactionRadius={interactionRadius}
-          interactionEnabled={interactionEnabled}
-          customTheme={customMode ? customTheme : null}
-        />
-      )}
-      <div className="w-full max-w-4xl mx-auto p-4">
-        {/* Add profile management section */}
-        <div className="mb-4 bg-gray-900 rounded-lg shadow p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-gray-100">Profiles</h3>
-            <div className="flex space-x-2">
-              <button
-                onClick={handleCreateProfile}
-                className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
-              >
-                New Profile
-              </button>
-              <button
-                onClick={handleImportProfile}
-                className="px-3 py-2 bg-gray-700 text-gray-200 rounded hover:bg-gray-600 transition-colors text-sm"
-              >
-                Import Profile
-              </button>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {profiles.map(profile => (
-              <div
-                key={profile.id}
-                className={`p-3 rounded border ${
-                  activeProfileId === profile.id
-                    ? 'bg-blue-900 border-blue-500'
-                    : 'bg-gray-800 border-gray-700'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-medium text-gray-200">{profile.name}</h4>
-                    <p className="text-xs text-gray-400">
-                      Last modified: {new Date(profile.lastModified).toLocaleDateString()}
-                    </p>
-                    <p className="text-xs text-gray-400">
-                      {profile.presets.length} saved presets
-                    </p>
-                  </div>
-                  <div className="flex flex-col space-y-1">
-                    <button
-                      onClick={() => loadProfile(profile)}
-                      className="px-2 py-1 text-sm text-blue-400 hover:text-blue-300"
-                      disabled={activeProfileId === profile.id}
-                    >
-                      Load
-                    </button>
-                    <button
-                      onClick={() => handleExportProfile(profile)}
-                      className="px-2 py-1 text-sm text-green-400 hover:text-green-300"
-                    >
-                      Export
-                    </button>
-                    <button
-                      onClick={() => handleDeleteProfile(profile.id)}
-                      className="px-2 py-1 text-sm text-red-400 hover:text-red-300"
-                      disabled={profiles.length === 1}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+    <div className="space-y-6">
+      {/* Theme Selection */}
+      <div>
+        <label className="block text-sm text-gray-400 mb-2">Theme</label>
+        <select
+          value={theme}
+          onChange={(e) => handleThemeChange(e.target.value)}
+          className="w-full bg-gray-800 text-gray-200 border border-gray-700 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-500"
+        >
+          {themes.map(t => (
+            <option key={t} value={t}>
+              {t.charAt(0).toUpperCase() + t.slice(1)}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Mouse/Touch Interaction Toggle */}
+      <div>
+        <label className="flex items-center space-x-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={interactionEnabled}
+            onChange={(e) => setInteractionEnabled(e.target.checked)}
+            className="form-checkbox h-5 w-5 text-green-500 rounded bg-gray-800 border-gray-700"
+          />
+          <span className="text-sm text-gray-400">Enable mouse / touch interaction</span>
+        </label>
+      </div>
+
+      {/* Node Count Slider */}
+      <div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="text-sm text-gray-400">Node count: {nodeCount}</label>
         </div>
-        
-        {/* Add preset controls */}
-        <div className="mb-4 bg-gray-900 rounded-lg shadow p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-gray-100">Saved Presets</h3>
-            <button
-              onClick={handleSavePreset}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-            >
-              Save Current State
-            </button>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {presets.map(preset => (
-              <div
-                key={preset.id}
-                className={`p-3 rounded border ${
-                  activePresetId === preset.id
-                    ? 'bg-blue-900 border-blue-500'
-                    : 'bg-gray-800 border-gray-700'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-gray-200 font-medium">{preset.name}</span>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleLoadPreset(preset)}
-                      className="text-blue-400 hover:text-blue-300"
-                    >
-                      Load
-                    </button>
-                    <button
-                      onClick={() => handleDeletePreset(preset.id)}
-                      className="text-red-400 hover:text-red-300"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-                <div className="flex space-x-1">
-                  <div
-                    className="w-4 h-4 rounded"
-                    style={{ backgroundColor: preset.backgroundColor }}
-                  />
-                  <div
-                    className="w-4 h-4 rounded"
-                    style={{ backgroundColor: preset.nodeColor }}
-                  />
-                  <div
-                    className="w-4 h-4 rounded"
-                    style={{ backgroundColor: preset.connectionColor }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="mb-8 bg-gray-900 rounded-lg shadow-lg overflow-hidden relative">
-          <div className="absolute top-4 right-4 z-10">
-            <button
-              onClick={() => setIsPreviewMode(true)}
-              className="px-4 py-2 bg-gray-800 text-gray-200 rounded-lg hover:bg-gray-700 transition-colors flex items-center space-x-2"
-            >
-              <span>Full Screen</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-2V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-              </svg>
-            </button>
-          </div>
-          <NodeNetworkWrapper 
-            variant={VARIANTS.INTERACTIVE_DEMO}
-            themeVariant={theme}
-            height="400px"
-            mouseInteractionRadius={interactionEnabled ? interactionRadius : 0}
-            nodeCount={nodeCount}
-            nodeSize={nodeSize}
-            customTheme={customMode ? customTheme : null}
+        <div className="relative">
+          <div className="absolute inset-0 bg-green-800/20 rounded-full"></div>
+          <input 
+            type="range" 
+            min="5" 
+            max="50" 
+            value={nodeCount} 
+            onChange={(e) => setNodeCount(parseInt(e.target.value))}
+            className="w-full h-1 bg-transparent appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer"
           />
         </div>
+      </div>
+
+      {/* Node Size Slider */}
+      <div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="text-sm text-gray-400">Node size: {nodeSize}px</label>
+        </div>
+        <div className="relative">
+          <div className="absolute inset-0 bg-green-800/20 rounded-full"></div>
+          <input 
+            type="range" 
+            min="2" 
+            max="8" 
+            value={nodeSize} 
+            onChange={(e) => setNodeSize(parseInt(e.target.value))}
+            className="w-full h-1 bg-transparent appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer"
+          />
+        </div>
+      </div>
+
+      {/* Connection Opacity Slider */}
+      <div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="text-sm text-gray-400">Connection opacity: {connectionOpacity}%</label>
+        </div>
+        <div className="relative">
+          <div className="absolute inset-0 bg-green-800/20 rounded-full"></div>
+          <input 
+            type="range" 
+            min="0" 
+            max="100" 
+            value={connectionOpacity} 
+            onChange={(e) => setConnectionOpacity(parseInt(e.target.value))}
+            className="w-full h-1 bg-transparent appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer"
+          />
+        </div>
+      </div>
+
+      {/* Connection Capacity Slider */}
+      <div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="text-sm text-gray-400">Connection capacity: {connectionCapacity}</label>
+        </div>
+        <div className="relative">
+          <div className="absolute inset-0 bg-green-800/20 rounded-full"></div>
+          <input 
+            type="range" 
+            min="100" 
+            max="500" 
+            value={connectionCapacity} 
+            onChange={(e) => setConnectionCapacity(parseInt(e.target.value))}
+            className="w-full h-1 bg-transparent appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer"
+          />
+        </div>
+      </div>
+
+      {/* Interaction Radius Slider */}
+      <div>
+        <div className="flex justify-between items-center mb-2">
+          <label className="text-sm text-gray-400">Interaction radius: {interactionRadius}px</label>
+        </div>
+        <div className="relative">
+          <div className="absolute inset-0 bg-green-800/20 rounded-full"></div>
+          <input 
+            type="range" 
+            min="50" 
+            max="500" 
+            value={interactionRadius} 
+            onChange={(e) => setInteractionRadius(parseInt(e.target.value))}
+            className="w-full h-1 bg-transparent appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer"
+          />
+        </div>
+      </div>
+
+      {/* Custom Color Section */}
+      <div className="pt-6 border-t border-gray-800">
+        <h3 className="text-lg font-semibold mb-4">Custom Color</h3>
         
-        <div className="bg-gray-900 rounded-lg shadow p-6">
-          <h2 className="text-xl font-bold mb-6 text-gray-100">Visualization Controls</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
-                Node Count: {nodeCount}
-              </label>
-              <input 
-                type="range" 
-                min="10" 
-                max="100" 
-                value={nodeCount} 
-                onChange={(e) => setNodeCount(parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+        {/* Color Pickers */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div>
+            <label className="block text-sm text-gray-400 mb-2">Background color</label>
+            <button
+              className="w-full h-10 rounded border border-gray-700"
+              style={{ backgroundColor }}
+              onClick={() => handleColorPickerToggle('background')}
+            />
+            {activeColorPicker === 'background' && (
+              <ColorPickerPopover
+                color={backgroundColor}
+                onChange={setBackgroundColor}
+                isOpen={true}
+                onClose={() => setActiveColorPicker(null)}
               />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
-                Node Size: {nodeSize}px
-              </label>
-              <input 
-                type="range" 
-                min="2" 
-                max="10" 
-                value={nodeSize} 
-                onChange={(e) => setNodeSize(parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
-                Theme
-              </label>
-              <select 
-                value={theme}
-                onChange={(e) => handleThemeChange(e.target.value)}
-                className="w-full p-2 border rounded bg-gray-800 text-gray-200 border-gray-700 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                disabled={customMode}
-              >
-                {themes.map(t => (
-                  <option key={t} value={t}>
-                    {t.charAt(0).toUpperCase() + t.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
-                Interaction Radius: {interactionRadius}px
-              </label>
-              <input 
-                type="range" 
-                min="50" 
-                max="300" 
-                value={interactionRadius} 
-                onChange={(e) => setInteractionRadius(parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                disabled={!interactionEnabled}
-              />
-            </div>
-            
-            <div className="flex items-center">
-              <input 
-                type="checkbox" 
-                id="interaction-toggle"
-                checked={interactionEnabled}
-                onChange={() => setInteractionEnabled(!interactionEnabled)}
-                className="w-4 h-4 text-blue-500 bg-gray-800 border-gray-600 rounded focus:ring-blue-500 focus:ring-offset-gray-900"
-              />
-              <label htmlFor="interaction-toggle" className="ml-2 text-sm font-semibold text-gray-200">
-                Enable Mouse/Touch Interaction
-              </label>
-            </div>
+            )}
           </div>
-          
-          {/* Custom color controls section */}
-          <div className="mt-8 border-t border-gray-700 pt-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-100">Custom Colors</h3>
-              <div className="flex items-center">
-                <input 
-                  type="checkbox" 
-                  id="custom-toggle"
-                  checked={customMode}
-                  onChange={toggleCustomMode}
-                  className="w-4 h-4 text-blue-500 bg-gray-800 border-gray-600 rounded focus:ring-blue-500 focus:ring-offset-gray-900"
-                />
-                <label htmlFor="custom-toggle" className="ml-2 text-sm font-semibold text-gray-200">
-                  Enable Custom Colors
-                </label>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-semibold text-gray-200 mb-2">
-                  Background Color
-                </label>
-                <div className="flex items-center relative">
-                  <button
-                    type="button"
-                    onClick={() => handleColorPickerToggle('background')}
-                    className="h-10 w-10 rounded border border-gray-600 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    style={{ backgroundColor: backgroundColor }}
-                    disabled={!customMode}
-                  />
-                  <input 
-                    type="text" 
-                    value={backgroundColor}
-                    onChange={(e) => setBackgroundColor(e.target.value)}
-                    className="ml-2 p-2 border rounded flex-1 bg-gray-800 text-gray-200 border-gray-700"
-                    disabled={!customMode}
-                  />
-                  <ColorPickerPopover
-                    color={backgroundColor}
-                    onChange={setBackgroundColor}
-                    isOpen={activeColorPicker === 'background' && customMode}
-                    onClose={() => setActiveColorPicker(null)}
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-200 mb-2">
-                  Node Color
-                </label>
-                <div className="flex items-center mb-2">
-                  <input 
-                    type="checkbox" 
-                    id="gradient-toggle"
-                    checked={isGradientMode}
-                    onChange={() => setIsGradientMode(!isGradientMode)}
-                    className="w-4 h-4 text-blue-500 bg-gray-800 border-gray-600 rounded focus:ring-blue-500 focus:ring-offset-gray-900"
-                    disabled={!customMode}
-                  />
-                  <label htmlFor="gradient-toggle" className="ml-2 text-sm font-semibold text-gray-200">
-                    Use Gradient
-                  </label>
-                </div>
-                {!isGradientMode ? (
-                  <div className="flex items-center relative">
-                    <button
-                      type="button"
-                      onClick={() => handleColorPickerToggle('node')}
-                      className="h-10 w-10 rounded border border-gray-600 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      style={{ backgroundColor: nodeColor }}
-                      disabled={!customMode}
-                    />
-                    <input 
-                      type="text" 
-                      value={nodeColor}
-                      onChange={(e) => setNodeColor(e.target.value)}
-                      className="ml-2 p-2 border rounded flex-1 bg-gray-800 text-gray-200 border-gray-700"
-                      disabled={!customMode}
-                    />
-                    <ColorPickerPopover
-                      color={nodeColor}
-                      onChange={setNodeColor}
-                      isOpen={activeColorPicker === 'node' && customMode}
-                      onClose={() => setActiveColorPicker(null)}
-                    />
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <div className="flex items-center relative">
-                      <button
-                        type="button"
-                        onClick={() => handleColorPickerToggle('gradient-from')}
-                        className="h-10 w-10 rounded border border-gray-600 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        style={{ backgroundColor: gradientColors.from }}
-                        disabled={!customMode}
-                      />
-                      <input 
-                        type="text" 
-                        value={gradientColors.from}
-                        onChange={(e) => setGradientColors({ ...gradientColors, from: e.target.value })}
-                        className="ml-2 p-2 border rounded flex-1 bg-gray-800 text-gray-200 border-gray-700"
-                        placeholder="From Color"
-                        disabled={!customMode}
-                      />
-                      <ColorPickerPopover
-                        color={gradientColors.from}
-                        onChange={(color) => setGradientColors({ ...gradientColors, from: color })}
-                        isOpen={activeColorPicker === 'gradient-from' && customMode}
-                        onClose={() => setActiveColorPicker(null)}
-                      />
-                    </div>
-                    <div className="flex items-center relative">
-                      <button
-                        type="button"
-                        onClick={() => handleColorPickerToggle('gradient-to')}
-                        className="h-10 w-10 rounded border border-gray-600 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        style={{ backgroundColor: gradientColors.to }}
-                        disabled={!customMode}
-                      />
-                      <input 
-                        type="text" 
-                        value={gradientColors.to}
-                        onChange={(e) => setGradientColors({ ...gradientColors, to: e.target.value })}
-                        className="ml-2 p-2 border rounded flex-1 bg-gray-800 text-gray-200 border-gray-700"
-                        placeholder="To Color"
-                        disabled={!customMode}
-                      />
-                      <ColorPickerPopover
-                        color={gradientColors.to}
-                        onChange={(color) => setGradientColors({ ...gradientColors, to: color })}
-                        isOpen={activeColorPicker === 'gradient-to' && customMode}
-                        onClose={() => setActiveColorPicker(null)}
-                      />
-                    </div>
-                    <div className="h-6 rounded-lg border border-gray-600" 
-                      style={{ 
-                        background: `linear-gradient(to right, ${gradientColors.from}, ${gradientColors.to})` 
-                      }} 
-                    />
-                  </div>
-                )}
-              </div>
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-200 mb-2">
-                  Connection Line Color
-                </label>
-                <div className="flex items-center relative">
-                  <button
-                    type="button"
-                    onClick={() => handleColorPickerToggle('connection')}
-                    className="h-10 w-10 rounded border border-gray-600 shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    style={{ backgroundColor: connectionColor }}
-                    disabled={!customMode}
-                  />
-                  <input 
-                    type="text" 
-                    value={connectionColor}
-                    onChange={(e) => setConnectionColor(e.target.value)}
-                    className="ml-2 p-2 border rounded flex-1 bg-gray-800 text-gray-200 border-gray-700"
-                    disabled={!customMode}
-                  />
-                  <button 
-                    className="ml-2 px-3 py-2 text-xs bg-blue-900 text-blue-200 rounded hover:bg-blue-800 transition-colors"
-                    onClick={() => setConnectionColor(nodeColor)}
-                    disabled={!customMode}
-                  >
-                    Match Node
-                  </button>
-                  <ColorPickerPopover
-                    color={connectionColor}
-                    onChange={setConnectionColor}
-                    isOpen={activeColorPicker === 'connection' && customMode}
-                    onClose={() => setActiveColorPicker(null)}
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-200 mb-2">
-                  Connection Opacity: {connectionOpacity}%
-                </label>
-                <input 
-                  type="range" 
-                  min="5" 
-                  max="80" 
-                  value={connectionOpacity} 
-                  onChange={(e) => setConnectionOpacity(parseInt(e.target.value))}
-                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                  disabled={!customMode}
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-200 mb-2">
-                  Node Brightness: {nodeBrightness}%
-                </label>
-                <input 
-                  type="range" 
-                  min="50" 
-                  max="100" 
-                  value={nodeBrightness} 
-                  onChange={(e) => setNodeBrightness(parseInt(e.target.value))}
-                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                  disabled={!customMode}
-                />
-              </div>
-            </div>
-            
-            {/* Contrast indicator */}
-            <div className="mt-6 p-4 bg-gray-800 rounded-lg">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="font-medium text-gray-200">Contrast Ratio</h4>
-                  <div className="flex items-center mt-1">
-                    <div className="w-6 h-6 rounded mr-2 border border-gray-600 shadow-sm" style={{ backgroundColor: customMode ? backgroundColor : '#0a1929' }}></div>
-                    <span className="mx-2 text-gray-300">to</span>
-                    <div className="w-6 h-6 rounded mr-2 border border-gray-600 shadow-sm" style={{ backgroundColor: customMode ? nodeColor : '#4dabf5' }}></div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-gray-100">{contrastRatio}:1</div>
-                  <div className={`text-sm ${contrastStatus.color}`}>
-                    {contrastStatus.status}
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div>
+            <label className="block text-sm text-gray-400 mb-2">Node color</label>
+            <button
+              className="w-full h-10 rounded border border-gray-700"
+              style={{ backgroundColor: nodeColor }}
+              onClick={() => handleColorPickerToggle('node')}
+            />
+            {activeColorPicker === 'node' && (
+              <ColorPickerPopover
+                color={nodeColor}
+                onChange={setNodeColor}
+                isOpen={true}
+                onClose={() => setActiveColorPicker(null)}
+              />
+            )}
+          </div>
+          <div>
+            <label className="block text-sm text-gray-400 mb-2">Connection color</label>
+            <button
+              className="w-full h-10 rounded border border-gray-700"
+              style={{ backgroundColor: connectionColor }}
+              onClick={() => handleColorPickerToggle('connection')}
+            />
+            {activeColorPicker === 'connection' && (
+              <ColorPickerPopover
+                color={connectionColor}
+                onChange={setConnectionColor}
+                isOpen={true}
+                onClose={() => setActiveColorPicker(null)}
+              />
+            )}
           </div>
         </div>
+
+        {/* Node Brightness Slider */}
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm text-gray-400">Node brightness: {nodeBrightness}%</label>
+          </div>
+          <div className="relative">
+            <div className="absolute inset-0 bg-green-800/20 rounded-full"></div>
+            <input 
+              type="range" 
+              min="0" 
+              max="200" 
+              value={nodeBrightness} 
+              onChange={(e) => setNodeBrightness(parseInt(e.target.value))}
+              className="w-full h-1 bg-transparent appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer"
+            />
+          </div>
+        </div>
+
+        {/* Gradient Mode Toggle */}
+        <div className="mt-4">
+          <label className="flex items-center space-x-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isGradientMode}
+              onChange={(e) => setIsGradientMode(e.target.checked)}
+              className="form-checkbox h-5 w-5 text-green-500 rounded bg-gray-800 border-gray-700"
+            />
+            <span className="text-sm text-gray-400">Enable gradient for connections</span>
+          </label>
+        </div>
+
+        {/* Gradient Color Pickers */}
+        {isGradientMode && (
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <label className="block text-sm text-gray-400 mb-2">Gradient start</label>
+              <button
+                className="w-full h-10 rounded border border-gray-700"
+                style={{ backgroundColor: gradientStart }}
+                onClick={() => handleColorPickerToggle('gradient-start')}
+              />
+              {activeColorPicker === 'gradient-start' && (
+                <ColorPickerPopover
+                  color={gradientStart}
+                  onChange={setGradientStart}
+                  isOpen={true}
+                  onClose={() => setActiveColorPicker(null)}
+                />
+              )}
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400 mb-2">Gradient end</label>
+              <button
+                className="w-full h-10 rounded border border-gray-700"
+                style={{ backgroundColor: gradientEnd }}
+                onClick={() => handleColorPickerToggle('gradient-end')}
+              />
+              {activeColorPicker === 'gradient-end' && (
+                <ColorPickerPopover
+                  color={gradientEnd}
+                  onChange={setGradientEnd}
+                  isOpen={true}
+                  onClose={() => setActiveColorPicker(null)}
+                />
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

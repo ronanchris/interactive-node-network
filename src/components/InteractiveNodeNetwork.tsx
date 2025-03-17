@@ -1,8 +1,8 @@
 // @ts-nocheck
 import React, { useEffect, useRef, useState } from 'react';
 
-// Main component implementation
-const InteractiveNodeNetwork: React.FC<{
+interface Props {
+  variant: 'interactive-demo' | 'background';
   nodeCount?: number;
   themeVariant?: string;
   mouseInteractionRadius?: number;
@@ -15,13 +15,23 @@ const InteractiveNodeNetwork: React.FC<{
     pulseColor: string;
     nodeBrightness: number;
   } | null;
-}> = ({ 
-  nodeCount = 30, 
+  connectionCapacity?: number;
+  connectionOpacity?: number;
+  lineThickness?: number;
+}
+
+// Main component implementation
+const InteractiveNodeNetwork: React.FC<Props> = ({
+  variant,
+  nodeCount = 30,
   themeVariant = 'default',
   mouseInteractionRadius = 200,
   height = '100%',
   nodeSize = 4,
-  customTheme = null
+  customTheme = null,
+  connectionCapacity = 300,
+  connectionOpacity = 20,
+  lineThickness = 1
 }) => {
   // State and refs setup
   const canvasRef = useRef<HTMLCanvasElement>(null);
