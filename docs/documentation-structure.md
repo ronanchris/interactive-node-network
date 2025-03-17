@@ -41,7 +41,7 @@ This document explains how our documentation is organized in the Interactive Nod
 
 ## Documentation Standards
 
-For documentation standards and guidelines, please refer to [Documentation Standards](../../CONTRIBUTING.md#documentation-standards) in our contributing guide.
+For documentation standards and guidelines, please refer to [Documentation Standards](../CONTRIBUTING.md#documentation-standards) in our contributing guide.
 
 ## Maintenance
 

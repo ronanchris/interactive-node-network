@@ -4,8 +4,8 @@
 > 
 > **Related Documents**:
 > - [Documentation Structure](./documentation-structure.md) - How our documentation is organized
-> - [Documentation Relationships](./diagrams/documentation-relationships.md) - Visual guide to documentation connections
-> - [Documentation Standards](../../CONTRIBUTING.md#documentation-standards) - Writing and maintenance guidelines
+> - [Documentation Relationships](./diagrams/doc-relationships.md) - Visual guide to documentation connections
+> - [Documentation Standards](../CONTRIBUTING.md#documentation-standards) - Writing and maintenance guidelines
 
 This document provides a comprehensive overview of all documentation in the Interactive Node Network project. Each document is listed with its purpose and a link to the actual file.
 
@@ -25,9 +25,9 @@ This document provides a comprehensive overview of all documentation in the Inte
 ## Getting Started
 
 ### Root Level Documents
-- [`README.md`](../../README.md) - Project overview, quick start, and main documentation index
-- [`CONTRIBUTING.md`](../../CONTRIBUTING.md) - Development guidelines and documentation standards
-- [`RULES.md`](../../RULES.md) - Core development rules and guidelines
+- [`README.md`](../README.md) - Project overview, quick start, and main documentation index
+- [`CONTRIBUTING.md`](../CONTRIBUTING.md) - Development guidelines and documentation standards
+- [`RULES.md`](../RULES.md) - Core development rules and guidelines
 
 ### Quick Start Guides
 - [`docs/quick-start.md`](./quick-start.md) - Step-by-step guide for initial setup
@@ -40,9 +40,9 @@ This document provides a comprehensive overview of all documentation in the Inte
 - [`docs/README.md`](./README.md) - Documentation system overview and index
 - [`docs/documentation-overview.md`](./documentation-overview.md) - This document: comprehensive documentation reference
 - [`docs/documentation-structure.md`](./documentation-structure.md) - How our documentation is organized
-- [`docs/documentation-relationships.md`](./diagrams/documentation-relationships.md) - Visual guide to documentation connections
+- [`docs/documentation-relationships.md`](./diagrams/doc-relationships.md) - Visual guide to documentation connections
 
-> **Related Standards**: See [Documentation Standards](../../CONTRIBUTING.md#documentation-standards) in CONTRIBUTING.md for writing guidelines.
+> **Related Standards**: See [Documentation Standards](../CONTRIBUTING.md#documentation-standards) in CONTRIBUTING.md for writing guidelines.
 
 ### Project Structure
 - [`docs/diagrams/project-structure.md`](./diagrams/project-structure.md) - Visual guide to codebase organization
@@ -56,7 +56,7 @@ This document provides a comprehensive overview of all documentation in the Inte
 - [`docs/guides/cursor-setup.md`](./guides/cursor-setup.md) - AI interaction guidelines
 - [`docs/guides/development-guide.md`](./guides/development-guide.md) - Development workflow and standards
 
-> **Related Standards**: See [Development Process](../../RULES.md#development-process) in RULES.md for workflow guidelines.
+> **Related Standards**: See [Development Process](../RULES.md#development-process) in RULES.md for workflow guidelines.
 
 ## Technical Documentation
 
@@ -66,24 +66,24 @@ This document provides a comprehensive overview of all documentation in the Inte
 - [`docs/technical/maintenance.md`](./technical/maintenance.md) - System maintenance procedures
 - [`docs/technical/performance.md`](./technical/performance.md) - Performance optimization guide
 
-> **Related Standards**: See [Performance Standards](../../RULES.md#performance-standards) in RULES.md for optimization guidelines.
+> **Related Standards**: See [Performance Standards](../RULES.md#performance-standards) in RULES.md for optimization guidelines.
 
 ## Learning Resources
 
 ### Educational Content
-- [`docs/learning/README.md`](./learning/README.md) - Learning resources index
-- [`docs/learning/learning-journal.md`](./learning/learning-journal.md) - Progress tracking and learnings
+- [`docs../learning/README.md`](../learning/README.md) - Learning resources index
+- [`docs/learning/learning-journal.md`](learning/learning-journal.md) - Progress tracking and learnings
 - [`docs/learning/advanced-automation.md`](./learning/advanced-automation.md) - Advanced automation features
 - [`docs/learning/documentation-automation.md`](./learning/documentation-automation.md) - Documentation management
 
 ## Performance
 
 ### Performance Documentation
-- [`docs/performance/README.md`](./performance/README.md) - Performance metrics and standards
-- [`docs/performance/monitoring.md`](./performance/monitoring.md) - System monitoring guide
+- [`docs../performance/README.md`](../performance/README.md) - Performance metrics and standards
+- [`docs/performance/monitoring.md`](performance/monitoring.md) - System monitoring guide
 - [`docs/performance/optimization.md`](./performance/optimization.md) - Performance optimization techniques
 
-> **Related Standards**: See [Performance Standards](../../RULES.md#performance-standards) in RULES.md for detailed metrics and thresholds.
+> **Related Standards**: See [Performance Standards](../RULES.md#performance-standards) in RULES.md for detailed metrics and thresholds.
 
 ## Reference
 
@@ -99,54 +99,54 @@ This document provides a comprehensive overview of all documentation in the Inte
 - [`docs/sessions/TEMPLATE.md`](./sessions/TEMPLATE.md) - Session documentation template
 
 > **Related Resources**: 
-> - See [Learning Journal](./learning/learning-journal.md) for progress tracking
+> - See [Learning Journal](learning/learning-journal.md) for progress tracking
 > - See [Documentation Automation](./learning/documentation-automation.md) for automated session management
 
 ### Source Code
-- [`src/`](../../src/) - Main application source code
-  - [`src/components/`](../../src/components/) - React components
-  - [`src/utils/`](../../src/utils/) - Utility functions
-  - [`src/types/`](../../src/types/) - TypeScript type definitions
-  - [`src/styles/`](../../src/styles/) - CSS and styling files
+- [`src/`](../src/.md) - Main application source code
+  - [`src/components/`](../src/components/.md) - React components
+  - [`src/utils/`](../src/utils/.md) - Utility functions
+  - [`src/types/`](../src/types/.md) - TypeScript type definitions
+  - [`src/styles/`](../src/styles/.md) - CSS and styling files
 
 ## Scripts
 
 ### Documentation Scripts
-- [`scripts/docs/link-checker.ts`](../../scripts/docs/link-checker.ts) - Link validation tool
-- [`scripts/docs/link-fixer.ts`](../../scripts/docs/link-fixer.ts) - Automated link fixing
-- [`scripts/docs/coverage.ts`](../../scripts/docs/coverage.ts) - Documentation coverage checker
-- [`scripts/docs/diagrams.ts`](../../scripts/docs/diagrams.ts) - Diagram generation
-- [`scripts/docs/reorganize.ts`](../../scripts/docs/reorganize.ts) - Documentation reorganization
+- [`scripts/docs/link-checker.ts`](../scripts/docs/link-checker.ts) - Link validation tool
+- [`scripts/docs/link-fixer.ts`](../scripts/docs/link-fixer.ts) - Automated link fixing
+- [`scripts/docs/coverage.ts`](../scripts/docs/coverage.ts) - Documentation coverage checker
+- [`scripts/docs/diagrams.ts`](../scripts/docs/diagrams.ts) - Diagram generation
+- [`scripts/docs/reorganize.ts`](../scripts/docs/reorganize.ts) - Documentation reorganization
 
 ### Environment Scripts
-- [`scripts/setup-machine.ts`](../../scripts/setup-machine.ts) - Machine setup automation
-- [`scripts/check-environment.ts`](../../scripts/check-environment.ts) - Environment verification
-- [`scripts/init-machine-management.ts`](../../scripts/init-machine-management.ts) - Machine management initialization
-- [`scripts/fix-links.ts`](../../scripts/fix-links.ts) - Link fixing utility
+- [`scripts/setup-machine.ts`](../scripts/setup-machine.ts) - Machine setup automation
+- [`scripts/check-environment.ts`](../scripts/check-environment.ts) - Environment verification
+- [`scripts/init-machine-management.ts`](../scripts/init-machine-management.ts) - Machine management initialization
+- [`scripts/fix-links.ts`](../scripts/fix-links.ts) - Link fixing utility
 
 ### Test Scripts
-- [`scripts/tests/test-machine-detection.ts`](../../scripts/tests/test-machine-detection.ts) - Machine detection tests
+- [`scripts/tests/test-machine-detection.ts`](../scripts/tests/test-machine-detection.ts) - Machine detection tests
 
 ## Configuration
 
 ### Project Configuration
-- [`package.json`](../../package.json) - Project dependencies and scripts
-- [`tsconfig.json`](../../tsconfig.json) - TypeScript configuration
-- [`vite.config.ts`](../../vite.config.ts) - Vite build configuration
-- [`.env.example`](../../.env.example) - Environment variables template
-- [`.gitignore`](../../.gitignore) - Git ignore rules
-- [`.eslintrc.json`](../../.eslintrc.json) - ESLint configuration
-- [`.prettierrc`](../../.prettierrc) - Prettier configuration
+- [`package.json`](../package.json) - Project dependencies and scripts
+- [`tsconfig.json`](../tsconfig.json) - TypeScript configuration
+- [`vite.config.ts`](../vite.config.ts) - Vite build configuration
+- [`.env.example`](../.env.example) - Environment variables template
+- [`.gitignore`](../.gitignore) - Git ignore rules
+- [`.eslintrc.json`](../.eslintrc.json) - ESLint configuration
+- [`.prettierrc`](../.prettierrc) - Prettier configuration
 
 ### Build Output
-- [`dist/`](../../dist/) - Production build output
-- [`coverage/`](../../coverage/) - Test coverage reports
+- [`dist/`](../dist/.md) - Production build output
+- [`coverage/`](../coverage/.md) - Test coverage reports
 - [`docs/diagrams/`](./diagrams/) - Generated documentation diagrams
 
 ## Document Relationships
 
 For a visual representation of how these documents are connected, see:
-- [`docs/diagrams/documentation-relationships.md`](./diagrams/documentation-relationships.md)
+- [`docs/diagrams/documentation-relationships.md`](./diagrams/doc-relationships.md)
 - [`docs/diagrams/project-structure.md`](./diagrams/project-structure.md)
 
 ## Maintenance
@@ -158,4 +158,4 @@ This overview is maintained as part of our documentation system. When adding new
 4. Update the quick navigation section if needed
 5. Update the document relationships diagram
 
-> **Related Standards**: See [Documentation Standards](../../CONTRIBUTING.md#documentation-standards) in CONTRIBUTING.md for maintenance guidelines. 
+> **Related Standards**: See [Documentation Standards](../CONTRIBUTING.md#documentation-standards) in CONTRIBUTING.md for maintenance guidelines. 

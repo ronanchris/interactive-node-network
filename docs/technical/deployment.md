@@ -123,7 +123,7 @@ This document outlines the deployment procedures and best practices for the Inte
 
 ## Related Documentation
 
-- [Development Workflow](./development-workflow.md)
-- [Project Standards](./project-standards.md)
-- [Performance Guidelines](./performance/README.md)
-- [Error Handling](./errors/README.md) 
+- [Development Workflow](../development-workflow.md)
+- [Project Standards](../project-standards.md)
+- [Performance Guidelines](../performance/README.md)
+- [Error Handling](../errors/README.md) 

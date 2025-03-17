@@ -692,7 +692,7 @@ This document outlines the educational support resources and guidelines for the 
 
 ## Related Documentation
 
-- [`learning-journal.md`](./learning/learning-journal.md)
+- [`learning-journal.md`](../learning/learning-journal.md)
 - [Educational Support Guidelines](./educational-support.md)
-- [Documentation Best Practices](./documentation-best-practices.md)
-- [Project Standards](./project-standards.md)
+- [Documentation Best Practices](../documentation-best-practices.md)
+- [Project Standards](../project-standards.md)

@@ -108,10 +108,10 @@ Machine management encompasses all aspects of system resource allocation, monito
 ## Integration
 
 This document works in conjunction with:
-- [Performance Monitoring](./performance/monitoring.md)
-- [Error Handling](./errors/README.md)
-- [Session Management](./session-management.md)
-- [Learning System](./learning/README.md)
+- [Performance Monitoring](../performance/monitoring.md)
+- [Error Handling](../errors/README.md)
+- [Session Management](../session-management.md)
+- [Learning System](../learning/README.md)
 
 ## Maintenance
 

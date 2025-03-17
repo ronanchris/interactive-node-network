@@ -9,7 +9,7 @@ Each session should be documented following our [Session Template](./TEMPLATE.md
 > **Related Resources**:
 > - See [Learning Journal](../learning/learning-journal.md) for progress tracking
 > - See [Documentation Automation](../learning/documentation-automation.md) for automated session management
-> - See [Development Process](../../RULES.md#development-process) for workflow guidelines
+> - See [Development Process](../RULES.md#development-process) for workflow guidelines
 
 ## Session History
 

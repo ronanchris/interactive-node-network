@@ -98,10 +98,10 @@ Common patterns of user behavior and system responses that inform the design and
 
 ## Related Documentation
 
-- [Project Standards](./project-standards.md)
-- [Documentation Best Practices](./documentation-best-practices.md)
-- [Performance Monitoring](./performance/monitoring.md)
-- [Learning System](./learning/README.md)
+- [Project Standards](../project-standards.md)
+- [Documentation Best Practices](../documentation-best-practices.md)
+- [Performance Monitoring](../performance/monitoring.md)
+- [Learning System](../learning/README.md)
 
 ## Documentation Terms
 

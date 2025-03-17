@@ -86,9 +86,9 @@ Effective communication is crucial for project success. These guidelines ensure 
 
 This document works in conjunction with:
 - [User Interaction](./user-interaction.md)
-- [Development Workflow](./development-workflow.md)
-- [Project Standards](./project-standards.md)
-- [Learning System](./learning/README.md)
+- [Development Workflow](../development-workflow.md)
+- [Project Standards](../project-standards.md)
+- [Learning System](../learning/README.md)
 
 ## Maintenance
 

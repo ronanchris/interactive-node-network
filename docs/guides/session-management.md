@@ -116,6 +116,6 @@ This document outlines how AI sessions are managed, tracked, and utilized for ma
 
 ## Cross-References
 
-- [Performance Monitoring](./performance/monitoring.md) for metrics tracking
-- [Error Handling](./errors/README.md) for issue management
-- [Development Workflow](./development-workflow.md) for process integration 
+- [Performance Monitoring](../performance/monitoring.md) for metrics tracking
+- [Error Handling](../errors/README.md) for issue management
+- [Development Workflow](../development-workflow.md) for process integration 

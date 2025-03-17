@@ -495,6 +495,41 @@
         .severity-critical {
             background: #dc3545;
         }
+
+        /* Key Documentation Section Styles */
+        .key-docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .key-doc-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .key-doc-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .key-doc-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--accent-color);
+        }
+
+        .key-doc-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
     </style>
 </head>
 <body>
@@ -527,11 +562,56 @@
             </div>
         </div>
 
+        <!-- Key Documentation Links -->
+        <div class="dashboard-section">
+            <h2>Key Documentation</h2>
+            <div class="key-docs-grid">
+                <a href="https://github.com/ronanchris/interactive-node-network/blob/main/docs/README.md" class="key-doc-card" target="_blank">
+                    <h3>📚 Project Overview</h3>
+                    <p>Main project documentation and getting started guide</p>
+                </a>
+                <a href="https://github.com/ronanchris/interactive-node-network/blob/main/docs/documentation-overview.md" class="key-doc-card" target="_blank">
+                    <h3>🗺️ Documentation Overview</h3>
+                    <p>Complete guide to project documentation structure</p>
+                </a>
+                <a href="https://github.com/ronanchris/interactive-node-network/blob/main/docs/guides/development-guide.md" class="key-doc-card" target="_blank">
+                    <h3>🛠️ Development Guide</h3>
+                    <p>Setup, development workflow, and best practices</p>
+                </a>
+                <a href="https://github.com/ronanchris/interactive-node-network/blob/main/docs/technical/node-network-summary.md" class="key-doc-card" target="_blank">
+                    <h3>📊 Node Network</h3>
+                    <p>Technical overview of the node network visualization</p>
+                </a>
+                <a href="https://github.com/ronanchris/interactive-node-network/blob/main/docs/sessions/README.md" class="key-doc-card" target="_blank">
+                    <h3>📅 Session History</h3>
+                    <p>Development session logs and progress tracking</p>
+                </a>
+                <a href="https://github.com/ronanchris/interactive-node-network/blob/main/docs/reference/glossary.md" class="key-doc-card" target="_blank">
+                    <h3>📖 Glossary</h3>
+                    <p>Definitions and terminology reference</p>
+                </a>
+            </div>
+        </div>
+
         <div class="issues">
             <h2>Current Issues</h2>
             <ul class="issue-list">
                 <!-- Issues will be populated here -->
             </ul>
+        </div>
+
+        <div class="cross-refs-section">
+            <div class="cross-refs-header" onclick="toggleCrossRefs()">
+                <div class="cross-refs-status">
+                    <div class="status-indicator" id="crossRefsStatus"></div>
+                    <span>Broken Cross-References</span>
+                    <span class="cross-refs-count" id="crossRefsCount"></span>
+                </div>
+                <div class="expand-icon" id="crossRefsExpandIcon">▼</div>
+            </div>
+            <div class="cross-refs-content" id="crossRefsContent">
+                <!-- Cross-references will be populated here -->
+            </div>
         </div>
 
         <div class="file-details">
@@ -579,23 +659,8 @@
                     </tr>
                 </thead>
                 <tbody id="fileTableBody">
-                    <!-- Files will be populated here -->
                 </tbody>
             </table>
-        </div>
-
-        <div class="cross-refs-section">
-            <div class="cross-refs-header" onclick="toggleCrossRefs()">
-                <div class="cross-refs-status">
-                    <div class="status-indicator" id="crossRefsStatus"></div>
-                    <span>Broken Cross-References</span>
-                    <span class="cross-refs-count" id="crossRefsCount"></span>
-                </div>
-                <div class="expand-icon" id="crossRefsExpandIcon">▼</div>
-            </div>
-            <div class="cross-refs-content" id="crossRefsContent">
-                <!-- Cross-references will be populated here -->
-            </div>
         </div>
 
         <div class="last-updated">
@@ -636,7 +701,7 @@
             try {
                 // Get the base path for GitHub Pages
                 const basePath = location.hostname === 'localhost' ? '' : '/interactive-node-network';
-                const response = await fetch(`${basePath}/data/health-report.json`);
+                const response = await fetch(`${basePath}/status/health-report.json`);
                 const data = await response.json();
                 fileData = data.fileDetails;
 
@@ -653,161 +718,13 @@
                 const counts = updateStatusCounts(fileData, reviewThreshold, criticalThreshold);
                 const freshPercentage = Math.round((counts['up-to-date'] / fileData.length) * 100);
                 metricValues[3].textContent = `${freshPercentage}%`;
-                
-                // Update status items
-                const issuesList = document.querySelector('.issue-list');
-                let statusHTML = '';
 
-                // 1. Documentation Coverage Status
-                const coverageStatus = data.metrics.coverage < 50 ? 'critical' : data.metrics.coverage < 80 ? 'warning' : 'good';
-                statusHTML += `
-                    <li class="issue-item">
-                        <div class="issue-header" onclick="toggleIssueDetails(this)">
-                            <div class="issue-severity severity-${coverageStatus}"></div>
-                            <div class="issue-content">
-                                <div class="issue-title">Documentation Coverage</div>
-                                <div class="issue-description">Current coverage: ${data.metrics.coverage}%</div>
-                            </div>
-                            <span class="expand-icon">▼</span>
-                        </div>
-                        <div class="issue-details">
-                            <h4>Coverage Details</h4>
-                            <ul>
-                                <li>API Documentation: ${data.metrics.coverage >= 80 ? '✅' : '⚠️'} ${Math.round(data.metrics.coverage * 0.8)}%</li>
-                                <li>Code Examples: ${data.metrics.coverage >= 60 ? '✅' : '⚠️'} ${Math.round(data.metrics.coverage * 0.6)}%</li>
-                                <li>Usage Guidelines: ${data.metrics.coverage >= 70 ? '✅' : '⚠️'} ${Math.round(data.metrics.coverage * 0.7)}%</li>
-                            </ul>
-                        </div>
-                    </li>
-                `;
+                // Update the file table with the current active filter
+                const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+                updateFileTable(activeFilter);
 
-                // 2. Content Freshness Status
-                const staleFiles = fileData.filter(file => file.status === 'needs-review').length;
-                const freshnessStatus = staleFiles > 10 ? 'critical' : staleFiles > 5 ? 'warning' : 'good';
-                statusHTML += `
-                    <li class="issue-item">
-                        <div class="issue-header" onclick="toggleIssueDetails(this)">
-                            <div class="issue-severity severity-${freshnessStatus}"></div>
-                            <div class="issue-content">
-                                <div class="issue-title">Content Freshness</div>
-                                <div class="issue-description">${staleFiles} files need review</div>
-                            </div>
-                            <span class="expand-icon">▼</span>
-                        </div>
-                        <div class="issue-details">
-                            <h4>Files Needing Review</h4>
-                            <div class="stale-files-list">
-                                ${fileData
-                                    .filter(file => file.status === 'needs-review')
-                                    .map(file => `
-                                        <div class="stale-file-item">
-                                            <div class="file-path">${file.path}</div>
-                                            <div class="last-updated">Last updated: ${new Date(file.lastModified).toLocaleDateString()}</div>
-                                        </div>
-                                    `).join('')}
-                            </div>
-                        </div>
-                    </li>
-                `;
-
-                // 3. Broken Cross-References (existing)
-                const brokenRefs = data.issues.filter(issue => issue.title === 'Broken Cross-References');
-                if (brokenRefs.length > 0) {
-                    statusHTML += `
-                        <li class="issue-item">
-                            <div class="issue-header" onclick="toggleIssueDetails(this)">
-                                <div class="issue-severity severity-${brokenRefs[0].severity}"></div>
-                                <div class="issue-content">
-                                    <div class="issue-title">Broken Cross-References</div>
-                                    <div class="issue-description">${brokenRefs.length} broken links found</div>
-                                </div>
-                                <span class="expand-icon">▼</span>
-                            </div>
-                            <div class="issue-details">
-                                <h4>Broken Links</h4>
-                                <div class="broken-links-list">
-                                    ${brokenRefs.map(ref => `
-                                        <div class="broken-link-item">
-                                            <div class="broken-link-file">${ref.file}</div>
-                                            <div class="broken-link-desc">${ref.description}</div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="action-button" onclick="fixAllBrokenLinks(this)">
-                                        Fix All Broken Links
-                                    </button>
-                                </div>
-                                <div class="action-result"></div>
-                            </div>
-                        </li>
-                    `;
-                }
-
-                // 4. Documentation Structure Status
-                const structureIssues = data.issues.filter(issue => 
-                    issue.title.toLowerCase().includes('structure') || 
-                    issue.title.toLowerCase().includes('organization')
-                );
-                if (structureIssues.length > 0) {
-                    statusHTML += `
-                        <li class="issue-item">
-                            <div class="issue-header" onclick="toggleIssueDetails(this)">
-                                <div class="issue-severity severity-${structureIssues[0].severity}"></div>
-                                <div class="issue-content">
-                                    <div class="issue-title">Documentation Structure</div>
-                                    <div class="issue-description">${structureIssues.length} structural improvements suggested</div>
-                                </div>
-                                <span class="expand-icon">▼</span>
-                            </div>
-                            <div class="issue-details">
-                                <h4>Suggested Improvements</h4>
-                                <ul>
-                                    ${structureIssues.map(issue => `
-                                        <li>${issue.description}</li>
-                                    `).join('')}
-                                </ul>
-                            </div>
-                        </li>
-                    `;
-                }
-
-                // 5. Recent Updates Status
-                const recentUpdates = fileData
-                    .filter(file => {
-                        const daysSinceUpdate = Math.floor((new Date() - new Date(file.lastModified)) / (1000 * 60 * 60 * 24));
-                        return daysSinceUpdate <= 7;
-                    })
-                    .slice(0, 5);
-                
-                statusHTML += `
-                    <li class="issue-item">
-                        <div class="issue-header" onclick="toggleIssueDetails(this)">
-                            <div class="issue-severity severity-good"></div>
-                            <div class="issue-content">
-                                <div class="issue-title">Recent Updates</div>
-                                <div class="issue-description">${recentUpdates.length} files updated in the last week</div>
-                            </div>
-                            <span class="expand-icon">▼</span>
-                        </div>
-                        <div class="issue-details">
-                            <h4>Recently Updated Files</h4>
-                            <div class="recent-updates-list">
-                                ${recentUpdates.map(file => `
-                                    <div class="recent-update-item">
-                                        <div class="file-path">${file.path}</div>
-                                        <div class="update-date">Updated: ${new Date(file.lastModified).toLocaleDateString()}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </li>
-                `;
-
-                // Update the DOM
-                issuesList.innerHTML = statusHTML;
-
-                updateFileTable();
+                // Update cross-references section
+                updateCrossRefsSection(data.issues);
                 
                 // Update last updated timestamp
                 document.querySelector('.last-updated').textContent = 
@@ -851,33 +768,37 @@
             const criticalThresholdInput = document.getElementById('criticalThreshold');
             const reviewThresholdValue = document.getElementById('reviewThresholdValue');
             const criticalThresholdValue = document.getElementById('criticalThresholdValue');
+            
+            // Add event listeners for threshold sliders
+            reviewThresholdInput.addEventListener('input', (e) => {
+                const value = e.target.value;
+                reviewThresholdValue.textContent = `${value} days`;
+                updateDashboard();
+            });
+            
+            criticalThresholdInput.addEventListener('input', (e) => {
+                const value = e.target.value;
+                criticalThresholdValue.textContent = `${value} days`;
+                updateDashboard();
+            });
 
-            function updateThresholds() {
-                const reviewDays = reviewThresholdInput.value;
-                const criticalDays = criticalThresholdInput.value;
-                
-                reviewThresholdValue.textContent = `${reviewDays} days`;
-                criticalThresholdValue.textContent = `${criticalDays} days`;
-                
-                if (parseInt(reviewDays) >= parseInt(criticalDays)) {
-                    criticalThresholdInput.value = parseInt(reviewDays) + 1;
-                    criticalThresholdValue.textContent = `${parseInt(reviewDays) + 1} days`;
-                }
-                
-                updateFileTable(document.querySelector('.filter-btn.active').dataset.filter);
-            }
-
-            reviewThresholdInput.addEventListener('input', updateThresholds);
-            criticalThresholdInput.addEventListener('input', updateThresholds);
-
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            filterButtons.forEach(button => {
+            // Add event listeners for filter buttons
+            document.querySelectorAll('.filter-btn').forEach(button => {
                 button.addEventListener('click', () => {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    // Add active class to clicked button
                     button.classList.add('active');
-                    updateFileTable(button.dataset.filter);
+                    // Update table with selected filter
+                    const filter = button.dataset.filter;
+                    updateFileTable(filter);
                 });
             });
+
+            // Initial update
+            updateDashboard();
         });
 
         function getIssueDetails(issue) {
@@ -1055,9 +976,6 @@
                 button.disabled = false;
             }
         }
-
-        // Initial update
-        updateDashboard();
     </script>
 </body>
 </html> 

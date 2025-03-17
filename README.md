@@ -266,7 +266,7 @@ npm run lint         # Lint code
 ## Documentation
 
 - [Project Documentation](./README.md)
-- [Contributing Guidelines](../CONTRIBUTING.md)
+- [Contributing Guidelines](./CONTRIBUTING.md)
 - [Machine Management](./machine-management.md)
 - [Documentation Structure](./documentation-structure.md)
 
@@ -306,7 +306,7 @@ npm run lint         # Lint code
 
 1. Review [Documentation Structure](./documentation-structure.md)
 2. Explore [Machine Management](./machine-management.md)
-3. Read [Contributing Guidelines](../CONTRIBUTING.md)
+3. Read [Contributing Guidelines](./CONTRIBUTING.md)
 4. Join the development community
 
 ## Support
@@ -318,9 +318,9 @@ npm run lint         # Lint code
 ## Related Documentation
 
 - [Project Standards](./project-standards.md)
-- [Error Handling](./errors/README.md)
-- [Performance Guide](./performance/README.md)
-- [Learning System](./learning/README.md)
+- [Error Handling](./docs/errors/README.md)
+- [Performance Guide](./docs/performance/README.md)
+- [Learning System](./docs/learning/README.md)
 
 This document outlines the standards and guidelines for the Interactive Node Network project.
 
@@ -447,8 +447,8 @@ This document outlines the standards and guidelines for the Interactive Node Net
 
 - [Development Workflow](./development-workflow.md)
 - [Quick Start Guide](./quick-start.md)
-- [Error Handling](./errors/README.md)
-- [Performance Guidelines](./performance/README.md)
+- [Error Handling](./docs/errors/README.md)
+- [Performance Guidelines](./docs/performance/README.md)
 
 # Development Sessions
 

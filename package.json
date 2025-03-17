@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "build:status": "mkdir -p dist/status && cp -r docs/status/* dist/status/",
+    "build:status": "mkdir -p dist/status && cp -r docs/status/* dist/status/ && mv dist/status/dashboard.html dist/status/index.html",
     "predeploy": "npm run build && npm run build:status",
     "deploy": "gh-pages -d dist"
   },
@@ -17,11 +17,13 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/node": "^22.13.10",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.14",
     "gh-pages": "^6.3.0",
+    "glob": "^11.0.1",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3",
     "terser": "^5.39.0",

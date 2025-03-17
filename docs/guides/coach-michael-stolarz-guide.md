@@ -7,9 +7,9 @@ Following up on our Discord conversation, I wanted to share how I've structured 
 
 ### 1. Root Level Documents
 - [`README.md`](../../README.md) - Project overview, quick start, and setup instructions
-- [`CONTRIBUTING.md`](../../CONTRIBUTING.md) - Development guidelines and documentation standards
-- [`SESSIONS.md`](../../SESSIONS.md) - Tracks development sessions and decisions
-- [`RULES.md`](../../RULES.md) - Core development rules and guidelines
+- [`CONTRIBUTING.md`](../CONTRIBUTING.md) - Development guidelines and documentation standards
+- [`SESSIONS.md`](../SESSIONS.md) - Tracks development sessions and decisions
+- [`RULES.md`](../RULES.md) - Core development rules and guidelines
 - [`docs/technical/architecture.md`](../technical/architecture.md) - Project notes and architectural decisions
 
 ### 2. Guides
@@ -48,7 +48,7 @@ I've organized the documentation with a few key principles:
    - Reference materials in `docs/reference/` - Reference materials and troubleshooting
 
 3. **Documentation Standards**
-   - All internal links must start with `./` or `../`
+   - All internal links must start with `./` or `../////`
    - Links to Markdown files must include `.md` extension
    - Each directory should have a `README.md`
    - Documentation coverage is automatically checked

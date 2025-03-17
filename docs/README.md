@@ -35,7 +35,7 @@ docs/
 ## Documentation Types
 
 ### 1. Rules and Guidelines
-- Main rules file: `../RULES.md` (root level)
+- Main rules file: `../////RULES.md` (root level)
 - Contains all project rules and guidelines
 - Primary reference for AI assistants and developers
 
@@ -68,7 +68,7 @@ docs/
 ## Using This Documentation
 
 ### For AI Assistants
-1. Start with `../RULES.md` (root level)
+1. Start with `../////RULES.md` (root level)
 2. Check `./sessions/README.md` for context
 3. Review relevant section docs based on task
 

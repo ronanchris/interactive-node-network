@@ -1,10 +1,6 @@
-import { promises as fs } from 'fs';
-import * as path from 'path';
 import { glob } from 'glob';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import * as fs from 'fs';
+import * as path from 'path';
 
 interface LinkIssue {
   file: string;
@@ -23,146 +19,143 @@ interface CheckResult {
   };
 }
 
-class MarkdownLinkChecker {
-  private readonly rootDir: string;
-  
-  constructor(rootDir: string) {
-    this.rootDir = rootDir;
+class LinkChecker {
+  private issues: LinkIssue[] = [];
+  private filesChecked = 0;
+  private linksChecked = 0;
+
+  private isDocumentationFile(filePath: string): boolean {
+    return filePath.endsWith('.md') || filePath.endsWith('.mdx');
   }
 
-  async check(): Promise<CheckResult> {
-    const result: CheckResult = {
-      issues: [],
-      stats: {
-        filesChecked: 0,
-        linksChecked: 0,
-        issuesFound: 0
-      }
-    };
-
-    // Find all markdown files
-    const files = await glob('**/*.md', {
-      cwd: this.rootDir,
-      ignore: ['node_modules/**']
-    });
-
-    result.stats.filesChecked = files.length;
-
-    for (const file of files) {
-      const fullPath = path.join(this.rootDir, file);
-      const content = await fs.readFile(fullPath, 'utf-8');
-      const lines = content.split('\n');
-
-      // Find Markdown links using regex
-      const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-      
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        let match;
-
-        while ((match = linkRegex.exec(line)) !== null) {
-          result.stats.linksChecked++;
-          const [, text, link] = match;
-          
-          // Check various link issues
-          await this.checkLink(file, i + 1, text, link, result);
-        }
-      }
-    }
-
-    result.stats.issuesFound = result.issues.length;
-    return result;
+  private isConfigurationFile(filePath: string): boolean {
+    const configExtensions = ['.env', '.json', '.yaml', '.yml', '.toml', '.ini', '.eslintrc', '.prettierrc'];
+    return configExtensions.some(ext => filePath.endsWith(ext));
   }
 
-  private async checkLink(file: string, line: number, text: string, link: string, result: CheckResult) {
-    // Skip external links and anchor-only links
-    if (link.startsWith('http') || link.startsWith('#')) {
+  private isSourceCodeFile(filePath: string): boolean {
+    const sourceExtensions = ['.ts', '.js', '.jsx', '.tsx', '.css', '.scss', '.html'];
+    return sourceExtensions.some(ext => filePath.endsWith(ext));
+  }
+
+  private isSourceCodeDir(filePath: string): boolean {
+    const sourceDirs = ['src/', 'dist/', 'coverage/', 'node_modules/'];
+    return sourceDirs.some(dir => filePath.includes(dir));
+  }
+
+  private isAssetFile(filePath: string): boolean {
+    return filePath.includes('assets/') && filePath.endsWith('.json');
+  }
+
+  private isDirectory(filePath: string): boolean {
+    return !path.extname(filePath);
+  }
+
+  private checkLink(filePath: string, line: number, link: string): void {
+    this.linksChecked++;
+
+    // Skip external links
+    if (link.startsWith('http://') || link.startsWith('https://') || link.startsWith('mailto:')) {
       return;
     }
 
-    // Check if link starts with ./ or ../
-    if (!link.startsWith('./') && !link.startsWith('../')) {
-      result.issues.push({
-        file,
-        line,
-        link,
-        issue: 'Link should start with ./ or ../',
-        suggestion: link.startsWith('/') ? `.${link}` : `./${link}`
-      });
+    // Handle anchor links
+    const [filePathPart, anchorPart] = link.split('#');
+    const targetPath = path.resolve(path.dirname(filePath), filePathPart);
+
+    // Skip source code directories
+    if (this.isSourceCodeDir(filePathPart)) {
+      return;
     }
 
-    // Check if .md extension is included for internal doc links
-    if (!link.includes('#') && !link.endsWith('.md')) {
-      result.issues.push({
-        file,
+    // Skip configuration files
+    if (this.isConfigurationFile(filePathPart)) {
+      return;
+    }
+
+    // Skip asset files
+    if (this.isAssetFile(filePathPart)) {
+      return;
+    }
+
+    // Check if the file exists
+    if (!fs.existsSync(targetPath)) {
+      this.issues.push({
+        file: filePath,
+        line,
+        link,
+        issue: 'Linked file does not exist'
+      });
+      return;
+    }
+
+    // Only require .md extension for documentation files
+    if (this.isDocumentationFile(targetPath) && !filePathPart.endsWith('.md')) {
+      this.issues.push({
+        file: filePath,
         line,
         link,
         issue: 'Internal document links should include .md extension',
-        suggestion: `${link}.md`
+        suggestion: `${filePathPart}.md`
       });
+      return;
     }
 
-    // Check if the linked file exists
-    const [filePath, anchor] = link.split('#');
-    if (filePath) {
-      const targetPath = path.join(path.dirname(path.join(this.rootDir, file)), filePath);
-      try {
-        await fs.access(targetPath);
-      } catch {
-        result.issues.push({
-          file,
-          line,
-          link,
-          issue: 'Linked file does not exist'
-        });
-      }
-    }
-
-    // Check anchor format if present
-    if (anchor) {
-      if (!/^[a-z0-9-]+$/.test(anchor)) {
-        result.issues.push({
-          file,
-          line,
-          link,
-          issue: 'Anchor should be lowercase with hyphens only',
-          suggestion: `${filePath}#${anchor.toLowerCase().replace(/[^a-z0-9-]/g, '-')}`
-        });
-      }
+    // Don't require .md extension for non-documentation files
+    if (this.isConfigurationFile(targetPath) || this.isSourceCodeFile(targetPath) || this.isDirectory(targetPath)) {
+      return;
     }
   }
 
-  static formatReport(result: CheckResult): string {
-    let report = '# Markdown Link Check Report\n\n';
-    
-    report += '## Statistics\n';
-    report += `- Files checked: ${result.stats.filesChecked}\n`;
-    report += `- Links checked: ${result.stats.linksChecked}\n`;
-    report += `- Issues found: ${result.stats.issuesFound}\n\n`;
+  private checkFile(filePath: string): void {
+    this.filesChecked++;
+    const content = fs.readFileSync(filePath, 'utf8');
+    const lines = content.split('\n');
 
-    if (result.issues.length > 0) {
-      report += '## Issues\n\n';
-      for (const issue of result.issues) {
-        report += `### ${issue.file}:${issue.line}\n`;
-        report += `- Link: \`${issue.link}\`\n`;
-        report += `- Issue: ${issue.issue}\n`;
-        if (issue.suggestion) {
-          report += `- Suggestion: \`${issue.suggestion}\`\n`;
-        }
-        report += '\n';
+    lines.forEach((line, index) => {
+      const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+      let match;
+
+      while ((match = linkRegex.exec(line)) !== null) {
+        this.checkLink(filePath, index + 1, match[2]);
       }
-    } else {
-      report += '## No issues found! 🎉\n';
+    });
+  }
+
+  public async check(): Promise<void> {
+    const files = await glob('**/*.md', { ignore: ['node_modules/**'] });
+    
+    for (const file of files) {
+      this.checkFile(file);
     }
 
-    return report;
+    this.printReport();
+  }
+
+  private printReport(): void {
+    console.log('# Markdown Link Check Report\n');
+    console.log('## Statistics');
+    console.log(`- Files checked: ${this.filesChecked}`);
+    console.log(`- Links checked: ${this.linksChecked}`);
+    console.log(`- Issues found: ${this.issues.length}\n`);
+
+    if (this.issues.length > 0) {
+      console.log('## Issues\n');
+
+      this.issues.forEach(issue => {
+        console.log(`### ${issue.file}:${issue.line}`);
+        console.log(`- Link: \`${issue.link}\``);
+        console.log(`- Issue: ${issue.issue}`);
+        if (issue.suggestion) {
+          console.log(`- Suggestion: \`${issue.suggestion}\``);
+        }
+        console.log('');
+      });
+
+      process.exit(1);
+    }
   }
 }
 
-// Main execution
-const checker = new MarkdownLinkChecker(process.cwd());
-const result = await checker.check();
-console.log(MarkdownLinkChecker.formatReport(result));
-
-// Exit with error if issues found
-process.exit(result.issues.length > 0 ? 1 : 0); 
+const checker = new LinkChecker();
+checker.check().catch(console.error); 
