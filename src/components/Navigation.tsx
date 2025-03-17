@@ -12,7 +12,7 @@ const Navigation: React.FC = () => {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <a
-                  href="/interactive-node-network/"
+                  href="/interactive-node-network/app/"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Network Dashboard
