@@ -42,11 +42,9 @@ I've organized the documentation with a few key principles:
    - Project notes (`NOTES.md`)
 
 2. **Organized Documentation**
-   - Guides in `docs/guides/`
-   - Technical docs in `docs/technical/`
-   - Learning resources in `docs/learning/`
-   - Performance docs in `docs/performance/`
-   - Visual docs in `docs/diagrams/`
+   - Guides in `docs/guides/` - User-facing documentation and guides
+   - Technical docs in `docs/technical/` - Implementation details and technical information
+   - Reference materials in `docs/reference/` - Reference materials and troubleshooting
 
 3. **Documentation Standards**
    - All internal links must start with `./` or `../`
@@ -57,9 +55,9 @@ I've organized the documentation with a few key principles:
    - Common link issues are automatically fixed
 
 4. **Learning Focus**
-   - Documented learning process in `docs/learning/`
-   - Clear guides for different aspects
-   - Comprehensive technical documentation
+   - Comprehensive development guide in `docs/guides/development-guide.md`
+   - Clear guides for different aspects of the project
+   - Technical documentation for implementation details
 
 5. **Project Evolution**
    - Session-based development tracking
@@ -241,27 +239,16 @@ graph TD
     P1[Priority 1:<br>Immediate Load] --> RULES[RULES.md]
     P1 --> SESSIONS[Recent SESSIONS.md<br>entries]
     
-    P2[Priority 2:<br>Referenced Docs] --> MACHINE[machine-management.md]
-    P2 --> CURSOR[cursor-instructions.md]
+    P2[Priority 2:<br>Referenced Docs] --> MACHINE[technical/machine-management.md]
+    P2 --> CURSOR[guides/cursor-instructions.md]
     P2 --> CURRENT[Current task<br>related docs]
     
-    P3[Priority 3:<br>On-Demand Load] --> LEARNING[learning-journal.md]
+    P3[Priority 3:<br>On-Demand Load] --> DEV_GUIDE[guides/development-guide.md]
     P3 --> HISTORY[Historical sessions]
     P3 --> OTHER[Other documentation]
     
-    %% Load Triggers
-    RULES --> |triggers load of|P2
-    SESSIONS --> |may trigger load of|P3
-    CURRENT --> |may reference|LEARNING
-    
     %% Styling
     classDef p1 fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
-    classDef p2 fill:#fff3e0,stroke:#ef6c00,stroke-width:2px;
-    classDef p3 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
-    
-    class P1,RULES,SESSIONS p1;
-    class P2,MACHINE,CURSOR,CURRENT p2;
-    class P3,LEARNING,HISTORY,OTHER p3;
 ```
 
 ### Memory Management During Review
