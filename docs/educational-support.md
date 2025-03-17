@@ -1,134 +1,171 @@
-# Educational Support Guidelines
+# Educational Support
 
-This document outlines how we handle learning opportunities and knowledge sharing in the Interactive Node Network project.
+This document outlines the educational support resources and guidelines for the Interactive Node Network project.
 
-## 1. Knowledge Introduction
+## Learning Resources
 
-When encountering technical concepts, tools, or patterns for the first time:
+### Documentation
+- Project documentation
+- API references
+- Architecture guides
+- Best practices
+- Code examples
 
-- Automatically offer explanations
-- Use a simple y/n choice system for user to request explanations
-- Break down complex topics into digestible options (e.g., y1, y2, y3 for different levels or aspects)
-- Wait for user response before proceeding with technical details
+### Tutorials
+- Getting started
+- Basic concepts
+- Advanced features
+- Common patterns
+- Troubleshooting
 
-Example: "I see we're using TypeScript for the first time. Would you like me to explain what it is and why we're using it? (y/n)"
-
-## 2. Learning Journal Management
-
-We maintain [`learning-journal.md`](./learning/learning-journal.md) as our primary learning documentation. Each entry includes:
-
-### Entry Structure
-- Date first encountered
-- Brief description
-- Real example from our project
-- Why it's useful
-
-### Categories
-- Languages and Frameworks
-- Tools and Libraries
-- Best Practices
-- Design Patterns
-
-### Entry Format
-```markdown
-### [Topic Name]
-*First Encountered: [Date]*
-
-**What is it?**
-[Brief explanation]
-
-**How we're using it**
-[Specific examples from our project]
-
-**Why it's valuable**
-[List of benefits and use cases]
-
-**Related Concepts**
-[Links to related topics]
-```
-
-## 3. Documentation Integration
-
-When new learning opportunities arise:
-
-- Suggest updates to existing .md files
-- Create new specialized .md files for complex topics
-- Maintain cross-references between related concepts
-- Keep documentation DRY (Don't Repeat Yourself)
-
-## 4. Learning Opportunity Detection
-
-Monitor for learning opportunities during:
-
-- Introduction of new tools or libraries
-- Implementation of design patterns
-- Problem-solving approaches
-- Code optimization techniques
-- Best practice applications
-
-## 5. Knowledge Capture Process
-
-1. **Identification**
-   - Monitor for new concepts or techniques
-   - Flag potential learning opportunities
-   - Ask user if they want to document it
-
-2. **Documentation**
-   - Create or update learning journal entry
-   - Add cross-references to related docs
-   - Include practical examples
-   - Link to external resources
-
-3. **Review and Refinement**
-   - Periodically review entries for accuracy
-   - Update with new learnings
-   - Add more examples as we use concepts
-   - Improve explanations based on experience
-
-## 6. Integration with Development Flow
-
-- Pause development to capture learning when appropriate
-- Link commit messages to learning entries when relevant
-- Tag code examples that demonstrate concepts
-- Update documentation as our understanding evolves
-
-## 7. Best Practices
-
-- Keep explanations clear and concise
-- Use real project examples
-- Include both basic and advanced aspects
-- Maintain links to official documentation
-- Update entries as we learn more
-- Cross-reference related concepts
-
-## 8. Learning Categories
-
-### Technical Skills
-- Programming languages
-- Frameworks and libraries
-- Development tools
-- Testing approaches
+### Code Examples
+- Basic usage
+- Advanced scenarios
+- Integration examples
 - Performance optimization
-
-### Project Management
-- Documentation practices
-- Version control workflows
-- Deployment procedures
-- Communication protocols
-
-### Design Patterns
-- Code organization
-- Component architecture
-- State management
 - Error handling
 
-## 9. Review and Maintenance
+## Learning Paths
 
-Regular maintenance of learning materials:
+### Beginners
+1. Project setup
+2. Basic concepts
+3. Simple features
+4. Common patterns
+5. Basic troubleshooting
 
-- Monthly review of entries
-- Update outdated information
-- Add new examples
-- Improve explanations
-- Archive obsolete content
-- Update cross-references 
+### Intermediate
+1. Advanced features
+2. Performance optimization
+3. Testing strategies
+4. Error handling
+5. Security practices
+
+### Advanced
+1. Architecture design
+2. System integration
+3. Performance tuning
+4. Advanced debugging
+5. Contributing guidelines
+
+## Support Channels
+
+### Documentation
+- Official documentation
+- API references
+- Architecture guides
+- Best practices
+- FAQs
+
+### Community
+- Discussion forums
+- Chat channels
+- Code reviews
+- Pair programming
+- Mentoring
+
+### Tools
+- Development environment
+- Debugging tools
+- Testing frameworks
+- Performance profilers
+- Documentation generators
+
+## Best Practices
+
+### Learning
+- Start with basics
+- Practice regularly
+- Review code examples
+- Write documentation
+- Share knowledge
+
+### Teaching
+- Clear explanations
+- Practical examples
+- Progressive difficulty
+- Regular feedback
+- Encourage questions
+
+### Documentation
+- Keep it current
+- Include examples
+- Use clear language
+- Link related topics
+- Provide context
+
+## Knowledge Sharing
+
+### Code Reviews
+- Constructive feedback
+- Learning opportunities
+- Best practices
+- Common pitfalls
+- Style guidelines
+
+### Pair Programming
+- Knowledge transfer
+- Problem solving
+- Code quality
+- Best practices
+- Team learning
+
+### Documentation
+- Technical writing
+- API documentation
+- Architecture docs
+- Learning resources
+- Best practices
+
+## Progress Tracking
+
+### Learning Journal
+- Document learnings
+- Track progress
+- Note challenges
+- Record solutions
+- Share insights
+
+### Skill Assessment
+- Technical skills
+- Documentation
+- Problem solving
+- Code quality
+- Best practices
+
+### Feedback Loop
+- Regular reviews
+- Improvement areas
+- Success metrics
+- Learning goals
+- Action items
+
+## Tools and Resources
+
+### Development
+- IDE setup
+- Version control
+- Testing tools
+- Debugging tools
+- Performance tools
+
+### Documentation
+- Writing tools
+- Diagram tools
+- Code examples
+- Style guides
+- Templates
+
+### Learning
+- Online resources
+- Reference materials
+- Practice exercises
+- Code challenges
+- Project examples
+
+## Related Documentation
+
+- [`learning-journal.md`](./learning/learning-journal.md)
+- [Educational Support Guidelines](./educational-support.md)
+- [Documentation Best Practices](./documentation-best-practices.md)
+- [Project Standards](./project-standards.md) 

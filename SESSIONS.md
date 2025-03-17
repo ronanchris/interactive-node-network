@@ -670,11 +670,11 @@ npm run test:machine-detection  # Run machine detection tests
 
 ### Resources
 - [Mermaid Diagram Documentation](https://mermaid.js.org/)
-- [Documentation Best Practices](docs/documentation-best-practices.md)
-- [Memory Management Guidelines](docs/automation-rules.md#during-session)
+- [Documentation Best Practices](./docs/documentation-best-practices.md)
+- [Memory Management Guidelines](./docs/automation-rules.md#during-session)
 
-For detailed guidance on working with this project, please refer to [Coach Michael's Guide](docs/guides/coach-michael-stolarz-guide.md).
-The [Coach's Guide](docs/guides/coach-michael-stolarz-guide.md) contains detailed information about AI interaction patterns and automation rules.
+For detailed guidance on working with this project, please refer to [Coach Michael's Guide](./docs/guides/coach-michael-stolarz-guide.md).
+The [Coach's Guide](./docs/guides/coach-michael-stolarz-guide.md) contains detailed information about AI interaction patterns and automation rules.
 
 ## Cross-Machine Development Guidelines
 
@@ -762,6 +762,6 @@ When switching between different computers:
 - Next session will validate cross-machine development guidelines
 
 ### Resources
-- [AI Interaction Patterns](docs/learning/ai-interaction-patterns.md)
-- [Coach Guide](docs/guides/coach-michael-stolarz-guide.md)
-- [Learning Documentation](docs/learning/README.md) 
+- [AI Interaction Patterns](./docs/learning/ai-interaction-patterns.md)
+- [Coach Guide](./docs/guides/coach-michael-stolarz-guide.md)
+- [Learning Documentation](./docs/learning/README.md) 

@@ -1,29 +1,64 @@
 {
   "rules.md": {
-    "hash": "pending_initial_scan",
-    "last_checked": "2024-03-17T00:00:00Z",
-    "last_modified": "2024-03-17T00:00:00Z"
+    "hash": "to_be_generated",
+    "last_checked": "2024-03-17T05:30:00Z",
+    "last_modified": "2024-03-17T05:30:00Z"
   },
   "sessions.md": {
-    "hash": "pending_initial_scan",
-    "last_checked": "2024-03-17T00:00:00Z",
-    "last_modified": "2024-03-17T00:00:00Z"
+    "hash": "to_be_generated",
+    "last_checked": "2024-03-17T05:30:00Z",
+    "last_modified": "2024-03-17T05:30:00Z"
   },
   "docs": {
+    "README.md": {
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T03:57:00Z"
+    },
+    "documentation-structure.md": {
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T05:30:00Z"
+    },
+    "learning/README.md": {
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T05:30:00Z"
+    },
+    "learning/learning-journal.md": {
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T05:14:00Z"
+    },
+    "learning/ai-interaction-patterns.md": {
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T04:27:00Z"
+    },
+    "learning/advanced-automation.md": {
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T03:57:00Z"
+    },
+    "learning/documentation-automation.md": {
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T03:57:00Z"
+    },
     "performance/README.md": {
-      "hash": "pending_initial_scan",
-      "last_checked": "2024-03-17T00:00:00Z",
-      "last_modified": "2024-03-17T00:00:00Z"
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T03:57:00Z"
     },
     "performance/monitoring.md": {
-      "hash": "pending_initial_scan",
-      "last_checked": "2024-03-17T00:00:00Z",
-      "last_modified": "2024-03-17T00:00:00Z"
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T03:57:00Z"
     },
     "session-management.md": {
-      "hash": "pending_initial_scan",
-      "last_checked": "2024-03-17T00:00:00Z",
-      "last_modified": "2024-03-17T00:00:00Z"
+      "hash": "to_be_generated",
+      "last_checked": "2024-03-17T05:30:00Z",
+      "last_modified": "2024-03-17T03:57:00Z"
     }
   }
 } 

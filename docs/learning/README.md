@@ -4,17 +4,17 @@ This directory contains documentation related to learning and development in the
 
 ## Key Documents
 
-1. [Learning Journal](learning-journal.md) - Progress tracking and insights
-2. [Advanced Automation](advanced-automation.md) - Advanced automation features
-3. [Documentation Automation](documentation-automation.md) - Documentation management
-4. [AI Interaction Patterns](ai-interaction-patterns.md) - Analysis of common vs novel AI interaction patterns
+1. [Learning Journal](./learning-journal.md) - Progress tracking and insights
+2. [AI Interaction Patterns](./ai-interaction-patterns.md) - Analysis of common vs advanced AI interaction patterns
+3. [Advanced Automation](./advanced-automation.md) - Advanced automation features
+4. [Documentation Automation](./documentation-automation.md) - Documentation management
 
 ## Document Relationships
 
 - Learning Journal → tracks daily progress and insights
+- AI Interaction Patterns → analyzes our unique approach to AI assistance
 - Advanced Automation → details automation implementation
 - Documentation Automation → explains documentation systems
-- AI Interaction Patterns → analyzes our unique approach to AI assistance
 
 ## Usage
 
@@ -24,10 +24,10 @@ These documents serve multiple purposes:
 3. Capture implementation details
 4. Analyze innovative approaches
 
-For the most recent learning entries, refer to the [Learning Journal](learning-journal.md).
-For technical implementation details, see [Advanced Automation](advanced-automation.md).
-For documentation practices, check [Documentation Automation](documentation-automation.md).
-For AI interaction analysis, review [AI Interaction Patterns](ai-interaction-patterns.md).
+For the most recent learning entries, refer to the [Learning Journal](./learning-journal.md).
+For AI interaction analysis, review [AI Interaction Patterns](./ai-interaction-patterns.md).
+For technical implementation details, see [Advanced Automation](./advanced-automation.md).
+For documentation practices, check [Documentation Automation](./documentation-automation.md).
 
 ## Contents
 
@@ -36,17 +36,25 @@ For AI interaction analysis, review [AI Interaction Patterns](ai-interaction-pat
    - Documents best practices
    - Maintains knowledge base
    - Cross-references documentation
-2. [Documentation Automation](./documentation-automation.md)
-   - Automated documentation checks
-   - Quality assurance tools
-   - CI/CD integration
-   - Monitoring and reporting
+
+2. [AI Interaction Patterns](./ai-interaction-patterns.md)
+   - Common vs advanced patterns
+   - Pattern analysis
+   - Implementation examples
+   - Best practices
+
 3. [Advanced Automation](./advanced-automation.md)
    - Table of Contents generation
    - Documentation coverage analysis
    - Version synchronization
    - Automated diagrams
    - Metrics and monitoring
+
+4. [Documentation Automation](./documentation-automation.md)
+   - Automated documentation checks
+   - Quality assurance tools
+   - CI/CD integration
+   - Monitoring and reporting
 
 ## Purpose
 

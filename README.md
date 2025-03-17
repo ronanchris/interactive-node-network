@@ -28,33 +28,33 @@ Welcome to the Interactive Node Network project! This guide will help you get st
 Our documentation is structured to guide you from setup to advanced topics. Here's how to navigate it:
 
 ### 1. Getting Started
-1. [Quick Start Guide](docs/quick-start.md) - Begin here for initial setup
-2. [Machine Management](docs/machine-management.md) - Configure your development environment
-3. [Documentation Structure](docs/documentation-structure.md) - Understand how our docs are organized
-4. [Documentation Relationships](docs/diagrams/doc-relationships.md) - Visual guide to documentation
+1. [Quick Start Guide](./docs/quick-start.md) - Begin here for initial setup
+2. [Machine Management](./docs/machine-management.md) - Configure your development environment
+3. [Documentation Structure](./docs/documentation-structure.md) - Understand how our docs are organized
+4. [Documentation Relationships](./docs/diagrams/doc-relationships.md) - Visual guide to documentation
 
 ### 2. Core Documentation
 All core documentation is in the `docs/` directory:
-- [Documentation Overview](docs/README.md) - Complete documentation index
-- [Documentation Structure](docs/documentation-structure.md) - Understand how our docs are organized
-- [Documentation Relationships](docs/diagrams/doc-relationships.md) - Visual guide to documentation
-- [Project Structure](docs/diagrams/project-structure.md) - Visual guide to codebase organization
+- [Documentation Overview](./docs/README.md) - Complete documentation index
+- [Documentation Structure](./docs/documentation-structure.md) - Understand how our docs are organized
+- [Documentation Relationships](./docs/diagrams/doc-relationships.md) - Visual guide to documentation
+- [Project Structure](./docs/diagrams/project-structure.md) - Visual guide to codebase organization
 
 ### 3. Guides and Technical Documentation
-- [Coach's Guide](docs/guides/coach-michael-stolarz-guide.md) - Project overview and educational aspects
-- [Permissions Guide](docs/guides/permissions-guide.md) - Access and security rules
-- [Cursor Instructions](docs/guides/cursor-instructions.md) - AI interaction guidelines
-- [Network Summary](docs/technical/node-network-summary.md) - Technical implementation details
+- [Coach's Guide](./docs/guides/coach-michael-stolarz-guide.md) - Project overview and educational aspects
+- [Permissions Guide](./docs/guides/permissions-guide.md) - Access and security rules
+- [Cursor Instructions](./docs/guides/cursor-instructions.md) - AI interaction guidelines
+- [Network Summary](./docs/technical/node-network-summary.md) - Technical implementation details
 
 ### 4. Learning and Development
-- [Learning Overview](docs/learning/README.md) - Educational resources index
-- [Advanced Automation](docs/learning/advanced-automation.md) - Advanced automation features
-- [Documentation Automation](docs/learning/documentation-automation.md) - Documentation management
-- [Learning Journal](docs/learning/learning-journal.md) - Progress tracking
+- [Learning Overview](./docs/learning/README.md) - Educational resources index
+- [Advanced Automation](./docs/learning/advanced-automation.md) - Advanced automation features
+- [Documentation Automation](./docs/learning/documentation-automation.md) - Documentation management
+- [Learning Journal](./docs/learning/learning-journal.md) - Progress tracking
 
 ### 5. Performance and Monitoring
-- [Performance Overview](docs/performance/README.md) - Performance metrics and standards
-- [Monitoring Guide](docs/performance/monitoring.md) - System monitoring
+- [Performance Overview](./docs/performance/README.md) - Performance metrics and standards
+- [Monitoring Guide](./docs/performance/monitoring.md) - System monitoring
 
 ## 🔧 Key Features
 
@@ -114,24 +114,24 @@ npm run generate-diagrams  # Update documentation diagrams
 
 ## 🤝 Contributing
 
-1. Start with our [Quick Start Guide](docs/quick-start.md)
-2. Review [Machine Management](docs/machine-management.md)
-3. Follow [Session Management](docs/sessions/README.md)
+1. Start with our [Quick Start Guide](./docs/quick-start.md)
+2. Review [Machine Management](./docs/machine-management.md)
+3. Follow [Session Management](./docs/sessions/README.md)
 4. Document learnings and decisions
 
 ## 🆘 Getting Help
 
 1. **Documentation Issues**
-   - Check [Error Handling](docs/errors/README.md)
-   - Review [Learning Journal](docs/learning/learning-journal.md)
-   - See [Documentation Structure](docs/documentation-structure.md)
+   - Check [Error Handling](./docs/errors/README.md)
+   - Review [Learning Journal](./docs/learning/learning-journal.md)
+   - See [Documentation Structure](./docs/documentation-structure.md)
 
 2. **Performance Issues**
-   - See [Performance Documentation](docs/performance/README.md)
+   - See [Performance Documentation](./docs/performance/README.md)
    - Check monitoring guides
 
 3. **Environment Issues**
-   - Review [Machine Management](docs/machine-management.md)
+   - Review [Machine Management](./docs/machine-management.md)
    - Run environment checks
 
 ## 📝 Best Practices
@@ -163,17 +163,17 @@ npm run generate-diagrams  # Update documentation diagrams
    npm run generate-diagrams
    ```
 
-Remember: This documentation system is designed to evolve. If you find areas for improvement, follow our [Contributing Guidelines](docs/quick-start.md#contributing) to help make it better.
+Remember: This documentation system is designed to evolve. If you find areas for improvement, follow our [Contributing Guidelines](./CONTRIBUTING.md) to help make it better.
 
 ## 📊 Project Status
 
-- [Active Sessions](SESSIONS.md)
-- [Recent Changes](docs/learning/learning-journal.md)
-- [Known Issues](docs/errors/README.md)
+- [Active Sessions](./SESSIONS.md)
+- [Recent Changes](./docs/learning/learning-journal.md)
+- [Known Issues](./docs/errors/README.md)
 
 ---
 
 For a complete overview of our documentation:
-1. Start with the [Documentation Structure Guide](docs/documentation-structure.md)
-2. View the [Documentation Relationships](docs/diagrams/documentation-relationships.md)
-3. Check the [Documentation Overview](docs/README.md)
+1. Start with the [Documentation Structure Guide](./docs/documentation-structure.md)
+2. View the [Documentation Relationships](./docs/diagrams/documentation-relationships.md)
+3. Check the [Documentation Overview](./docs/README.md)

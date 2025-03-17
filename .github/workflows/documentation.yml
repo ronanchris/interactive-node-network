@@ -1,0 +1,84 @@
+name: Documentation Checks
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - '**.md'
+      - '.github/workflows/documentation.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - '**.md'
+      - '.github/workflows/documentation.yml'
+
+jobs:
+  check-documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for git log
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check documentation health
+        run: npm run docs:check
+
+      - name: Generate coverage report
+        run: |
+          npm run docs:coverage
+          if [ -f docs/coverage-report.md ]; then
+            echo "COVERAGE_EXISTS=true" >> $GITHUB_ENV
+          fi
+
+      - name: Check documentation coverage
+        if: env.COVERAGE_EXISTS == 'true'
+        run: |
+          COVERAGE=$(grep "Coverage:" docs/coverage-report.md | awk '{print $2}' | tr -d '%')
+          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+            echo "Documentation coverage is below 80%"
+            exit 1
+          fi
+
+      - name: Update checksums
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          npm run docs:update-checksums
+          git add .checksums.json
+          git commit -m "chore: update documentation checksums" || echo "No changes to commit"
+          git push
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && env.COVERAGE_EXISTS == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('docs/coverage-report.md', 'utf8');
+            const coverage = report.match(/Coverage: (\d+\.\d+)%/)[1];
+            const body = `## Documentation Coverage Report
+            
+            Current coverage: ${coverage}%
+            
+            ${report}
+            
+            Please ensure documentation coverage remains above 80%.`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            }); 

@@ -3,16 +3,16 @@
 This document tracks new concepts, tools, and practices as we encounter them in our project. Each entry includes when we first saw it, what it is, how we're using it, and why it's valuable.
 
 ## Table of Contents
-1. [Languages](#languages)
-   - [TypeScript](#typescript)
-2. [Tools](#tools)
-   - [Vite](#vite)
-   - [Tailwind CSS](#tailwind-css)
-   - [Terser](#terser)
-   - [esbuild](#esbuild)
-3. [Frameworks](#frameworks)
-   - [React](#react)
-4. [Best Practices](#best-practices)
+1. [Languages](./#languages)
+   - [TypeScript](./#typescript)
+2. [Tools](./#tools)
+   - [Vite](./#vite)
+   - [Tailwind CSS](./#tailwind-css)
+   - [Terser](./#terser)
+   - [esbuild](./#esbuild)
+3. [Frameworks](./#frameworks)
+   - [React](./#react)
+4. [Best Practices](./#best-practices)
 
 ## Languages
 
@@ -330,4 +330,150 @@ Each computer maintains its own secure connection, and you can:
 2. Give keys descriptive names
 3. Keep private keys secure
 4. Back up important keys
-5. Remove keys from GitHub when no longer needed 
+5. Remove keys from GitHub when no longer needed
+
+### Documentation Health
+*First Encountered: March 16, 2024*
+
+**What is it?**
+A measure of documentation quality, coverage, and maintainability. See [Documentation Health](../glossary.md#documentation-health) for more details.
+
+### Documentation Coverage
+*First Encountered: March 16, 2024*
+
+**What is it?**
+The extent to which code and features are documented. See [Documentation Coverage](../glossary.md#documentation-coverage) for more details.
+
+### Health Checks
+*First Encountered: March 16, 2024*
+
+**What is it?**
+Automated checks for documentation quality and coverage. See [Health Checks](../glossary.md#health-checks) for more details.
+
+### CI/CD Integration
+*First Encountered: March 16, 2024*
+
+**What is it?**
+Integration of documentation checks into our CI/CD pipeline. See [CI/CD Integration](../automation-rules.md) for more details.
+
+### Coverage Analysis Scripts
+*First Encountered: 2024-03-17*
+
+**What is it?**
+A coverage analysis script is an automated tool that systematically evaluates the completeness and quality of project documentation. It performs several key checks:
+1. Documentation presence (README files in directories)
+2. Link validity (finding broken references)
+3. Documentation freshness (identifying outdated files)
+4. Coverage metrics (calculating documentation completeness)
+
+**How we're using it**
+In our project, we've implemented a comprehensive coverage analysis system in `scripts/docs/coverage.ts`:
+```typescript
+interface CoverageReport {
+  total_files: number;
+  documented_files: number;
+  coverage_percentage: number;
+  missing_documentation: string[];
+  broken_links: string[];
+  outdated_files: string[];
+  recommendations: string[];
+}
+
+// Example usage
+const coverage = new DocumentationCoverage(rootDir);
+const report = await coverage.analyzeCoverage();
+```
+
+The script is integrated into our CI/CD pipeline through GitHub Actions, which:
+- Runs on every PR affecting documentation
+- Enforces minimum 80% documentation coverage
+- Provides automated recommendations
+- Comments on PRs with coverage reports
+
+**Why it's valuable**
+1. Automated Quality Assurance
+   - Consistently measures documentation completeness
+   - Identifies gaps and broken references
+   - Maintains documentation freshness
+
+2. Development Workflow
+   - Integrates with CI/CD pipeline
+   - Provides immediate feedback
+   - Enforces documentation standards
+
+3. Maintenance Benefits
+   - Reduces manual review time
+   - Prevents documentation drift
+   - Ensures consistent quality
+
+**Related Concepts**
+- [Documentation Health](../glossary.md#documentation-health)
+- [Documentation Coverage](../glossary.md#documentation-coverage)
+- [Health Checks](../glossary.md#health-checks)
+- [CI/CD Integration](../automation-rules.md)
+
+### Markdown Link Patterns
+*First Encountered: [Current Date]*
+
+**What is it?**
+A consistent pattern for handling Markdown links in our documentation that addresses several challenges:
+1. Relative vs. absolute paths
+2. Links to sections within documents
+3. Links across different documentation hierarchies
+4. Links to external resources
+
+**Issues Encountered**
+1. Different tools interpret Markdown links differently:
+   - Some tools require `.md` extension
+   - Others automatically resolve without the extension
+   - Some tools handle spaces differently
+2. Section links (anchors) can be problematic:
+   - Spaces in headers get converted to hyphens
+   - Case sensitivity varies by tool
+   - Special characters handling is inconsistent
+3. Path resolution varies:
+   - Some tools resolve from the current file location
+   - Others resolve from the project root
+   - Windows vs. Unix path separators can cause issues
+
+**Our Standard Solution**
+1. Internal Document Links:
+   ```markdown
+   - Same directory: [Link Text](./file-name.md)
+   - Parent directory: [Link Text](../file-name.md)
+   - Child directory: [Link Text](./subdirectory/file-name.md)
+   - Section within same file: [Link Text](#section-name)
+   - Section in another file: [Link Text](./file-name.md#section-name)
+   ```
+
+2. Link Formatting Rules:
+   - Always include the `.md` extension for documentation files
+   - Use hyphens instead of spaces in filenames
+   - Use lowercase for filenames and paths
+   - Use relative paths from the current file's location
+   - Start relative paths with `./` or `../` for clarity
+
+3. Section Anchors:
+   - Use lowercase for section references
+   - Replace spaces with hyphens
+   - Remove special characters
+   - Example: `## My Section (2023)` → `#my-section-2023`
+
+**Why it's valuable**
+1. Consistent linking improves documentation maintainability
+2. Reduces broken links in documentation
+3. Makes automated link checking more reliable
+4. Simplifies documentation migration if needed
+5. Improves compatibility across different Markdown tools
+
+**Implementation**
+We've implemented these rules in:
+1. Documentation structure
+2. Link checking tools
+3. Documentation automation
+4. CI/CD validation
+
+**Related Documentation**
+- [Documentation Structure](../documentation-structure.md)
+- [Documentation Best Practices](../documentation-best-practices.md)
+- [Project Standards](../project-standards.md) 

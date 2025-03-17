@@ -1,179 +1,140 @@
 # Quick Start Guide
 
-This guide will help you set up both the machine management system and documentation system in your project.
+This guide will help you get started with the Interactive Node Network project quickly and efficiently.
+
+## Prerequisites
+
+- Node.js (v23.10.0 or later)
+- npm (v10.9.2 or later)
+- Git
+- A modern web browser
+- Code editor (VS Code recommended)
 
 ## Installation
 
-1. Create a new directory for your project (if not already created):
+1. Clone the repository:
    ```bash
-   mkdir my-project
-   cd my-project
+   git clone https://github.com/your-username/interactive-node-network.git
+   cd interactive-node-network
    ```
 
-2. Initialize your project:
+2. Install dependencies:
    ```bash
-   npm init -y
+   npm install
    ```
 
-3. Copy the initialization script:
+3. Set up environment:
    ```bash
-   mkdir -p scripts
-   cp /path/to/init-machine-management.ts scripts/
+   cp .env.example .env
+   ```
+   Edit `.env` with your configuration values.
+
+## Development Server
+
+1. Start the development server:
+   ```bash
+   npm run dev
    ```
 
-4. Install required dependencies:
-   ```bash
-   npm install -D typescript ts-node @types/node
+2. Open your browser and navigate to:
+   ```
+   http://localhost:5173/interactive-node-network/
    ```
 
-5. Run the initialization script:
-   ```bash
-   npx ts-node scripts/init-machine-management.ts
-   ```
+## Basic Usage
 
-## Project Structure
-
-After initialization, your project will have the following structure:
+### Project Structure
 ```
-.
-├── docs/
-│   ├── README.md                 # Project documentation overview
-│   ├── quick-start.md           # This guide
-│   ├── automation-rules.md      # Documentation automation rules
-│   ├── glossary.md             # Project glossary
-│   ├── machine-management.md   # Machine management documentation
-│   ├── learning/              # Learning documentation
-│   │   ├── README.md         # Learning overview
-│   │   └── learning-journal.md # Captured learnings
-│   ├── sessions/             # Session documentation
-│   │   └── README.md        # Sessions overview
-│   └── diagrams/            # Generated diagrams
-├── scripts/
-│   ├── docs/
-│   │   ├── automation.ts    # Documentation automation
-│   │   └── diagrams.ts     # Diagram generation
-│   ├── setup-machine.ts     # Machine setup script
-│   └── tests/
-│       └── test-machine-detection.ts # Machine detection tests
-├── .machine-config.json      # Machine configuration
-├── .gitignore               # Git ignore rules
-├── SESSIONS.md              # Session history
-└── package.json             # Project configuration
+/
+├── src/               # Source code
+├── public/            # Static assets
+├── docs/             # Documentation
+├── tests/            # Test files
+└── scripts/          # Utility scripts
 ```
 
-## Available Commands
+### Key Commands
+```bash
+npm run dev           # Start development server
+npm run build         # Build for production
+npm run test          # Run tests
+npm run docs:serve    # Serve documentation
+npm run lint         # Lint code
+```
 
-### Machine Management
-- `npm run setup-machine` - Set up your development environment
-- `npm run verify-machine` - Verify your machine configuration
-- `npm run test:machine-detection` - Run machine detection tests
+## Development Workflow
 
-### Documentation
-- `npm run docs:check` - Check documentation health
-- `npm run docs:learn` - Add a learning entry
-- `npm run docs:session` - Update session notes
-- `npm run docs:update` - Update all documentation
-- `npm run generate-diagrams` - Generate documentation diagrams
-
-## First-Time Setup
-
-1. Review and customize `.machine-config.json`:
-   ```json
-   {
-     "identifier": "your-machine-name",
-     "osVersion": "your-os-version",
-     "shell": "your-shell-path",
-     "workspacePath": "your-workspace-path",
-     // ... other configurations
-   }
-   ```
-
-2. Run the machine setup:
+1. Create a new branch:
    ```bash
-   npm run setup-machine
+   git checkout -b feature/your-feature-name
    ```
 
-3. Initialize core documentation:
-   - Update `docs/README.md` with your project overview
-   - Review and customize `docs/automation-rules.md`
-   - Start your glossary in `docs/glossary.md`
-
-4. Start your first development session:
+2. Make your changes and commit:
    ```bash
-   npm run docs:session
+   git add .
+   git commit -m "feat: your feature description"
    ```
 
-## Best Practices
-
-### Machine Management
-1. Always run `verify-machine` when switching development machines
-2. Keep `.machine-config.json` updated with your latest requirements
-3. Document machine-specific setup steps in `docs/machine-management.md`
-
-### Documentation
-1. Use `docs:learn` to capture important learnings
-2. Start each development session with `docs:session`
-3. Keep the glossary updated with new terms
-4. Generate diagrams when documentation structure changes
-5. Review session notes periodically for insights
-
-## Maintenance
-
-1. Regular health checks:
+3. Push changes and create a pull request:
    ```bash
-   npm run docs:check
+   git push origin feature/your-feature-name
    ```
 
-2. Update documentation when:
-   - Starting a new development session
-   - Adding new features or components
-   - Making significant architectural changes
-   - Learning something new about the project
+## Documentation
 
-3. Keep dependencies updated:
-   ```bash
-   npm update
-   ```
+- [Project Documentation](./README.md)
+- [Contributing Guidelines](../CONTRIBUTING.md)
+- [Machine Management](./machine-management.md)
+- [Documentation Structure](./documentation-structure.md)
 
-## Getting Help
+## Common Tasks
 
-1. Check the following resources:
-   - `docs/machine-management.md` for machine setup issues
-   - `docs/automation-rules.md` for documentation guidelines
-   - Session notes for historical context
-   - Learning journal for past solutions
+### Adding a New Node
+1. Create node component in `src/components/`
+2. Register node in `src/nodes/index.ts`
+3. Add node documentation
+4. Test node functionality
 
-2. Common issues and solutions are documented in:
-   - `docs/learning/learning-journal.md`
-   - Individual session notes
+### Modifying Network Behavior
+1. Update network configuration in `src/config/`
+2. Modify network handlers in `src/handlers/`
+3. Test changes
+4. Update documentation
 
-## Moving to a New Project
+## Troubleshooting
 
-To reuse this setup in a new project:
+### Common Issues
+1. **Server won't start**
+   - Check Node.js version
+   - Verify port availability
+   - Check environment variables
 
-1. Copy the initialization script:
-   ```bash
-   mkdir -p new-project/scripts
-   cp scripts/init-machine-management.ts new-project/scripts/
-   ```
+2. **Build errors**
+   - Clear npm cache: `npm cache clean --force`
+   - Delete node_modules: `rm -rf node_modules`
+   - Reinstall dependencies: `npm install`
 
-2. Initialize the new project:
-   ```bash
-   cd new-project
-   npm init -y
-   npx ts-node scripts/init-machine-management.ts
-   ```
-
-3. Customize for the new project:
-   - Update project-specific details in documentation
-   - Modify machine requirements as needed
-   - Add project-specific scripts and automation
+3. **Network errors**
+   - Check network configuration
+   - Verify node connections
+   - Review error logs
 
 ## Next Steps
 
-1. Review the complete documentation in `docs/README.md`
-2. Set up your development environment
-3. Start your first development session
-4. Begin documenting your project journey
+1. Review [Documentation Structure](./documentation-structure.md)
+2. Explore [Machine Management](./machine-management.md)
+3. Read [Contributing Guidelines](../CONTRIBUTING.md)
+4. Join the development community
 
-Remember: The documentation system is designed to evolve with your project. Keep it updated and it will serve as a valuable resource throughout your development process. 
+## Support
+
+- Create an issue in the repository
+- Check existing documentation
+- Contact the development team
+
+## Related Documentation
+
+- [Project Standards](./project-standards.md)
+- [Error Handling](./errors/README.md)
+- [Performance Guide](./performance/README.md)
+- [Learning System](./learning/README.md)

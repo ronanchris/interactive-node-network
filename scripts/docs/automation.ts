@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { execSync } from 'child_process';
 import { machineSetup } from '../setup-machine';
+import { createHash } from 'crypto';
 
 interface DocumentationCheck {
   type: 'learning' | 'session' | 'readme' | 'glossary' | 'machine_check';
@@ -17,12 +18,76 @@ interface DocumentationUpdate {
   timestamp: string;
 }
 
+interface ChecksumEntry {
+  hash: string;
+  last_checked: string;
+  last_modified: string;
+}
+
+interface ChecksumMap {
+  [key: string]: ChecksumEntry;
+}
+
 class DocumentationAutomation {
   private readonly rootDir: string;
   private updates: DocumentationUpdate[] = [];
+  private checksums: ChecksumMap = {};
+  private readonly CHECKSUM_FILE = '.checksums.json';
 
   constructor(rootDir: string) {
     this.rootDir = rootDir;
+    this.loadChecksums();
+  }
+
+  /**
+   * Load existing checksums
+   */
+  private loadChecksums(): void {
+    try {
+      const content = readFileSync(join(this.rootDir, this.CHECKSUM_FILE), 'utf8');
+      this.checksums = JSON.parse(content);
+    } catch (error) {
+      console.warn('No existing checksums found, creating new file');
+      this.checksums = {};
+    }
+  }
+
+  /**
+   * Generate SHA-256 hash for a file
+   */
+  private generateHash(filePath: string): string {
+    const content = readFileSync(join(this.rootDir, filePath), 'utf8');
+    return createHash('sha256').update(content).digest('hex');
+  }
+
+  /**
+   * Update checksum for a file
+   */
+  private updateChecksum(filePath: string): void {
+    const now = new Date().toISOString();
+    const hash = this.generateHash(filePath);
+    
+    this.checksums[filePath] = {
+      hash,
+      last_checked: now,
+      last_modified: now
+    };
+
+    writeFileSync(
+      join(this.rootDir, this.CHECKSUM_FILE),
+      JSON.stringify(this.checksums, null, 2)
+    );
+  }
+
+  /**
+   * Verify file checksum
+   */
+  private verifyChecksum(filePath: string): boolean {
+    const existing = this.checksums[filePath];
+    if (!existing) return false;
+
+    const currentHash = this.generateHash(filePath);
+    return currentHash === existing.hash;
   }
 
   /**
@@ -188,21 +253,79 @@ ${nextSteps.map(step => `- ${step}`).join('\n')}
   }
 
   /**
-   * Verify documentation health
+   * Check documentation health including checksums
    */
   public async checkHealth(): Promise<boolean> {
-    try {
-      // Run all automated checks
-      execSync('npm run check-env');
-      execSync('npm run generate-diagrams');
-      
-      // Add more health checks as needed
-      
-      return true;
-    } catch (error) {
-      console.error('Documentation health check failed:', error);
-      return false;
+    const checks = [
+      this.checkGlossaryHealth(),
+      this.checkLearningHealth(),
+      this.checkSessionHealth(),
+      this.verifyAllChecksums()
+    ];
+
+    return (await Promise.all(checks)).every(result => result);
+  }
+
+  /**
+   * Verify all file checksums
+   */
+  private async verifyAllChecksums(): Promise<boolean> {
+    const files = Object.keys(this.checksums);
+    let allValid = true;
+
+    for (const file of files) {
+      if (!this.verifyChecksum(file)) {
+        console.error(`Checksum mismatch for ${file}`);
+        allValid = false;
+      }
     }
+
+    return allValid;
+  }
+
+  /**
+   * Monitor documentation for changes
+   */
+  public async startMonitoring(): Promise<void> {
+    // Monitor documentation files for changes
+    const chokidar = require('chokidar');
+    const watcher = chokidar.watch(join(this.rootDir, 'docs'), {
+      ignored: /(^|[\/\\])\../,
+      persistent: true
+    });
+
+    watcher
+      .on('change', async (path: string) => {
+        const relativePath = path.replace(this.rootDir + '/', '');
+        console.log(`File ${relativePath} has been changed`);
+        this.updateChecksum(relativePath);
+        await this.checkHealth();
+      })
+      .on('add', async (path: string) => {
+        const relativePath = path.replace(this.rootDir + '/', '');
+        console.log(`File ${relativePath} has been added`);
+        this.updateChecksum(relativePath);
+      });
+  }
+
+  /**
+   * Generate documentation coverage report
+   */
+  public async generateCoverageReport(): Promise<void> {
+    const report = {
+      total_files: 0,
+      files_with_readme: 0,
+      cross_references: 0,
+      missing_documentation: [] as string[],
+      outdated_checksums: [] as string[]
+    };
+
+    // Implementation details...
+    
+    writeFileSync(
+      join(this.rootDir, 'docs', 'coverage-report.md'),
+      JSON.stringify(report, null, 2)
+    );
   }
 
   private async handleMachineCheck(trigger: string): Promise<void> {
@@ -230,6 +353,83 @@ ${nextSteps.map(step => `- ${step}`).join('\n')}
       };
       
       await this.handleTrigger(check, {});
+    }
+  }
+
+  /**
+   * Check glossary health
+   */
+  private async checkGlossaryHealth(): Promise<boolean> {
+    try {
+      const glossaryPath = join(this.rootDir, 'docs', 'glossary.md');
+      const content = readFileSync(glossaryPath, 'utf8');
+      
+      // Check for required sections
+      const requiredSections = ['## Terms', '## Categories', '## Usage'];
+      const missingSection = requiredSections.find(section => !content.includes(section));
+      
+      if (missingSection) {
+        console.error(`Missing required section: ${missingSection}`);
+        return false;
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Glossary health check failed:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Check learning documentation health
+   */
+  private async checkLearningHealth(): Promise<boolean> {
+    try {
+      const learningPath = join(this.rootDir, 'docs', 'learning');
+      const files = ['README.md', 'learning-journal.md', 'ai-interaction-patterns.md'];
+      
+      for (const file of files) {
+        const filePath = join(learningPath, file);
+        if (!this.verifyChecksum(join('docs/learning', file))) {
+          console.error(`Learning file ${file} has been modified without updating checksum`);
+          return false;
+        }
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Learning health check failed:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Check session documentation health
+   */
+  private async checkSessionHealth(): Promise<boolean> {
+    try {
+      const sessionsPath = join(this.rootDir, 'SESSIONS.md');
+      const content = readFileSync(sessionsPath, 'utf8');
+      
+      // Check for required session elements
+      const requiredElements = [
+        '## Session Summary',
+        '### Duration',
+        '### Key Accomplishments',
+        '### Current Status'
+      ];
+      
+      const missingElement = requiredElements.find(element => !content.includes(element));
+      
+      if (missingElement) {
+        console.error(`Missing required session element: ${missingElement}`);
+        return false;
+      }
+      
+      return true;
+    } catch (error) {
+      console.error('Session health check failed:', error);
+      return false;
     }
   }
 }

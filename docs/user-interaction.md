@@ -1,108 +1,194 @@
 # User Interaction Guidelines
 
-This document outlines the rules and best practices for user interaction in the Interactive Node Network project.
+This document outlines the guidelines for user interaction in the Interactive Node Network project.
 
-## 1. Explicit Acceptance Instructions
+## Core Principles
 
-When proposing changes or actions that require user approval:
+### Clarity
+- Clear communication
+- Simple instructions
+- Consistent terminology
+- Helpful feedback
+- Error guidance
 
-- Always notify the user when "Accept all" needs to be clicked
-- Explain what changes will be accepted
-- Mention if any commands will be automatically executed after acceptance
-- Example: "Please click 'Accept all' to apply these changes. This will also trigger the git commit command we discussed."
+### Responsiveness
+- Quick responses
+- Progress indicators
+- Loading states
+- Error recovery
+- Success confirmation
 
-## 2. Code Changes
+### Accessibility
+- Screen reader support
+- Keyboard navigation
+- Color contrast
+- Font sizing
+- Focus management
 
-When making modifications to the codebase:
+## Interaction Patterns
 
-- Never make significant code changes without user approval
-- Always explain what changes are being made and why
-- Show diffs or explain the impact of changes
-- Wait for explicit confirmation before proceeding with related steps
+### Navigation
+- Clear structure
+- Intuitive flow
+- Breadcrumbs
+- Search functionality
+- Quick access
 
-## 3. Command Execution
+### Forms
+- Clear labels
+- Validation feedback
+- Error messages
+- Required fields
+- Help text
 
-When running commands:
+### Feedback
+- Success messages
+- Error notifications
+- Progress updates
+- Status indicators
+- Confirmation dialogs
 
-- Always show commands before executing them
-- Explain what each command does
-- Indicate if commands require user approval
-- Warn about any potential risks or side effects
+## Visual Design
 
-## 4. Task Interruptions
+### Layout
+- Consistent grid
+- Clear hierarchy
+- White space
+- Responsive design
+- Mobile-first
 
-When interrupted during a task by a user question:
+### Typography
+- Readable fonts
+- Clear hierarchy
+- Consistent sizing
+- Proper contrast
+- Line spacing
 
-1. Acknowledge the question first
-2. Ask if the user would like to:
-   - Complete the previous task first
-   - Address the new question immediately
-   - Handle both in parallel if possible
+### Colors
+- Brand colors
+- Semantic colors
+- Contrast ratios
+- Color blindness
+- Dark mode support
 
-Example: "I notice you have a question about X, but I was in the middle of updating Y. Would you like me to:
-1. Finish updating Y first?
-2. Address your question about X now?
-3. Handle both if possible?"
+## Error Handling
 
-This ensures:
-- No tasks are left incomplete
-- Clear communication is maintained
-- All questions are addressed
-- Work remains organized
+### Prevention
+- Clear instructions
+- Input validation
+- Confirmation dialogs
+- Undo functionality
+- Auto-save
 
-## 5. Context Management
+### Recovery
+- Clear error messages
+- Recovery options
+- Help resources
+- Contact support
+- Data preservation
 
-- Keep track of interrupted tasks to ensure completion
-- Document current progress when switching tasks
-- Reference relevant previous discussions when needed
-- Maintain clear task priorities
+### Communication
+- User-friendly messages
+- Technical details
+- Next steps
+- Support options
+- Documentation links
 
-## 6. Communication Style
+## Performance
 
-- Use clear, concise language
-- Provide examples when explaining concepts
-- Break down complex topics into manageable parts
-- Ask for clarification when needed
-- Maintain professional but friendly tone
+### Loading
+- Progress indicators
+- Skeleton screens
+- Lazy loading
+- Caching
+- Optimizations
 
-## 7. Error Handling
+### Responsiveness
+- Quick feedback
+- Smooth animations
+- Debouncing
+- Throttling
+- Background processing
 
-When encountering errors:
+### Offline Support
+- Data persistence
+- Offline functionality
+- Sync mechanisms
+- Error recovery
+- Status indicators
 
-- Explain the error in plain language
-- Provide context about what caused it
-- Suggest possible solutions
-- Ask for user preference on how to proceed
+## Documentation
 
-## 8. Progress Updates
+### User Guide
+- Getting started
+- Basic usage
+- Advanced features
+- Troubleshooting
+- FAQs
 
-Regularly provide:
+### API Documentation
+- Endpoints
+- Parameters
+- Responses
+- Examples
+- Error codes
 
-- Clear status updates
-- Information about any blockers
-- Suggested next steps
-- Time estimates when relevant
+### Release Notes
+- New features
+- Improvements
+- Bug fixes
+- Breaking changes
+- Migration guides
 
-## 9. Documentation
+## Best Practices
 
-- Update relevant documentation when making changes
-- Explain where to find additional information
-- Reference related documentation when appropriate
-- Suggest documentation improvements when needed
+### Design
+- Consistent patterns
+- Clear hierarchy
+- Visual feedback
+- Accessibility
+- Responsive design
 
-## 10. Learning Opportunities
+### Development
+- Clean code
+- Performance
+- Testing
+- Documentation
+- Maintenance
 
-When encountering new concepts or techniques:
+### Testing
+- User testing
+- Accessibility
+- Performance
+- Cross-browser
+- Mobile devices
 
-- Proactively identify potential learning opportunities
-- Ask if the user would like to document the learning:
-  ```
-  "I notice we're using [concept] for the first time. Would you like me to add this to our learning journal? (y/n)"
-  ```
-- If yes:
-  1. Pause current task if appropriate
-  2. Create/update entry in [`learning-journal.md`](./learning/learning-journal.md)
-  3. Add cross-references in relevant documentation
-  4. Resume task with clear context
+## Learning System
 
-See [Educational Support Guidelines](./educational-support.md) for detailed documentation practices. 
+### User Feedback
+- Usage analytics
+- Error tracking
+- User surveys
+- Feature requests
+- Bug reports
+
+### Continuous Improvement
+- Regular updates
+- Performance monitoring
+- User feedback
+- A/B testing
+- Iterative design
+
+### Documentation
+- Keep current
+- User feedback
+- Examples
+- Tutorials
+- Best practices
+
+## Related Documentation
+
+- [`learning-journal.md`](./learning/learning-journal.md)
+- [Educational Support Guidelines](./educational-support.md)
+- [Documentation Best Practices](./documentation-best-practices.md)
+- [Project Standards](./project-standards.md) 

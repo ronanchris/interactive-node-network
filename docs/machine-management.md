@@ -1,190 +1,122 @@
-# Machine Configuration Management System
+# Machine Management
+
+This document outlines the guidelines and best practices for managing system resources in the Interactive Node Network project.
 
 ## Overview
-This document details our robust system for managing development environments across multiple machines. The system provides automated detection, setup, and verification of development environments, ensuring consistency and reducing setup time for new machines.
 
-## Core Components
+Machine management encompasses all aspects of system resource allocation, monitoring, and optimization to ensure optimal performance of the Interactive Node Network.
 
-### 1. Machine Configuration Storage
-- **Location**: `.machine-config.json`
-- **Purpose**: Stores machine-specific configurations and shared requirements
-- **Structure**:
-  ```json
-  {
-    "machines": {
-      "[machine-id]": {
-        "identifier": "string",
-        "osVersion": "string",
-        "shell": "string",
-        "workspacePath": "string",
-        "nodeVersion": "string",
-        "requiredTools": ["string"],
-        "configurations": {
-          "[tool]": {
-            "type": "string",
-            "configFile": "string",
-            "required": boolean
-          }
-        },
-        "environmentVariables": {
-          "required": ["string"],
-          "optional": ["string"]
-        },
-        "lastVerified": "ISO date string"
-      }
-    },
-    "shared": {
-      "requiredFiles": ["string"],
-      "syncExclude": ["string"]
-    }
-  }
-  ```
+## Contents
 
-### 2. Machine Setup Script
-- **Location**: `scripts/setup-machine.ts`
-- **Purpose**: Handles machine detection, setup, and verification
-- **Key Features**:
-  - Automatic machine identification
-  - Environment change detection
-  - Tool installation automation
-  - Configuration verification
-  - Shell setup
-  - Git configuration
+- [Resource Allocation](#resource-allocation)
+- [Memory Management](#memory-management)
+- [CPU Utilization](#cpu-utilization)
+- [Storage Management](#storage-management)
+- [Network Resources](#network-resources)
+- [Monitoring and Alerts](#monitoring-and-alerts)
 
-### 3. Documentation Automation
-- **Location**: `scripts/docs/automation.ts`
-- **Purpose**: Integrates machine management with documentation
-- **Features**:
-  - Machine change detection
-  - Documentation updates
-  - Session tracking
-  - Learning capture
-  - Configuration history
+## Resource Allocation
 
-### 4. Testing Framework
-- **Location**: `scripts/tests/test-machine-detection.ts`
-- **Purpose**: Validates machine detection and setup
-- **Test Cases**:
-  - New machine detection
-  - Environment changes
-  - Workspace modifications
-  - Configuration updates
+### Memory Allocation
+- Set appropriate memory limits for Node.js processes
+- Implement garbage collection optimization
+- Monitor memory leaks
+- Use memory profiling tools
 
-## Automation Rules
+### CPU Management
+- Implement CPU throttling when necessary
+- Balance workloads across available cores
+- Monitor CPU usage patterns
+- Set process priorities
 
-### Machine Detection Triggers
-1. **New Session Start**
-   - Compare current machine info with stored configurations
-   - Check for environment changes
-   - Verify tool installations
+### Storage Guidelines
+- Implement efficient data storage strategies
+- Regular cleanup of temporary files
+- Disk space monitoring
+- Backup procedures
 
-2. **Environment Changes**
-   - OS version updates
-   - Shell changes
-   - Workspace path modifications
-   - Node.js version changes
+## Memory Management
 
-3. **Configuration Updates**
-   - Tool installations
-   - Environment variables
-   - Shell configurations
-   - Git settings
+### Best Practices
+- Use memory pools for frequent allocations
+- Implement proper cleanup procedures
+- Monitor heap usage
+- Set up memory thresholds
 
-## Available Commands
+### Memory Leaks
+- Detection strategies
+- Prevention methods
+- Regular auditing
+- Automated alerts
 
-```bash
-# Setup new machine or update existing
-npm run setup-machine
+## CPU Utilization
 
-# Verify current machine configuration
-npm run verify-machine
+### Optimization
+- Process scheduling
+- Load balancing
+- Thread management
+- Resource limits
 
-# Run machine detection tests
-npm run test:machine-detection
-```
-
-## Implementation Details
-
-### 1. Machine Identification
-```typescript
-private generateMachineId(): string {
-  const hostname = execSync('hostname').toString().trim();
-  return `${hostname}-${platform()}`;
-}
-```
-
-### 2. Environment Change Detection
-```typescript
-public hasEnvironmentChanged(): boolean {
-  // Compare current environment with stored configuration
-  // Check OS, shell, workspace, Node.js version
-  // Return detailed change information
-}
-```
-
-### 3. Automated Setup Process
-1. Detect machine/environment
-2. Install required tools
-3. Configure development environment
-4. Verify installation
-5. Update configuration
-6. Document changes
-
-## Best Practices
-
-### 1. Configuration Management
-- Keep `.machine-config.json` in version control
-- Document machine-specific requirements
-- Regular verification of configurations
-- Backup before major changes
-
-### 2. Development Environment
-- Use version managers (nvm, homebrew)
-- Maintain consistent tool versions
-- Document environment variables
-- Regular environment verification
-
-### 3. Documentation
-- Update session notes for configuration changes
-- Document machine-specific workarounds
-- Maintain troubleshooting guides
-- Keep configuration history
-
-## Value Proposition
-
-### 1. Development Efficiency
-- **Reduced Setup Time**: Automated installation and configuration
-- **Consistency**: Same development environment across machines
-- **Verification**: Automated checks prevent environment issues
-
-### 2. Team Collaboration
-- **Documentation**: Clear record of environment requirements
-- **Onboarding**: Easy setup for new team members
-- **Troubleshooting**: Detailed configuration history
-
-### 3. Quality Assurance
-- **Testing**: Comprehensive test suite for environment management
-- **Validation**: Regular verification of configurations
-- **History**: Tracked changes and updates
-
-### 4. Maintenance
-- **Updates**: Easy to update tools and configurations
-- **Monitoring**: Regular environment checks
-- **Recovery**: Quick setup after machine changes
-
-## Future Enhancements
-
-### 1. Potential Improvements
-- Backup/restore mechanism for configurations
-- More detailed environment checks
-- Automated troubleshooting
-- Integration tests for full setup process
-
-### 2. Monitoring Opportunities
-- Regular health checks
-- Configuration drift detection
-- Usage analytics
+### Monitoring
+- CPU usage tracking
 - Performance metrics
+- Bottleneck detection
+- Alert thresholds
 
-## Conclusion
-This system provides a robust foundation for managing development environments across multiple machines. It combines automation, documentation, and testing to ensure consistent and efficient development environments, reducing setup time and preventing configuration issues. 
+## Storage Management
+
+### Data Organization
+- File system structure
+- Temporary storage
+- Cache management
+- Cleanup routines
+
+### Backup Procedures
+- Regular backups
+- Incremental backups
+- Recovery procedures
+- Verification processes
+
+## Network Resources
+
+### Bandwidth Management
+- Traffic monitoring
+- Bandwidth allocation
+- Quality of Service (QoS)
+- Network optimization
+
+### Connection Management
+- Connection pooling
+- Load balancing
+- Timeout handling
+- Error recovery
+
+## Monitoring and Alerts
+
+### System Monitoring
+- Resource usage tracking
+- Performance metrics
+- Health checks
+- Alert systems
+
+### Alert Configuration
+- Threshold settings
+- Notification rules
+- Escalation procedures
+- Response protocols
+
+## Integration
+
+This document works in conjunction with:
+- [Performance Monitoring](./performance/monitoring.md)
+- [Error Handling](./errors/README.md)
+- [Session Management](./session-management.md)
+- [Learning System](./learning/README.md)
+
+## Maintenance
+
+Regular review and updates of machine management procedures ensure:
+- Optimal resource utilization
+- Early detection of potential issues
+- Efficient problem resolution
+- Continuous system improvement 
