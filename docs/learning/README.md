@@ -1,6 +1,33 @@
-# Learning Documentation
+# Learning Resources
 
-This directory contains documentation related to learning and knowledge management in the Interactive Node Network project.
+This directory contains documentation related to learning and development in the Interactive Node Network project.
+
+## Key Documents
+
+1. [Learning Journal](learning-journal.md) - Progress tracking and insights
+2. [Advanced Automation](advanced-automation.md) - Advanced automation features
+3. [Documentation Automation](documentation-automation.md) - Documentation management
+4. [AI Interaction Patterns](ai-interaction-patterns.md) - Analysis of common vs novel AI interaction patterns
+
+## Document Relationships
+
+- Learning Journal → tracks daily progress and insights
+- Advanced Automation → details automation implementation
+- Documentation Automation → explains documentation systems
+- AI Interaction Patterns → analyzes our unique approach to AI assistance
+
+## Usage
+
+These documents serve multiple purposes:
+1. Track learning progress
+2. Document technical decisions
+3. Capture implementation details
+4. Analyze innovative approaches
+
+For the most recent learning entries, refer to the [Learning Journal](learning-journal.md).
+For technical implementation details, see [Advanced Automation](advanced-automation.md).
+For documentation practices, check [Documentation Automation](documentation-automation.md).
+For AI interaction analysis, review [AI Interaction Patterns](ai-interaction-patterns.md).
 
 ## Contents
 
