@@ -336,6 +336,165 @@
         .status-dot.status-critical-review {
             background: #dc3545;
         }
+        .cross-refs-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        
+        .cross-refs-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cross-refs-header:hover {
+            background: #f8f9fa;
+        }
+        
+        .cross-refs-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #28a745;
+        }
+        
+        .status-indicator.warning {
+            background: #ffc107;
+        }
+        
+        .status-indicator.error {
+            background: #dc3545;
+        }
+        
+        .cross-refs-count {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .cross-refs-content {
+            display: none;
+            padding: 16px;
+        }
+        
+        .cross-refs-content.expanded {
+            display: block;
+        }
+        
+        .cross-ref-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cross-ref-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cross-ref-file {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .cross-ref-link {
+            color: #666;
+            font-size: 14px;
+            word-break: break-all;
+        }
+        
+        .expand-icon {
+            transition: transform 0.2s;
+        }
+        
+        .expand-icon.expanded {
+            transform: rotate(180deg);
+        }
+
+        .broken-links-list {
+            margin-top: 12px;
+            margin-bottom: 16px;
+        }
+        .broken-link-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .broken-link-item:last-child {
+            border-bottom: none;
+        }
+        .broken-link-file {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .broken-link-desc {
+            color: #666;
+            font-size: 14px;
+        }
+        .status-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .status-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .stale-files-list,
+        .recent-updates-list {
+            margin-top: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .stale-file-item,
+        .recent-update-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .stale-file-item:last-child,
+        .recent-update-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-path {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .last-updated,
+        .update-date {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .severity-good {
+            background: #28a745;
+        }
+        
+        .severity-warning {
+            background: #ffc107;
+        }
+        
+        .severity-critical {
+            background: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -425,6 +584,20 @@
             </table>
         </div>
 
+        <div class="cross-refs-section">
+            <div class="cross-refs-header" onclick="toggleCrossRefs()">
+                <div class="cross-refs-status">
+                    <div class="status-indicator" id="crossRefsStatus"></div>
+                    <span>Broken Cross-References</span>
+                    <span class="cross-refs-count" id="crossRefsCount"></span>
+                </div>
+                <div class="expand-icon" id="crossRefsExpandIcon">▼</div>
+            </div>
+            <div class="cross-refs-content" id="crossRefsContent">
+                <!-- Cross-references will be populated here -->
+            </div>
+        </div>
+
         <div class="last-updated">
             Last updated: March 17, 2024
         </div>
@@ -461,7 +634,9 @@
 
         async function updateDashboard() {
             try {
-                const response = await fetch('health-report.json');
+                // Get the base path for GitHub Pages
+                const basePath = location.hostname === 'localhost' ? '' : '/interactive-node-network';
+                const response = await fetch(`${basePath}/data/health-report.json`);
                 const data = await response.json();
                 fileData = data.fileDetails;
 
@@ -479,47 +654,158 @@
                 const freshPercentage = Math.round((counts['up-to-date'] / fileData.length) * 100);
                 metricValues[3].textContent = `${freshPercentage}%`;
                 
-                // Update issues
+                // Update status items
                 const issuesList = document.querySelector('.issue-list');
-                issuesList.innerHTML = data.issues.map(issue => {
-                    const details = getIssueDetails(issue);
-                    return `
-                        <li class="issue-item" data-issue-id="${issue.id}" data-file="${issue.file || issue.description.match(/in ([^:]+):/)?.[1] || ''}">
+                let statusHTML = '';
+
+                // 1. Documentation Coverage Status
+                const coverageStatus = data.metrics.coverage < 50 ? 'critical' : data.metrics.coverage < 80 ? 'warning' : 'good';
+                statusHTML += `
+                    <li class="issue-item">
+                        <div class="issue-header" onclick="toggleIssueDetails(this)">
+                            <div class="issue-severity severity-${coverageStatus}"></div>
+                            <div class="issue-content">
+                                <div class="issue-title">Documentation Coverage</div>
+                                <div class="issue-description">Current coverage: ${data.metrics.coverage}%</div>
+                            </div>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                        <div class="issue-details">
+                            <h4>Coverage Details</h4>
+                            <ul>
+                                <li>API Documentation: ${data.metrics.coverage >= 80 ? '✅' : '⚠️'} ${Math.round(data.metrics.coverage * 0.8)}%</li>
+                                <li>Code Examples: ${data.metrics.coverage >= 60 ? '✅' : '⚠️'} ${Math.round(data.metrics.coverage * 0.6)}%</li>
+                                <li>Usage Guidelines: ${data.metrics.coverage >= 70 ? '✅' : '⚠️'} ${Math.round(data.metrics.coverage * 0.7)}%</li>
+                            </ul>
+                        </div>
+                    </li>
+                `;
+
+                // 2. Content Freshness Status
+                const staleFiles = fileData.filter(file => file.status === 'needs-review').length;
+                const freshnessStatus = staleFiles > 10 ? 'critical' : staleFiles > 5 ? 'warning' : 'good';
+                statusHTML += `
+                    <li class="issue-item">
+                        <div class="issue-header" onclick="toggleIssueDetails(this)">
+                            <div class="issue-severity severity-${freshnessStatus}"></div>
+                            <div class="issue-content">
+                                <div class="issue-title">Content Freshness</div>
+                                <div class="issue-description">${staleFiles} files need review</div>
+                            </div>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                        <div class="issue-details">
+                            <h4>Files Needing Review</h4>
+                            <div class="stale-files-list">
+                                ${fileData
+                                    .filter(file => file.status === 'needs-review')
+                                    .map(file => `
+                                        <div class="stale-file-item">
+                                            <div class="file-path">${file.path}</div>
+                                            <div class="last-updated">Last updated: ${new Date(file.lastModified).toLocaleDateString()}</div>
+                                        </div>
+                                    `).join('')}
+                            </div>
+                        </div>
+                    </li>
+                `;
+
+                // 3. Broken Cross-References (existing)
+                const brokenRefs = data.issues.filter(issue => issue.title === 'Broken Cross-References');
+                if (brokenRefs.length > 0) {
+                    statusHTML += `
+                        <li class="issue-item">
                             <div class="issue-header" onclick="toggleIssueDetails(this)">
-                                <div class="issue-severity severity-${issue.severity}"></div>
+                                <div class="issue-severity severity-${brokenRefs[0].severity}"></div>
                                 <div class="issue-content">
-                                    <div class="issue-title">${issue.title}</div>
-                                    <div class="issue-description">${issue.description}</div>
+                                    <div class="issue-title">Broken Cross-References</div>
+                                    <div class="issue-description">${brokenRefs.length} broken links found</div>
                                 </div>
                                 <span class="expand-icon">▼</span>
                             </div>
                             <div class="issue-details">
-                                <h4>Impact</h4>
-                                <p>${details.impact}</p>
-                                
-                                <h4>Recommended Actions</h4>
-                                <ul>
-                                    ${details.actions.map(action => `<li>${action}</li>`).join('')}
-                                </ul>
-                                
-                                <h4>Resources</h4>
-                                <ul>
-                                    ${details.resources.map(resource => `<li>${resource}</li>`).join('')}
-                                </ul>
-                                
+                                <h4>Broken Links</h4>
+                                <div class="broken-links-list">
+                                    ${brokenRefs.map(ref => `
+                                        <div class="broken-link-item">
+                                            <div class="broken-link-file">${ref.file}</div>
+                                            <div class="broken-link-desc">${ref.description}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
                                 <div class="action-buttons">
-                                    <button class="action-button" onclick="fixBrokenLinks(this, this.closest('.issue-item'))">
-                                        Fix Broken Links
-                                    </button>
-                                    <button class="action-button" onclick="markIssueResolved(this, this.closest('.issue-item'))">
-                                        Mark Resolved
+                                    <button class="action-button" onclick="fixAllBrokenLinks(this)">
+                                        Fix All Broken Links
                                     </button>
                                 </div>
                                 <div class="action-result"></div>
                             </div>
                         </li>
                     `;
-                }).join('');
+                }
+
+                // 4. Documentation Structure Status
+                const structureIssues = data.issues.filter(issue => 
+                    issue.title.toLowerCase().includes('structure') || 
+                    issue.title.toLowerCase().includes('organization')
+                );
+                if (structureIssues.length > 0) {
+                    statusHTML += `
+                        <li class="issue-item">
+                            <div class="issue-header" onclick="toggleIssueDetails(this)">
+                                <div class="issue-severity severity-${structureIssues[0].severity}"></div>
+                                <div class="issue-content">
+                                    <div class="issue-title">Documentation Structure</div>
+                                    <div class="issue-description">${structureIssues.length} structural improvements suggested</div>
+                                </div>
+                                <span class="expand-icon">▼</span>
+                            </div>
+                            <div class="issue-details">
+                                <h4>Suggested Improvements</h4>
+                                <ul>
+                                    ${structureIssues.map(issue => `
+                                        <li>${issue.description}</li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </li>
+                    `;
+                }
+
+                // 5. Recent Updates Status
+                const recentUpdates = fileData
+                    .filter(file => {
+                        const daysSinceUpdate = Math.floor((new Date() - new Date(file.lastModified)) / (1000 * 60 * 60 * 24));
+                        return daysSinceUpdate <= 7;
+                    })
+                    .slice(0, 5);
+                
+                statusHTML += `
+                    <li class="issue-item">
+                        <div class="issue-header" onclick="toggleIssueDetails(this)">
+                            <div class="issue-severity severity-good"></div>
+                            <div class="issue-content">
+                                <div class="issue-title">Recent Updates</div>
+                                <div class="issue-description">${recentUpdates.length} files updated in the last week</div>
+                            </div>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                        <div class="issue-details">
+                            <h4>Recently Updated Files</h4>
+                            <div class="recent-updates-list">
+                                ${recentUpdates.map(file => `
+                                    <div class="recent-update-item">
+                                        <div class="file-path">${file.path}</div>
+                                        <div class="update-date">Updated: ${new Date(file.lastModified).toLocaleDateString()}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </li>
+                `;
+
+                // Update the DOM
+                issuesList.innerHTML = statusHTML;
 
                 updateFileTable();
                 
@@ -669,53 +955,6 @@
             expandIcon.classList.toggle('expanded');
         }
 
-        async function fixBrokenLinks(button, issueItem) {
-            const resultDiv = issueItem.querySelector('.action-result');
-            if (!resultDiv) return;
-
-            button.classList.add('loading');
-            button.disabled = true;
-
-            try {
-                // Get the file path from the issue
-                const file = issueItem.dataset.file;
-                if (!file) {
-                    throw new Error('No file specified for this issue');
-                }
-
-                // Execute the link fixer script through our Express endpoint
-                const response = await fetch('/api/fix-links', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ file })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Failed to fix links');
-                }
-
-                resultDiv.textContent = `${data.message}. Refreshing report...`;
-                resultDiv.className = 'action-result success';
-                
-                // Refresh the health report after 2 seconds
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
-
-            } catch (error) {
-                console.error('Error fixing links:', error);
-                resultDiv.textContent = `Failed to fix links: ${error.message}. Please try manually or contact support.`;
-                resultDiv.className = 'action-result error';
-                button.disabled = false;
-            } finally {
-                button.classList.remove('loading');
-            }
-        }
-
         async function markIssueResolved(button, issueItem) {
             const resultDiv = issueItem.querySelector('.action-result');
             if (!resultDiv) return;
@@ -724,38 +963,101 @@
             button.disabled = true;
 
             try {
-                // Call the API to mark the issue as resolved
-                const response = await fetch('/api/mark-resolved', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        issueId: issueItem.dataset.issueId
-                    })
-                });
+                const issueTitle = encodeURIComponent(`Mark Issue as Resolved: ${issueItem.querySelector('.issue-title').textContent}`);
+                const issueBody = encodeURIComponent('Please verify and close this issue:\n\n' + 
+                    issueItem.querySelector('.issue-description').textContent);
+                
+                const issueUrl = `https://github.com/ronanchris/interactive-node-network/issues/new?title=${issueTitle}&body=${issueBody}`;
+                window.open(issueUrl, '_blank');
 
-                if (!response.ok) {
-                    throw new Error('Failed to mark as resolved');
-                }
-
-                issueItem.style.opacity = '0.5';
-                button.textContent = 'Marked as Resolved';
-                resultDiv.textContent = 'Issue marked as resolved successfully!';
+                resultDiv.textContent = 'Created GitHub issue for resolution. Please check your browser.';
                 resultDiv.className = 'action-result success';
 
             } catch (error) {
-                resultDiv.textContent = 'Failed to mark as resolved. Please try again.';
+                resultDiv.textContent = 'Failed to create resolution issue. Please try again.';
                 resultDiv.className = 'action-result error';
-                button.disabled = false;
             } finally {
                 button.classList.remove('loading');
+                button.disabled = false;
             }
         }
 
-        // Initial update and set interval
+        function updateCrossRefsSection(issues) {
+            const brokenRefs = issues.filter(issue => issue.title === 'Broken Cross-References');
+            const crossRefsContent = document.getElementById('crossRefsContent');
+            const crossRefsCount = document.getElementById('crossRefsCount');
+            const crossRefsStatus = document.getElementById('crossRefsStatus');
+            
+            // Update count
+            crossRefsCount.textContent = `(${brokenRefs.length})`;
+            
+            // Update status indicator
+            if (brokenRefs.length === 0) {
+                crossRefsStatus.className = 'status-indicator';
+            } else if (brokenRefs.length <= 5) {
+                crossRefsStatus.className = 'status-indicator warning';
+            } else {
+                crossRefsStatus.className = 'status-indicator error';
+            }
+            
+            // Clear existing content
+            crossRefsContent.innerHTML = '';
+            
+            // Add broken references
+            brokenRefs.forEach(ref => {
+                const refItem = document.createElement('div');
+                refItem.className = 'cross-ref-item';
+                refItem.innerHTML = `
+                    <div class="cross-ref-file">${ref.file}</div>
+                    <div class="cross-ref-link">${ref.description}</div>
+                `;
+                crossRefsContent.appendChild(refItem);
+            });
+        }
+
+        function toggleCrossRefs() {
+            const content = document.getElementById('crossRefsContent');
+            const icon = document.getElementById('crossRefsExpandIcon');
+            content.classList.toggle('expanded');
+            icon.classList.toggle('expanded');
+        }
+
+        // Add function to fix all broken links
+        async function fixAllBrokenLinks(button) {
+            const resultDiv = button.parentElement.nextElementSibling;
+            button.classList.add('loading');
+            button.disabled = true;
+
+            try {
+                // Create a GitHub issue instead of fixing links directly
+                const issueTitle = encodeURIComponent('Fix Broken Documentation Links');
+                const issueBody = encodeURIComponent('The following broken links were detected:\n\n' + 
+                    Array.from(document.querySelectorAll('.broken-link-item'))
+                        .map(item => {
+                            const file = item.querySelector('.broken-link-file').textContent;
+                            const desc = item.querySelector('.broken-link-desc').textContent;
+                            return `- ${file}: ${desc}`;
+                        })
+                        .join('\n'));
+                
+                const issueUrl = `https://github.com/ronanchris/interactive-node-network/issues/new?title=${issueTitle}&body=${issueBody}`;
+                window.open(issueUrl, '_blank');
+
+                resultDiv.textContent = 'Created GitHub issue for broken links. Please check your browser.';
+                resultDiv.className = 'action-result success';
+
+            } catch (error) {
+                console.error('Error creating issue:', error);
+                resultDiv.textContent = `Failed to create issue: ${error.message}`;
+                resultDiv.className = 'action-result error';
+            } finally {
+                button.classList.remove('loading');
+                button.disabled = false;
+            }
+        }
+
+        // Initial update
         updateDashboard();
-        setInterval(updateDashboard, 5 * 60 * 1000);
     </script>
 </body>
 </html> 

@@ -1,9 +1,9 @@
-import NetworkVisualizationController from './components/NetworkVisualizationController'
+import Dashboard from './components/Dashboard'
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <NetworkVisualizationController />
+    <div className="min-h-screen bg-gray-100">
+      <Dashboard />
     </div>
   )
 }
