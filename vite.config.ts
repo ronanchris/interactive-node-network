@@ -35,7 +35,9 @@ export default defineConfig({
     reportCompressedSize: false,  // Skip reporting compressed size for faster builds
     rollupOptions: {
       output: {
-        manualChunks: undefined
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-colorful']
+        }
       }
     }
   },

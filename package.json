@@ -82,9 +82,9 @@
     "docs:generate-changelog": "ts-node scripts/docs/generate-changelog.ts",
     "docs:check-coverage": "ts-node scripts/docs/coverage.ts",
     "docs:maintain": "npm run docs:health && npm run docs:update-timestamps && npm run docs:check-coverage",
-    "build:dashboard": "npm run docs:health && mkdir -p docs/status/data && cp docs/status/health-report.json docs/status/data/",
+    "build:dashboard": "npm run docs:health && mkdir -p docs/status/data && cp docs/status/health-report.json docs/status/data/ && vite build",
     "predeploy": "npm run build:dashboard",
-    "deploy": "gh-pages -d docs/status"
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
