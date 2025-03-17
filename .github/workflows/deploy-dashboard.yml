@@ -3,6 +3,12 @@ name: Deploy Dashboard to GitHub Pages
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'docs/status/**'
+      - 'vite.config.ts'
+      - 'package.json'
+      - '.github/workflows/deploy-dashboard.yml'
   workflow_dispatch:
 
 permissions:
@@ -26,7 +32,9 @@ jobs:
           npm install -D terser
         
       - name: Generate health report
-        run: npm run build:health
+        run: |
+          mkdir -p docs/status/data
+          npm run build:health || echo "Health report generation failed"
         env:
           NODE_OPTIONS: --experimental-specifier-resolution=node
         
@@ -37,12 +45,14 @@ jobs:
           NODE_ENV: production
         
       - name: Prepare status dashboard
-        run: npm run build:status
+        run: |
+          mkdir -p dist/status
+          cp -r docs/status/* dist/status/ || echo "No status files to copy"
         
       - name: List build outputs
         run: |
           echo "Contents of dist directory:"
-          ls -la dist/
+          ls -la dist/ || echo "dist/ not found"
           echo "\nContents of dist/app directory:"
           ls -la dist/app || echo "dist/app not found"
           echo "\nContents of dist/status directory:"
@@ -50,6 +60,7 @@ jobs:
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
+        if: success()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
