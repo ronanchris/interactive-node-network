@@ -59,8 +59,8 @@ interface Props {
   nodeCount?: number;
   customTheme?: {
     background: string;
-    nodeColor: string | { from: string; to: string };
-    connectionColor: string;
+    nodeColor: string;
+    connectionColor: string | { from: string; to: string };
     pulseColor: string;
     nodeBrightness: number;
   } | null;
@@ -68,6 +68,9 @@ interface Props {
   connectionCapacity?: number;
   connectionOpacity?: number;
   lineThickness?: number;
+  enableGradient?: boolean;
+  gradientStart?: string;
+  gradientEnd?: string;
 }
 
 const NodeNetworkWrapper: React.FC<Props> = ({
@@ -80,7 +83,10 @@ const NodeNetworkWrapper: React.FC<Props> = ({
   nodeSize = 4,
   connectionCapacity = 300,
   connectionOpacity = 20,
-  lineThickness = 1
+  lineThickness = 1,
+  enableGradient = false,
+  gradientStart = '',
+  gradientEnd = ''
 }) => {
   return (
     <div className="w-full" style={{ height }}>
@@ -94,6 +100,9 @@ const NodeNetworkWrapper: React.FC<Props> = ({
         connectionCapacity={connectionCapacity}
         connectionOpacity={connectionOpacity}
         lineThickness={lineThickness}
+        enableGradient={enableGradient}
+        gradientStart={gradientStart}
+        gradientEnd={gradientEnd}
       />
     </div>
   );

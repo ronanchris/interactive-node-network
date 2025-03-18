@@ -310,121 +310,130 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
       ctx.save();
       ctx.scale(dpr, dpr);
 
-      // Create new connections more frequently
-      if (currentTime - lastConnectionTime.current > 200) {
+      // Create new connections
+      if (currentTime - lastConnectionTime.current > 100) {
         const nodes = nodesRef.current;
         if (nodes.length > 1) {
-          // Only create new connections if we're under capacity
-          if (connectionsRef.current.length < connectionCapacity) {
-            // Try to create a new connection
-            const fromNode = Math.floor(Math.random() * nodes.length);
-            let toNode;
-            do {
-              toNode = Math.floor(Math.random() * nodes.length);
-            } while (toNode === fromNode);
-
-            // Check if connection already exists
-            const connectionExists = connectionsRef.current.some(
-              conn => (conn.fromNode === fromNode && conn.toNode === toNode) ||
-                      (conn.fromNode === toNode && conn.toNode === fromNode)
-            );
-
-            if (!connectionExists) {
-              connectionsRef.current.push({
-                fromNode,
-                toNode,
-                progress: 0,
-                active: true,
-                startTime: currentTime,
-                duration: 1000,
-                opacity: 0,
-                completed: false
-              });
-            }
-          } else {
-            // Remove oldest completed connection if at capacity
+          // Remove excess connections if we're over capacity
+          if (connectionsRef.current.length > connectionCapacity) {
+            const excess = connectionsRef.current.length - connectionCapacity;
             const completedConnections = connectionsRef.current.filter(conn => conn.completed);
             if (completedConnections.length > 0) {
-              const oldestConnection = completedConnections
-                .sort((a, b) => a.startTime - b.startTime)[0];
-              
-              connectionsRef.current = connectionsRef.current.filter(
-                conn => conn !== oldestConnection
-              );
+              completedConnections
+                .sort((a, b) => a.startTime - b.startTime)
+                .slice(0, excess)
+                .forEach(conn => {
+                  connectionsRef.current = connectionsRef.current.filter(c => c !== conn);
+                });
+            }
+          }
+
+          // Create new connections if under capacity
+          if (connectionsRef.current.length < connectionCapacity) {
+            // Find nodes that are close enough to connect
+            for (let i = 0; i < nodes.length; i++) {
+              for (let j = i + 1; j < nodes.length; j++) {
+                if (connectionsRef.current.length >= connectionCapacity) break;
+                
+                const node1 = nodes[i];
+                const node2 = nodes[j];
+                
+                // Check distance between nodes
+                const dx = node2.x - node1.x;
+                const dy = node2.y - node1.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                // Only connect nodes within reasonable distance
+                if (distance < 150) {
+                  // Check if connection already exists
+                  const connectionExists = connectionsRef.current.some(
+                    conn => (conn.fromNode === i && conn.toNode === j) ||
+                           (conn.fromNode === j && conn.toNode === i)
+                  );
+
+                  if (!connectionExists) {
+                    connectionsRef.current.push({
+                      fromNode: i,
+                      toNode: j,
+                      progress: 0,
+                      active: true,
+                      startTime: currentTime,
+                      duration: 800,
+                      opacity: 0,
+                      completed: false
+                    });
+                  }
+                }
+              }
             }
           }
           lastConnectionTime.current = currentTime;
         }
       }
 
-      // Draw all connections
-      connectionsRef.current.forEach(conn => {
+      // Draw all connections with consistent style
+      ctx.lineWidth = lineThickness * 2; // Double the line thickness for better visibility
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      // First draw completed connections
+      connectionsRef.current.filter(conn => !conn.active).forEach(conn => {
         const fromNode = nodesRef.current[conn.fromNode];
         const toNode = nodesRef.current[conn.toNode];
 
-        // Set up consistent line style
-        ctx.lineWidth = lineThickness;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
+        const baseOpacity = connectionOpacity / 100;
+        const finalOpacity = Math.max(0.1, Math.min(1, baseOpacity * 2)); // Ensure minimum visibility
 
-        if (conn.active) {
-          // Draw animated connection
-          const elapsed = currentTime - conn.startTime;
-          const progress = Math.min(1, elapsed / conn.duration);
-          const easedProgress = easeInOutCubic(progress);
-
-          const startX = fromNode.x;
-          const startY = fromNode.y;
-          const endX = toNode.x;
-          const endY = toNode.y;
-
-          // Calculate current position
-          const currentX = startX + (endX - startX) * easedProgress;
-          const currentY = startY + (endY - startY) * easedProgress;
-
-          // Create gradient for animated connection
-          const gradient = ctx.createLinearGradient(startX, startY, currentX, currentY);
-          const finalOpacity = connectionOpacity / 100;
-
-          if (enableGradient && gradientStart && gradientEnd) {
-            gradient.addColorStop(0, adjustColorOpacity(gradientStart, finalOpacity));
-            gradient.addColorStop(1, adjustColorOpacity(gradientEnd, finalOpacity));
-          } else {
-            const baseColor = typeof theme.connectionColor === 'string' ? theme.connectionColor : theme.connectionColor.from;
-            gradient.addColorStop(0, adjustColorOpacity(baseColor, finalOpacity));
-            gradient.addColorStop(1, adjustColorOpacity(baseColor, finalOpacity));
-          }
-
-          ctx.beginPath();
-          ctx.moveTo(startX, startY);
-          ctx.lineTo(currentX, currentY);
-          ctx.strokeStyle = gradient;
-          ctx.stroke();
-
-          // Mark connection as completed when animation is done
-          if (progress >= 1) {
-            conn.active = false;
-            conn.completed = true;
-          }
-        } else {
-          // Draw completed connection
+        if (enableGradient && gradientStart && gradientEnd) {
           const gradient = ctx.createLinearGradient(fromNode.x, fromNode.y, toNode.x, toNode.y);
-          const finalOpacity = connectionOpacity / 100;
-
-          if (enableGradient && gradientStart && gradientEnd) {
-            gradient.addColorStop(0, adjustColorOpacity(gradientStart, finalOpacity));
-            gradient.addColorStop(1, adjustColorOpacity(gradientEnd, finalOpacity));
-          } else {
-            const baseColor = typeof theme.connectionColor === 'string' ? theme.connectionColor : theme.connectionColor.from;
-            gradient.addColorStop(0, adjustColorOpacity(baseColor, finalOpacity));
-            gradient.addColorStop(1, adjustColorOpacity(baseColor, finalOpacity));
-          }
-
-          ctx.beginPath();
-          ctx.moveTo(fromNode.x, fromNode.y);
-          ctx.lineTo(toNode.x, toNode.y);
+          gradient.addColorStop(0, adjustColorOpacity(gradientStart, finalOpacity));
+          gradient.addColorStop(1, adjustColorOpacity(gradientEnd, finalOpacity));
           ctx.strokeStyle = gradient;
-          ctx.stroke();
+        } else {
+          const baseColor = typeof theme.connectionColor === 'string' ? theme.connectionColor : theme.connectionColor.from;
+          ctx.strokeStyle = adjustColorOpacity(baseColor, finalOpacity);
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(fromNode.x, fromNode.y);
+        ctx.lineTo(toNode.x, toNode.y);
+        ctx.stroke();
+      });
+
+      // Then draw active connections
+      connectionsRef.current.filter(conn => conn.active).forEach(conn => {
+        const fromNode = nodesRef.current[conn.fromNode];
+        const toNode = nodesRef.current[conn.toNode];
+
+        const elapsed = currentTime - conn.startTime;
+        const progress = Math.min(1, elapsed / conn.duration);
+        const easedProgress = easeInOutCubic(progress);
+
+        const currentX = fromNode.x + (toNode.x - fromNode.x) * easedProgress;
+        const currentY = fromNode.y + (toNode.y - fromNode.y) * easedProgress;
+
+        const baseOpacity = connectionOpacity / 100;
+        const animationOpacity = easedProgress;
+        const finalOpacity = Math.max(0.1, Math.min(1, baseOpacity * 2 * animationOpacity));
+
+        if (enableGradient && gradientStart && gradientEnd) {
+          const gradient = ctx.createLinearGradient(fromNode.x, fromNode.y, currentX, currentY);
+          gradient.addColorStop(0, adjustColorOpacity(gradientStart, finalOpacity));
+          gradient.addColorStop(1, adjustColorOpacity(gradientEnd, finalOpacity));
+          ctx.strokeStyle = gradient;
+        } else {
+          const baseColor = typeof theme.connectionColor === 'string' ? theme.connectionColor : theme.connectionColor.from;
+          ctx.strokeStyle = adjustColorOpacity(baseColor, finalOpacity);
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(fromNode.x, fromNode.y);
+        ctx.lineTo(currentX, currentY);
+        ctx.stroke();
+
+        if (progress >= 1) {
+          conn.active = false;
+          conn.completed = true;
         }
       });
 

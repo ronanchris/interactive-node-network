@@ -5,8 +5,8 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 
 interface CustomTheme {
   background: string;
-  nodeColor: string | { from: string; to: string };
-  connectionColor: string;
+  nodeColor: string;
+  connectionColor: string | { from: string; to: string };
   pulseColor: string;
   nodeBrightness: number;
 }
@@ -88,13 +88,17 @@ const App: React.FC = () => {
                 mouseInteractionRadius={networkConfig.enableMouseInteraction ? networkConfig.interactionRadius : 0}
                 nodeCount={networkConfig.nodeCount}
                 nodeSize={networkConfig.nodeSize}
+                connectionCapacity={networkConfig.connectionCapacity}
+                enableGradient={networkConfig.enableGradient}
+                gradientStart={networkConfig.gradientStart}
+                gradientEnd={networkConfig.gradientEnd}
                 customTheme={{
                   background: networkConfig.backgroundColor,
-                  nodeColor: networkConfig.enableGradient 
+                  nodeColor: networkConfig.nodeColor,
+                  connectionColor: networkConfig.enableGradient 
                     ? { from: networkConfig.gradientStart, to: networkConfig.gradientEnd }
-                    : networkConfig.nodeColor,
-                  connectionColor: `rgba(${hexToRgb(networkConfig.connectionColor).join(', ')}, ${networkConfig.connectionOpacity/100})`,
-                  pulseColor: `rgba(${hexToRgb(networkConfig.enableGradient ? networkConfig.gradientStart : networkConfig.nodeColor).join(', ')}, 0.5)`,
+                    : `rgba(${hexToRgb(networkConfig.connectionColor).join(', ')}, ${networkConfig.connectionOpacity/100})`,
+                  pulseColor: `rgba(${hexToRgb(networkConfig.nodeColor).join(', ')}, 0.5)`,
                   nodeBrightness: networkConfig.nodeBrightness/100
                 }}
               />
