@@ -150,7 +150,7 @@ const NetworkVisualizationController: React.FC = () => {
                     label="Node Count"
                     value={nodeCount}
                     min={10}
-                    max={100}
+                    max={200}
                     onChange={(e) => setNodeCount(parseInt(e.target.value))}
                   />
                   <Slider
