@@ -1,6 +1,6 @@
 # Interactive Node Network
 
-A beautiful and performant interactive node network visualization built with TypeScript and Canvas. The visualization features 500 gently animated nodes connected by delicate lines, with a dynamic gradient that follows your cursor.
+A performant interactive node network visualization built with TypeScript and Canvas. The visualization features 500 gently animated nodes connected by delicate lines, with a dynamic gradient that follows your cursor.
 
 ![Interactive Node Network Preview](docs/images/preview.png)
 

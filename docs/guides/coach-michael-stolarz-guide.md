@@ -1,7 +1,7 @@
 # Interactive Node Network - Coach Guide
 
 ## Project Overview
-The Interactive Node Network is a beautiful and performant visualization that creates an ethereal network of connected nodes. Built with TypeScript and Canvas, it features smooth animations, physics-based movement, and a dynamic gradient that follows the user's cursor.
+The Interactive Node Network is a performant visualization that creates an ethereal network of connected nodes. Built with TypeScript and Canvas, it features smooth animations, physics-based movement, and a dynamic gradient that follows the user's cursor.
 
 ## Current State (March 2024)
 The project has reached a polished state with:
