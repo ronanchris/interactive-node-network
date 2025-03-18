@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import NetworkVisualizationController from './components/NetworkVisualizationController';
 import NodeNetworkWrapper from './components/NodeNetworkWrapper';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
 
 interface CustomTheme {
   background: string;
@@ -13,92 +14,117 @@ interface CustomTheme {
 interface NetworkConfig {
   theme: string;
   nodeCount: number;
-  interactionRadius: number;
-  interactionEnabled: boolean;
-  customTheme: CustomTheme | null;
+  connectionCapacity: number;
   nodeSize: number;
+  interactionRadius: number;
+  connectionOpacity: number;
+  nodeBrightness: number;
+  backgroundColor: string;
+  nodeColor: string;
+  connectionColor: string;
+  enableGradient: boolean;
+  gradientStart: string;
+  gradientEnd: string;
+  enableMouseInteraction: boolean;
 }
 
 const App: React.FC = () => {
   const [networkConfig, setNetworkConfig] = useState<NetworkConfig>({
     theme: 'default',
     nodeCount: 30,
+    connectionCapacity: 5,
+    nodeSize: 4,
     interactionRadius: 200,
-    interactionEnabled: true,
-    customTheme: null,
-    nodeSize: 4
+    connectionOpacity: 20,
+    nodeBrightness: 100,
+    backgroundColor: '#171f31',
+    nodeColor: '#34c759',
+    connectionColor: '#34c759',
+    enableGradient: false,
+    gradientStart: '#34c759',
+    gradientEnd: '#4dabf5',
+    enableMouseInteraction: true
   });
 
-  return (
-    <div className="min-h-screen bg-gray-950">
-      {/* Header */}
-      <header className="bg-gray-900 shadow">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="flex-shrink-0 flex items-center text-white">
-                Interactive Node Network
-              </div>
-              <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                  Network Dashboard
-                </a>
-                <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                  Status Dashboard
-                </a>
-                <a href="#" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
+  const containerStyle = {
+    width: '100%',
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '0 36px',
+  };
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-bold text-white mb-8">Interactive Node Network Dashboard</h1>
+  const fullScreenButtonStyle = {
+    position: 'absolute' as const,
+    top: '16px',
+    right: '16px',
+    backgroundColor: 'transparent',
+    border: 'none',
+    color: 'white',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    padding: '8px',
+    borderRadius: '4px',
+  };
+
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: '#000000' }}>
+      <main className="max-w-7xl mx-auto">
+        <h1 className="text-2xl font-bold text-white mb-8 px-4">Interactive Node Network Dashboard</h1>
         
         {/* Network Visualization */}
-        <div className="bg-gray-900 rounded-lg shadow-xl overflow-hidden mb-8">
-          <NodeNetworkWrapper
-            variant="interactive-demo"
-            themeVariant={networkConfig.theme}
-            height="400px"
-            mouseInteractionRadius={networkConfig.interactionEnabled ? networkConfig.interactionRadius : 0}
-            nodeCount={networkConfig.nodeCount}
-            nodeSize={networkConfig.nodeSize}
-            customTheme={networkConfig.customTheme}
-          />
+        <div style={{ marginBottom: '36px' }}>
+          <div className="rounded-lg shadow-xl" style={containerStyle}>
+            <div style={{ position: 'relative' }}>
+              <button style={fullScreenButtonStyle}>
+                <span>Full Screen</span>
+                <FullscreenIcon />
+              </button>
+              <NodeNetworkWrapper
+                variant="interactive-demo"
+                themeVariant={networkConfig.theme}
+                height="400px"
+                mouseInteractionRadius={networkConfig.enableMouseInteraction ? networkConfig.interactionRadius : 0}
+                nodeCount={networkConfig.nodeCount}
+                nodeSize={networkConfig.nodeSize}
+                customTheme={{
+                  background: networkConfig.backgroundColor,
+                  nodeColor: networkConfig.enableGradient 
+                    ? { from: networkConfig.gradientStart, to: networkConfig.gradientEnd }
+                    : networkConfig.nodeColor,
+                  connectionColor: `rgba(${hexToRgb(networkConfig.connectionColor).join(', ')}, ${networkConfig.connectionOpacity/100})`,
+                  pulseColor: `rgba(${hexToRgb(networkConfig.enableGradient ? networkConfig.gradientStart : networkConfig.nodeColor).join(', ')}, 0.5)`,
+                  nodeBrightness: networkConfig.nodeBrightness/100
+                }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* Controls */}
-        <div className="bg-gray-900 rounded-lg shadow-xl p-6">
-          <h2 className="text-xl font-semibold text-white mb-6">Visualization Controls</h2>
+        <div className="rounded-lg shadow-xl" style={containerStyle}>
           <NetworkVisualizationController
             config={networkConfig}
             onConfigChange={setNetworkConfig}
           />
         </div>
-
-        {/* Additional Sections */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <div className="bg-gray-900 rounded-lg shadow-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Network Statistics</h2>
-            <p className="text-gray-400">Statistics coming soon...</p>
-          </div>
-          <div className="bg-gray-900 rounded-lg shadow-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Controls</h2>
-            <p className="text-gray-400">Controls coming soon...</p>
-          </div>
-          <div className="bg-gray-900 rounded-lg shadow-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Settings</h2>
-            <p className="text-gray-400">Settings coming soon...</p>
-          </div>
-        </div>
       </main>
     </div>
   );
 };
+
+// Helper function to convert hex to rgb
+function hexToRgb(hex: string): [number, number, number] {
+  // Remove the # if present
+  hex = hex.replace('#', '');
+  
+  // Parse the hex values
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  
+  return [r, g, b];
+}
 
 export default App; 
