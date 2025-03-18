@@ -33,8 +33,8 @@ const Slider: React.FC<SliderProps> = ({ label, value, min, max, step = 1, onCha
 
 const NetworkVisualizationController: React.FC = () => {
   // Basic controls
-  const [nodeCount, setNodeCount] = useState(50);
-  const [connectionCapacity, setConnectionCapacity] = useState(500);
+  const [nodeCount, setNodeCount] = useState(500);
+  const [connectionCapacity, setConnectionCapacity] = useState(1607);
   const [lineThickness, setLineThickness] = useState(0.5);
   const [connectionOpacity, setConnectionOpacity] = useState(20);
   const [nodeSize, setNodeSize] = useState(2);
@@ -45,28 +45,27 @@ const NetworkVisualizationController: React.FC = () => {
   // Gradient controls
   const [gradientEnabled, setGradientEnabled] = useState(true);
   const [gradientColors, setGradientColors] = useState([
-    { position: 0, color: '#ffffff', opacity: 1 },
-    { position: 0.3, color: '#4dabf5', opacity: 0.8 },
-    { position: 0.6, color: '#2196f3', opacity: 0.6 },
-    { position: 1, color: '#000000', opacity: 0.4 }
+    { position: 0, color: '#00ff9d', opacity: 1 },
+    { position: 0.3, color: '#00a2ff', opacity: 0.8 },
+    { position: 0.6, color: '#8000ff', opacity: 0.6 }
   ]);
   const [gradientRadius, setGradientRadius] = useState(800);
   const [gradientOpacity, setGradientOpacity] = useState(80);
-  const [followMouse, setFollowMouse] = useState(false);
+  const [followMouse, setFollowMouse] = useState(true);
 
   // Advanced controls
   const [mouseRadius, setMouseRadius] = useState(200);
   const [mouseForce, setMouseForce] = useState(0.05);
-  const [nodeSpeed, setNodeSpeed] = useState(0.08);
+  const [nodeSpeed, setNodeSpeed] = useState(0.01);
   const [nodePulseSpeed, setNodePulseSpeed] = useState(0.002);
-  const [nodePulseAmplitude, setNodePulseAmplitude] = useState(0.2);
+  const [nodePulseAmplitude, setNodePulseAmplitude] = useState(0.42);
   const [connectionDuration, setConnectionDuration] = useState(6000);
   const [connectionDistance, setConnectionDistance] = useState(400);
   const [connectionInterval, setConnectionInterval] = useState(50);
 
-  // Clustering controls
-  const [clusterForce, setClusterForce] = useState(0.0002);
-  const [connectionStrength, setConnectionStrength] = useState(0.001);
+  // Physics controls
+  const [clusterForce, setClusterForce] = useState(0.001);
+  const [connectionStrength, setConnectionStrength] = useState(0.0035);
   const [repulsionForce, setRepulsionForce] = useState(0.01);
 
   const accordionStyles = {
