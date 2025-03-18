@@ -1,400 +1,293 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
-import { Select, MenuItem, Checkbox, FormControlLabel, Slider } from '@mui/material';
-import { HexColorPicker } from 'react-colorful';
-import NodeNetworkWrapper from './NodeNetworkWrapper';
+import React, { useState } from 'react';
+import InteractiveNodeNetwork from './InteractiveNodeNetwork';
 
-// Styled components
-const ControlPanel = styled('div')({
-  backgroundColor: '#1f294d',
-  padding: '36px',
-  borderRadius: '8px',
-  color: 'white',
-});
+const NetworkVisualizationController: React.FC = () => {
+  // Basic controls
+  const [nodeCount, setNodeCount] = useState(30);
+  const [connectionCapacity, setConnectionCapacity] = useState(300);
+  const [lineThickness, setLineThickness] = useState(2);
+  const [connectionOpacity, setConnectionOpacity] = useState(50);
+  const [nodeSize, setNodeSize] = useState(4);
+  const [theme, setTheme] = useState('default');
 
-const ControlGrid = styled('div')({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '32px',
-  padding: '0',
-});
+  // Advanced controls
+  const [mouseRadius, setMouseRadius] = useState(200);
+  const [mouseForce, setMouseForce] = useState(0.05);
+  const [nodeSpeed, setNodeSpeed] = useState(0.5);
+  const [nodePulseSpeed, setNodePulseSpeed] = useState(0.002);
+  const [nodePulseAmplitude, setNodePulseAmplitude] = useState(0.2);
+  const [connectionDuration, setConnectionDuration] = useState(800);
+  const [connectionDistance, setConnectionDistance] = useState(200);
+  const [connectionInterval, setConnectionInterval] = useState(100);
 
-const SliderRow = styled('div')({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '64px',  // Increased from 32px
-  marginTop: '32px',
-});
-
-const SliderContainer = styled('div')({
-  marginTop: '24px',
-  '& label': {
-    display: 'block',
-    marginBottom: '8px',
-    textAlign: 'left',
-  }
-});
-
-const TopRow = styled('div')({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '64px',  // Increased from 32px
-  marginBottom: '40px',
-  alignItems: 'center',
-});
-
-const TopRowItem = styled('div')({
-  '& label': {
-    display: 'block',
-    marginBottom: '8px',
-    textAlign: 'left',
-  },
-  '& .MuiFormControlLabel-root': {
-    marginTop: '32px',
-  }
-});
-
-const LeftColumn = styled('div')({
-  '& ${TopRow}': {
-    marginBottom: '40px',  // Specific margin for Theme dropdown
-  }
-});
-
-const RightColumn = styled('div')({
-  '& ${TopRow}': {
-    marginBottom: '24px',  // Smaller margin for checkbox to align sliders
-  }
-});
-
-const StyledSelect = styled(Select)({
-  backgroundColor: 'white',
-  width: '100%',
-  '& .MuiSelect-icon': {
-    color: '#000',
-  }
-});
-
-const GreenSlider = styled(Slider)({
-  color: '#34c759',
-  height: 2,
-  '& .MuiSlider-thumb': {
-    width: 16,
-    height: 16,
-    backgroundColor: '#fff',
-    '&:hover, &.Mui-focusVisible': {
-      boxShadow: '0 0 0 8px rgba(52, 199, 89, 0.16)',
-    },
-  },
-  '& .MuiSlider-rail': {
-    opacity: 0.32,
-  },
-});
-
-const ColorSwatch = styled('button')({
-  width: '32px',
-  height: '32px',
-  border: '1px solid rgba(255, 255, 255, 0.1)',
-  borderRadius: '4px',
-  padding: 0,
-  cursor: 'pointer',
-  backgroundColor: '#e0e0e0',
-});
-
-const ColorSection = styled('div')({
-  display: 'flex',
-  gap: '16px',
-  alignItems: 'center',
-});
-
-interface NetworkConfig {
-  theme: string;
-  nodeCount: number;
-  connectionCapacity: number;
-  nodeSize: number;
-  interactionRadius: number;
-  connectionOpacity: number;
-  nodeBrightness: number;
-  backgroundColor: string;
-  nodeColor: string;
-  connectionColor: string;
-  enableGradient: boolean;
-  gradientStart: string;
-  gradientEnd: string;
-  enableMouseInteraction: boolean;
-  mouseInteractionRadius: number;
-  lineThickness: number;
-  customTheme?: {
-    background: string;
-    nodeColor: string;
-    connectionColor: string;
-    pulseColor: string;
-    nodeBrightness: number;
-  };
-}
-
-interface NetworkVisualizationControllerProps {
-  config: NetworkConfig;
-  onConfigChange: (config: NetworkConfig) => void;
-}
-
-const NetworkVisualizationController: React.FC<NetworkVisualizationControllerProps> = ({
-  config,
-  onConfigChange,
-}) => {
-  const [activeColorPicker, setActiveColorPicker] = React.useState<string | null>(null);
-
-  const handleChange = (key: keyof NetworkConfig, value: any) => {
-    onConfigChange({ ...config, [key]: value });
-  };
-
-  const ColorPickerPopover = styled('div')({
-    position: 'absolute',
-    zIndex: 2,
-    marginTop: '8px',
-  });
+  // Show advanced controls toggle
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   return (
     <div>
-      {/* Control Panel */}
-      <ControlPanel>
-        <h1 style={{ 
-          margin: '0 0 32px 0', 
-          fontSize: '24px', 
-          color: 'white',
-          textAlign: 'left'
-        }}>
-          Visualization Controls
-        </h1>
+      {/* Network Visualization */}
+      <div className="mb-6">
+        <InteractiveNodeNetwork
+          variant="interactive-demo"
+          themeVariant={theme}
+          height="400px"
+          nodeCount={nodeCount}
+          nodeSize={nodeSize}
+          connectionCapacity={connectionCapacity}
+          connectionOpacity={connectionOpacity}
+          lineThickness={lineThickness}
+          mouseRadius={mouseRadius}
+          mouseForce={mouseForce}
+          nodeSpeed={nodeSpeed}
+          nodePulseSpeed={nodePulseSpeed}
+          nodePulseAmplitude={nodePulseAmplitude}
+          connectionDuration={connectionDuration}
+          connectionDistance={connectionDistance}
+          connectionInterval={connectionInterval}
+        />
+      </div>
 
-        {/* Top Row - Theme and Checkbox */}
-        <TopRow>
-          <TopRowItem>
-            <label>Theme</label>
-            <StyledSelect
-              value={config.theme}
-              onChange={(e) => handleChange('theme', e.target.value)}
+      {/* Controls Panel */}
+      <div className="p-6 bg-gray-900 rounded-lg">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold text-white">Network Controls</h2>
+          <button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          >
+            {showAdvanced ? 'Hide Advanced' : 'Show Advanced'}
+          </button>
+        </div>
+        
+        {/* Basic Controls */}
+        <div className="space-y-6">
+          {/* Line Thickness Control */}
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Line Thickness: {lineThickness}px
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              step="0.5"
+              value={lineThickness}
+              onChange={(e) => setLineThickness(parseFloat(e.target.value))}
+              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+          </div>
+
+          {/* Connection Opacity Control */}
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Connection Opacity: {connectionOpacity}%
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={connectionOpacity}
+              onChange={(e) => setConnectionOpacity(parseInt(e.target.value))}
+              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+          </div>
+
+          {/* Node Count Control */}
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Node Count: {nodeCount}
+            </label>
+            <input
+              type="range"
+              min="10"
+              max="100"
+              value={nodeCount}
+              onChange={(e) => setNodeCount(parseInt(e.target.value))}
+              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+          </div>
+
+          {/* Connection Capacity Control */}
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Connection Capacity: {connectionCapacity}
+            </label>
+            <input
+              type="range"
+              min="50"
+              max="500"
+              step="50"
+              value={connectionCapacity}
+              onChange={(e) => setConnectionCapacity(parseInt(e.target.value))}
+              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+          </div>
+
+          {/* Node Size Control */}
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Node Size: {nodeSize}px
+            </label>
+            <input
+              type="range"
+              min="2"
+              max="8"
+              value={nodeSize}
+              onChange={(e) => setNodeSize(parseInt(e.target.value))}
+              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+          </div>
+
+          {/* Theme Selection */}
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Theme
+            </label>
+            <select
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
+              className="w-full bg-gray-700 text-white rounded-lg p-2"
             >
-              <MenuItem value="default">Default</MenuItem>
-              <MenuItem value="dark">Dark</MenuItem>
-              <MenuItem value="light">Light</MenuItem>
-            </StyledSelect>
-          </TopRowItem>
-          <TopRowItem>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={config.enableMouseInteraction}
-                  onChange={(e) => handleChange('enableMouseInteraction', e.target.checked)}
-                  sx={{
-                    color: '#34c759',
-                    '&.Mui-checked': {
-                      color: '#34c759',
-                    },
-                  }}
-                />
-              }
-              label="Enable mouse / touch interaction"
-            />
-          </TopRowItem>
-        </TopRow>
-
-        {/* Slider Rows */}
-        <div>
-          {/* Row 1 - Node Count and Connection Capacity */}
-          <SliderRow>
-            <div>
-              <label>Node count: {config.nodeCount}</label>
-              <GreenSlider
-                value={config.nodeCount}
-                onChange={(_, value) => handleChange('nodeCount', value)}
-                min={10}
-                max={100}
-              />
-            </div>
-            <div>
-              <label>Connection capacity: {config.connectionCapacity}</label>
-              <GreenSlider
-                value={config.connectionCapacity}
-                onChange={(_, value) => handleChange('connectionCapacity', value)}
-                min={50}
-                max={500}
-                step={50}
-              />
-            </div>
-          </SliderRow>
-
-          {/* Row 2 - Node Size and Interaction Radius */}
-          <SliderRow>
-            <div>
-              <label>Node size: {config.nodeSize} px</label>
-              <GreenSlider
-                value={config.nodeSize}
-                onChange={(_, value) => handleChange('nodeSize', value)}
-                min={1}
-                max={10}
-              />
-            </div>
-            <div>
-              <label>Interaction radius: {config.interactionRadius} px</label>
-              <GreenSlider
-                value={config.interactionRadius}
-                onChange={(_, value) => handleChange('interactionRadius', value)}
-                min={0}
-                max={500}
-                disabled={!config.enableMouseInteraction}
-              />
-            </div>
-          </SliderRow>
-
-          {/* Row 3 - Line Thickness and Connection Opacity */}
-          <SliderRow>
-            <div>
-              <label>Line thickness: {config.lineThickness} px</label>
-              <GreenSlider
-                value={config.lineThickness}
-                onChange={(_, value) => handleChange('lineThickness', value)}
-                min={1}
-                max={5}
-                step={0.5}
-              />
-            </div>
-            <div>
-              <label>Connection opacity: {config.connectionOpacity}%</label>
-              <GreenSlider
-                value={config.connectionOpacity}
-                onChange={(_, value) => handleChange('connectionOpacity', value)}
-                min={0}
-                max={100}
-              />
-            </div>
-          </SliderRow>
-        </div>
-
-        {/* Custom Colors Section */}
-        <div style={{ marginTop: '24px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', textAlign: 'left' }}>Custom Color</h3>
-          <div style={{ display: 'flex', gap: '24px' }}>
-            <div style={{ position: 'relative' }}>
-              <ColorSection>
-                <ColorSwatch
-                  style={{ backgroundColor: config.backgroundColor }}
-                  onClick={() => setActiveColorPicker(activeColorPicker === 'background' ? null : 'background')}
-                />
-                <span>Background color</span>
-              </ColorSection>
-              {activeColorPicker === 'background' && (
-                <ColorPickerPopover>
-                  <HexColorPicker
-                    color={config.backgroundColor}
-                    onChange={(color) => handleChange('backgroundColor', color)}
-                  />
-                </ColorPickerPopover>
-              )}
-            </div>
-            
-            <div style={{ position: 'relative' }}>
-              <ColorSection>
-                <ColorSwatch
-                  style={{ backgroundColor: config.nodeColor }}
-                  onClick={() => setActiveColorPicker(activeColorPicker === 'node' ? null : 'node')}
-                />
-                <span>Node color</span>
-              </ColorSection>
-              {activeColorPicker === 'node' && (
-                <ColorPickerPopover>
-                  <HexColorPicker
-                    color={config.nodeColor}
-                    onChange={(color) => handleChange('nodeColor', color)}
-                  />
-                </ColorPickerPopover>
-              )}
-            </div>
-            
-            <div style={{ position: 'relative' }}>
-              <ColorSection>
-                <ColorSwatch
-                  style={{ backgroundColor: config.connectionColor }}
-                  onClick={() => setActiveColorPicker(activeColorPicker === 'connection' ? null : 'connection')}
-                />
-                <span>Connection color</span>
-              </ColorSection>
-              {activeColorPicker === 'connection' && (
-                <ColorPickerPopover>
-                  <HexColorPicker
-                    color={config.connectionColor}
-                    onChange={(color) => handleChange('connectionColor', color)}
-                  />
-                </ColorPickerPopover>
-              )}
-            </div>
+              <option value="default">Default</option>
+              <option value="warm">Warm</option>
+              <option value="cool">Cool</option>
+              <option value="night">Night</option>
+              <option value="highContrast">High Contrast</option>
+              <option value="neon">Neon</option>
+            </select>
           </div>
-        </div>
 
-        {/* Gradient Section */}
-        <div style={{ marginTop: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <FormControlLabel
-              style={{ margin: '0', padding: '0' }}
-              control={
-                <Checkbox
-                  checked={config.enableGradient}
-                  onChange={(e) => handleChange('enableGradient', e.target.checked)}
-                  sx={{
-                    color: '#34c759',
-                    padding: '0',
-                    marginRight: '8px',
-                    '&.Mui-checked': {
-                      color: '#34c759',
-                    },
-                  }}
-                />
-              }
-              label="Enable gradient for connections"
-            />
-          </div>
-          
-          {config.enableGradient && (
-            <div style={{ display: 'flex', gap: '24px', marginTop: '16px' }}>
-              <div style={{ position: 'relative' }}>
-                <ColorSection>
-                  <ColorSwatch
-                    style={{ backgroundColor: config.gradientStart }}
-                    onClick={() => setActiveColorPicker(activeColorPicker === 'gradientStart' ? null : 'gradientStart')}
-                  />
-                  <span>Gradient start</span>
-                </ColorSection>
-                {activeColorPicker === 'gradientStart' && (
-                  <ColorPickerPopover>
-                    <HexColorPicker
-                      color={config.gradientStart}
-                      onChange={(color) => handleChange('gradientStart', color)}
-                    />
-                  </ColorPickerPopover>
-                )}
-              </div>
+          {/* Advanced Controls */}
+          {showAdvanced && (
+            <div className="mt-8 space-y-6 border-t border-gray-700 pt-6">
+              <h3 className="text-lg font-medium text-white mb-4">Advanced Controls</h3>
               
-              <div style={{ position: 'relative' }}>
-                <ColorSection>
-                  <ColorSwatch
-                    style={{ backgroundColor: config.gradientEnd }}
-                    onClick={() => setActiveColorPicker(activeColorPicker === 'gradientEnd' ? null : 'gradientEnd')}
-                  />
-                  <span>Gradient end</span>
-                </ColorSection>
-                {activeColorPicker === 'gradientEnd' && (
-                  <ColorPickerPopover>
-                    <HexColorPicker
-                      color={config.gradientEnd}
-                      onChange={(color) => handleChange('gradientEnd', color)}
-                    />
-                  </ColorPickerPopover>
-                )}
+              {/* Mouse Interaction Controls */}
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Mouse Interaction Radius: {mouseRadius}px
+                </label>
+                <input
+                  type="range"
+                  min="100"
+                  max="300"
+                  value={mouseRadius}
+                  onChange={(e) => setMouseRadius(parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Mouse Force: {mouseForce}
+                </label>
+                <input
+                  type="range"
+                  min="0.01"
+                  max="0.1"
+                  step="0.01"
+                  value={mouseForce}
+                  onChange={(e) => setMouseForce(parseFloat(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              {/* Node Animation Controls */}
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Node Speed: {nodeSpeed}
+                </label>
+                <input
+                  type="range"
+                  min="0.1"
+                  max="1.0"
+                  step="0.1"
+                  value={nodeSpeed}
+                  onChange={(e) => setNodeSpeed(parseFloat(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Node Pulse Speed: {nodePulseSpeed}
+                </label>
+                <input
+                  type="range"
+                  min="0.001"
+                  max="0.005"
+                  step="0.001"
+                  value={nodePulseSpeed}
+                  onChange={(e) => setNodePulseSpeed(parseFloat(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Node Pulse Amplitude: {nodePulseAmplitude}
+                </label>
+                <input
+                  type="range"
+                  min="0.1"
+                  max="0.5"
+                  step="0.1"
+                  value={nodePulseAmplitude}
+                  onChange={(e) => setNodePulseAmplitude(parseFloat(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              {/* Connection Animation Controls */}
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Connection Duration: {connectionDuration}ms
+                </label>
+                <input
+                  type="range"
+                  min="400"
+                  max="2000"
+                  step="100"
+                  value={connectionDuration}
+                  onChange={(e) => setConnectionDuration(parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Connection Distance: {connectionDistance}px
+                </label>
+                <input
+                  type="range"
+                  min="100"
+                  max="300"
+                  step="10"
+                  value={connectionDistance}
+                  onChange={(e) => setConnectionDistance(parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Connection Interval: {connectionInterval}ms
+                </label>
+                <input
+                  type="range"
+                  min="50"
+                  max="200"
+                  step="10"
+                  value={connectionInterval}
+                  onChange={(e) => setConnectionInterval(parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                />
               </div>
             </div>
           )}
         </div>
-      </ControlPanel>
+      </div>
     </div>
   );
 };
