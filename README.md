@@ -1,4 +1,56 @@
-Welcome to the Interactive Node Network project! This guide will help you get started and understand our comprehensive documentation system.
+# Interactive Node Network
+
+A beautiful and performant interactive node network visualization built with TypeScript and Canvas. The visualization features 500 gently animated nodes connected by delicate lines, with a dynamic gradient that follows your cursor.
+
+![Interactive Node Network Preview](docs/images/preview.png)
+
+## Default Configuration
+
+The visualization starts with an ethereal configuration:
+
+- **Nodes**: 500 nodes at 2px size
+- **Connections**: Up to 1607 connections at 0.5px thickness
+- **Colors**: Flowing gradient from green (#00ff9d) through blue (#00a2ff) to purple (#8000ff)
+- **Animation**: 
+  - Gentle node movement (speed: 0.01)
+  - Subtle pulsing (amplitude: 42%)
+  - Mouse-following gradient
+  - Smooth connection trails
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/ronanchris/interactive-node-network.git
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+Visit `http://localhost:3000` to see the visualization.
+
+## Features
+
+- Real-time interactive node network visualization
+- Smooth animations and physics-based movement
+- Dynamic gradient following cursor movement
+- Fully configurable through the control panel:
+  - Node count and size
+  - Connection properties
+  - Animation speeds
+  - Physics parameters
+  - Color gradients
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT License - feel free to use this in your own projects!
 
 ## 🚀 Quick Start
 
