@@ -1,6 +1,20 @@
 // @ts-nocheck
 import React, { useEffect, useRef, useState } from 'react';
 
+// Helper function to adjust color opacity
+const adjustColorOpacity = (color: string, opacity: number) => {
+  if (color.startsWith('rgba')) {
+    return color.replace(/[\d.]+\)$/g, `${opacity})`);
+  }
+  if (color.startsWith('#')) {
+    const r = parseInt(color.slice(1, 3), 16);
+    const g = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+  }
+  return color;
+};
+
 interface Props {
   variant: 'interactive-demo' | 'background';
   nodeCount?: number;
@@ -10,14 +24,28 @@ interface Props {
   nodeSize?: number;
   customTheme?: {
     background: string;
-    nodeColor: string | { from: string; to: string };
-    connectionColor: string;
+    nodeColor: string;
+    connectionColor: string | { from: string; to: string };
     pulseColor: string;
     nodeBrightness: number;
   } | null;
   connectionCapacity?: number;
   connectionOpacity?: number;
   lineThickness?: number;
+  enableGradient?: boolean;
+  gradientStart?: string;
+  gradientEnd?: string;
+}
+
+interface Connection {
+  fromNode: number;
+  toNode: number;
+  progress: number;
+  active: boolean;
+  startTime: number;
+  duration: number;
+  opacity: number;
+  completed: boolean;
 }
 
 // Main component implementation
@@ -31,7 +59,10 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
   customTheme = null,
   connectionCapacity = 300,
   connectionOpacity = 20,
-  lineThickness = 1
+  lineThickness = 1,
+  enableGradient = false,
+  gradientStart = '',
+  gradientEnd = ''
 }) => {
   // State and refs setup
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -43,11 +74,17 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
     velocity: { x: number; y: number };
     phase: number;
     brightness: number;
+    opacity: number;
+    startDelay: number;
   }>>([]);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [mousePosition, setMousePosition] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
   const [dpr, setDpr] = useState(1);
   
+  // Add connectionsRef to track active connections
+  const connectionsRef = useRef<Connection[]>([]);
+  const lastConnectionTime = useRef<number>(0);
+
   // Theme definitions
   const THEME_VARIANTS = {
     default: {
@@ -108,41 +145,78 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
     
     const container = canvas.parentElement;
     if (!container) return;
-    
-    // Get the actual dimensions of the container
-    const rect = container.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    
-    // Set physical canvas size
-    canvas.width = width * devicePixelRatio;
-    canvas.height = height * devicePixelRatio;
-    
-    // Set display size
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-    
-    // Store logical dimensions (pre-scaled)
-    setDimensions({ width, height });
-    
-    // Determine actual node count based on screen size and device
-    let actualNodeCount = nodeCount;
-    if (isMobile) {
-      actualNodeCount = Math.floor(nodeCount * 0.6);
-    }
-    
-    // Create nodes with logical coordinates
-    nodesRef.current = Array.from({ length: actualNodeCount }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      radius: nodeSize + Math.random() * (nodeSize * 0.5),
-      velocity: {
-        x: (Math.random() - 0.5) * 2,
-        y: (Math.random() - 0.5) * 2
-      },
-      phase: Math.random() * Math.PI * 2,
-      brightness: 0.8 + Math.random() * 0.2
-    }));
+
+    // Initialize with a small delay to ensure container is properly sized
+    const initializeNetwork = () => {
+      // Get the actual dimensions of the container
+      const rect = container.getBoundingClientRect();
+      const width = rect.width || container.clientWidth;
+      const height = rect.height || container.clientHeight;
+      
+      // Only proceed if we have valid dimensions
+      if (width === 0 || height === 0) {
+        // Try again in a few ms if dimensions aren't ready
+        setTimeout(initializeNetwork, 50);
+        return;
+      }
+      
+      // Set physical canvas size
+      canvas.width = width * devicePixelRatio;
+      canvas.height = height * devicePixelRatio;
+      
+      // Set display size
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      
+      // Store logical dimensions (pre-scaled)
+      setDimensions({ width, height });
+      
+      // Determine actual node count based on screen size and device
+      let actualNodeCount = nodeCount;
+      if (isMobile) {
+        actualNodeCount = Math.floor(nodeCount * 0.6);
+      }
+
+      // Create nodes with truly random positions across the entire screen
+      const newNodes = [];
+      for (let i = 0; i < actualNodeCount; i++) {
+        // Divide the screen into regions and place nodes in different regions
+        const region = i % 9; // Create 9 regions (3x3 grid)
+        const regionX = region % 3;
+        const regionY = Math.floor(region / 3);
+        
+        // Calculate position within the region
+        const x = (regionX * (width / 3)) + (Math.random() * (width / 3));
+        const y = (regionY * (height / 3)) + (Math.random() * (height / 3));
+        
+        // Random velocity in any direction
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 0.2 + Math.random() * 0.8;
+        
+        newNodes.push({
+          x,
+          y,
+          radius: nodeSize + Math.random() * (nodeSize * 0.5),
+          velocity: {
+            x: Math.cos(angle) * speed,
+            y: Math.sin(angle) * speed
+          },
+          phase: Math.random() * Math.PI * 2,
+          brightness: 0.8 + Math.random() * 0.2
+        });
+      }
+      
+      // Shuffle the nodes array to prevent pattern recognition
+      for (let i = newNodes.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newNodes[i], newNodes[j]] = [newNodes[j], newNodes[i]];
+      }
+      
+      nodesRef.current = newNodes;
+    };
+
+    // Start initialization
+    initializeNetwork();
     
     // Add event listeners
     if (!isMobile) {
@@ -153,25 +227,8 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
     
     // Handle resize
     const handleResize = () => {
-      const rect = container.getBoundingClientRect();
-      const width = rect.width;
-      const height = rect.height;
-      
-      // Update canvas dimensions
-      canvas.width = width * devicePixelRatio;
-      canvas.height = height * devicePixelRatio;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      
-      // Update stored dimensions
-      setDimensions({ width, height });
-      
-      // Reposition nodes within new dimensions
-      nodesRef.current = nodesRef.current.map(node => ({
-        ...node,
-        x: Math.min(node.x, width),
-        y: Math.min(node.y, height)
-      }));
+      if (!canvas || !container) return;
+      initializeNetwork(); // Reinitialize on resize
     };
     
     window.addEventListener('resize', handleResize);
@@ -179,15 +236,15 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
     return () => {
       if (!isMobile) {
         window.removeEventListener('mousemove', handleMouseMove);
-      } else {
+      } else if (canvas) {
         canvas.removeEventListener('touchmove', handleTouchMove);
       }
       window.removeEventListener('resize', handleResize);
-      if (requestRef.current) {
+      if (requestRef.current !== null) {
         cancelAnimationFrame(requestRef.current);
       }
     };
-  }, [nodeCount, nodeSize]);
+  }, [nodeCount, nodeSize, dimensions.width, dimensions.height]);
   
   // Handle mouse movement
   const handleMouseMove = (e: MouseEvent) => {
@@ -224,6 +281,11 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
     }
   };
   
+  // Easing function for smooth animations
+  const easeInOutCubic = (t: number): number => {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  };
+
   // Animation loop
   useEffect(() => {
     if (!canvasRef.current || nodesRef.current.length === 0) return;
@@ -247,97 +309,177 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
       // Set up scaling for high DPI
       ctx.save();
       ctx.scale(dpr, dpr);
-      
-      // Draw connections
-      ctx.lineWidth = 1;
-      nodesRef.current.forEach((node1, i) => {
-        nodesRef.current.slice(i + 1).forEach(node2 => {
-          const dx = node2.x - node1.x;
-          const dy = node2.y - node1.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < 150) {
-            const opacity = 1 - distance / 150;
-            ctx.beginPath();
-            ctx.moveTo(node1.x, node1.y);
-            ctx.lineTo(node2.x, node2.y);
-            ctx.strokeStyle = `rgba(77, 171, 245, ${opacity * 0.3})`;
-            ctx.stroke();
+
+      // Create new connections more frequently
+      if (currentTime - lastConnectionTime.current > 200) {
+        const nodes = nodesRef.current;
+        if (nodes.length > 1) {
+          // Only create new connections if we're under capacity
+          if (connectionsRef.current.length < connectionCapacity) {
+            // Try to create a new connection
+            const fromNode = Math.floor(Math.random() * nodes.length);
+            let toNode;
+            do {
+              toNode = Math.floor(Math.random() * nodes.length);
+            } while (toNode === fromNode);
+
+            // Check if connection already exists
+            const connectionExists = connectionsRef.current.some(
+              conn => (conn.fromNode === fromNode && conn.toNode === toNode) ||
+                      (conn.fromNode === toNode && conn.toNode === fromNode)
+            );
+
+            if (!connectionExists) {
+              connectionsRef.current.push({
+                fromNode,
+                toNode,
+                progress: 0,
+                active: true,
+                startTime: currentTime,
+                duration: 1000,
+                opacity: 0,
+                completed: false
+              });
+            }
+          } else {
+            // Remove oldest completed connection if at capacity
+            const completedConnections = connectionsRef.current.filter(conn => conn.completed);
+            if (completedConnections.length > 0) {
+              const oldestConnection = completedConnections
+                .sort((a, b) => a.startTime - b.startTime)[0];
+              
+              connectionsRef.current = connectionsRef.current.filter(
+                conn => conn !== oldestConnection
+              );
+            }
           }
-        });
+          lastConnectionTime.current = currentTime;
+        }
+      }
+
+      // Draw all connections
+      connectionsRef.current.forEach(conn => {
+        const fromNode = nodesRef.current[conn.fromNode];
+        const toNode = nodesRef.current[conn.toNode];
+
+        // Set up consistent line style
+        ctx.lineWidth = lineThickness;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        if (conn.active) {
+          // Draw animated connection
+          const elapsed = currentTime - conn.startTime;
+          const progress = Math.min(1, elapsed / conn.duration);
+          const easedProgress = easeInOutCubic(progress);
+
+          const startX = fromNode.x;
+          const startY = fromNode.y;
+          const endX = toNode.x;
+          const endY = toNode.y;
+
+          // Calculate current position
+          const currentX = startX + (endX - startX) * easedProgress;
+          const currentY = startY + (endY - startY) * easedProgress;
+
+          // Create gradient for animated connection
+          const gradient = ctx.createLinearGradient(startX, startY, currentX, currentY);
+          const finalOpacity = connectionOpacity / 100;
+
+          if (enableGradient && gradientStart && gradientEnd) {
+            gradient.addColorStop(0, adjustColorOpacity(gradientStart, finalOpacity));
+            gradient.addColorStop(1, adjustColorOpacity(gradientEnd, finalOpacity));
+          } else {
+            const baseColor = typeof theme.connectionColor === 'string' ? theme.connectionColor : theme.connectionColor.from;
+            gradient.addColorStop(0, adjustColorOpacity(baseColor, finalOpacity));
+            gradient.addColorStop(1, adjustColorOpacity(baseColor, finalOpacity));
+          }
+
+          ctx.beginPath();
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(currentX, currentY);
+          ctx.strokeStyle = gradient;
+          ctx.stroke();
+
+          // Mark connection as completed when animation is done
+          if (progress >= 1) {
+            conn.active = false;
+            conn.completed = true;
+          }
+        } else {
+          // Draw completed connection
+          const gradient = ctx.createLinearGradient(fromNode.x, fromNode.y, toNode.x, toNode.y);
+          const finalOpacity = connectionOpacity / 100;
+
+          if (enableGradient && gradientStart && gradientEnd) {
+            gradient.addColorStop(0, adjustColorOpacity(gradientStart, finalOpacity));
+            gradient.addColorStop(1, adjustColorOpacity(gradientEnd, finalOpacity));
+          } else {
+            const baseColor = typeof theme.connectionColor === 'string' ? theme.connectionColor : theme.connectionColor.from;
+            gradient.addColorStop(0, adjustColorOpacity(baseColor, finalOpacity));
+            gradient.addColorStop(1, adjustColorOpacity(baseColor, finalOpacity));
+          }
+
+          ctx.beginPath();
+          ctx.moveTo(fromNode.x, fromNode.y);
+          ctx.lineTo(toNode.x, toNode.y);
+          ctx.strokeStyle = gradient;
+          ctx.stroke();
+        }
       });
-      
+
       // Update and draw nodes
       nodesRef.current = nodesRef.current.map(node => {
         const newNode = { ...node };
         
         // Apply velocity with increased movement
-        newNode.x += newNode.velocity.x * deltaTime * 1.5;
-        newNode.y += newNode.velocity.y * deltaTime * 1.5;
+        newNode.x += newNode.velocity.x * deltaTime;
+        newNode.y += newNode.velocity.y * deltaTime;
         
-        // Mouse interaction - now attracting instead of repelling
+        // Mouse interaction
         if (mousePosition.x !== null && mousePosition.y !== null) {
           const dx = mousePosition.x / dpr - newNode.x;
           const dy = mousePosition.y / dpr - newNode.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
           if (distance < mouseInteractionRadius) {
-            const force = (1 - distance / mouseInteractionRadius) * 0.015 * deltaTime;
+            const force = (1 - distance / mouseInteractionRadius) * 0.02 * deltaTime;
             const angle = Math.atan2(dy, dx);
             newNode.velocity.x += Math.cos(angle) * force;
             newNode.velocity.y += Math.sin(angle) * force;
           }
         }
         
-        // Reduced friction for more persistent movement
-        newNode.velocity.x *= 0.995;
-        newNode.velocity.y *= 0.995;
+        // Add slight random movement for more natural flow
+        newNode.velocity.x += (Math.random() - 0.5) * 0.1;
+        newNode.velocity.y += (Math.random() - 0.5) * 0.1;
         
-        // Add slight random movement
-        newNode.velocity.x += (Math.random() - 0.5) * 0.02;
-        newNode.velocity.y += (Math.random() - 0.5) * 0.02;
+        // Apply friction
+        newNode.velocity.x *= 0.99;
+        newNode.velocity.y *= 0.99;
         
-        // Bounce off edges with more energy preservation
-        if (newNode.x <= 0 || newNode.x >= dimensions.width) {
-          newNode.velocity.x *= -0.95;
+        // Bounce off edges
+        if (newNode.x < 0 || newNode.x > dimensions.width) {
+          newNode.velocity.x *= -1;
           newNode.x = Math.max(0, Math.min(dimensions.width, newNode.x));
         }
-        if (newNode.y <= 0 || newNode.y >= dimensions.height) {
-          newNode.velocity.y *= -0.95;
+        if (newNode.y < 0 || newNode.y > dimensions.height) {
+          newNode.velocity.y *= -1;
           newNode.y = Math.max(0, Math.min(dimensions.height, newNode.y));
         }
         
-        // Limit maximum velocity to prevent excessive speed
-        const maxVelocity = 3;
-        const currentVelocity = Math.sqrt(newNode.velocity.x * newNode.velocity.x + newNode.velocity.y * newNode.velocity.y);
-        if (currentVelocity > maxVelocity) {
-          const scale = maxVelocity / currentVelocity;
-          newNode.velocity.x *= scale;
-          newNode.velocity.y *= scale;
-        }
-        
-        // Draw node with reduced pulse
+        // Draw node with solid color
         const pulse = Math.sin(currentTime * 0.002 + newNode.phase) * 0.1 + 0.9;
         const finalRadius = newNode.radius * pulse;
         
         ctx.beginPath();
         ctx.arc(newNode.x, newNode.y, finalRadius, 0, Math.PI * 2);
         
-        if (typeof theme.nodeColor === 'object' && theme.nodeColor.from && theme.nodeColor.to) {
-          const gradient = ctx.createRadialGradient(
-            newNode.x, newNode.y, 0,
-            newNode.x, newNode.y, finalRadius * 2
-          );
-          gradient.addColorStop(0, theme.nodeColor.from);
-          gradient.addColorStop(1, theme.nodeColor.to);
-          ctx.fillStyle = gradient;
-        } else {
-          ctx.fillStyle = typeof theme.nodeColor === 'string' ? theme.nodeColor : theme.nodeColor.from;
-        }
-        
+        // Use solid color for nodes
+        ctx.fillStyle = typeof theme.nodeColor === 'string' ? theme.nodeColor : theme.nodeColor.from;
         ctx.fill();
         
-        // Reduced phase update speed from 0.08 to 0.04
+        // Update phase
         newNode.phase += 0.04 * deltaTime;
         
         return newNode;
@@ -356,7 +498,7 @@ const InteractiveNodeNetwork: React.FC<Props> = ({
         cancelAnimationFrame(requestRef.current);
       }
     };
-  }, [dimensions, mousePosition, dpr, themeVariant, customTheme, mouseInteractionRadius]);
+  }, [dimensions, mousePosition, dpr, themeVariant, customTheme, mouseInteractionRadius, enableGradient, gradientStart, gradientEnd, connectionOpacity, connectionCapacity, lineThickness]);
   
   return (
     <div className="w-full h-full" style={{ height }}>

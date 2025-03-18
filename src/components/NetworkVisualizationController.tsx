@@ -1,8 +1,9 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { Select, MenuItem, Checkbox, FormControlLabel, Slider } from '@mui/material';
 import { HexColorPicker } from 'react-colorful';
+import NodeNetworkWrapper from './NodeNetworkWrapper';
 
 // Styled components
 const ControlPanel = styled('div')({
@@ -121,6 +122,15 @@ interface NetworkConfig {
   gradientStart: string;
   gradientEnd: string;
   enableMouseInteraction: boolean;
+  mouseInteractionRadius: number;
+  lineThickness: number;
+  customTheme?: {
+    background: string;
+    nodeColor: string;
+    connectionColor: string;
+    pulseColor: string;
+    nodeBrightness: number;
+  };
 }
 
 interface NetworkVisualizationControllerProps {
@@ -207,8 +217,9 @@ const NetworkVisualizationController: React.FC<NetworkVisualizationControllerPro
               <GreenSlider
                 value={config.connectionCapacity}
                 onChange={(_, value) => handleChange('connectionCapacity', value)}
-                min={1}
-                max={10}
+                min={50}
+                max={500}
+                step={50}
               />
             </div>
           </SliderRow>
@@ -236,8 +247,18 @@ const NetworkVisualizationController: React.FC<NetworkVisualizationControllerPro
             </div>
           </SliderRow>
 
-          {/* Row 3 - Connection Opacity (single slider) */}
+          {/* Row 3 - Line Thickness and Connection Opacity */}
           <SliderRow>
+            <div>
+              <label>Line thickness: {config.lineThickness} px</label>
+              <GreenSlider
+                value={config.lineThickness}
+                onChange={(_, value) => handleChange('lineThickness', value)}
+                min={1}
+                max={5}
+                step={0.5}
+              />
+            </div>
             <div>
               <label>Connection opacity: {config.connectionOpacity}%</label>
               <GreenSlider
