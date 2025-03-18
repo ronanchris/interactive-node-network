@@ -150,13 +150,13 @@ const NetworkVisualizationController: React.FC = () => {
                     label="Node Count"
                     value={nodeCount}
                     min={10}
-                    max={200}
+                    max={500}
                     onChange={(e) => setNodeCount(parseInt(e.target.value))}
                   />
                   <Slider
                     label="Node Size"
                     value={nodeSize}
-                    min={2}
+                    min={1}
                     max={8}
                     onChange={(e) => setNodeSize(parseInt(e.target.value))}
                     unit="px"
@@ -292,7 +292,7 @@ const NetworkVisualizationController: React.FC = () => {
                     label="Max Connections"
                     value={connectionCapacity}
                     min={50}
-                    max={1000}
+                    max={2000}
                     onChange={(e) => setConnectionCapacity(parseInt(e.target.value))}
                   />
                   <Slider
