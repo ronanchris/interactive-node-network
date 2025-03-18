@@ -51,11 +51,11 @@ const Slider: React.FC<SliderProps> = ({ label, value, min, max, step = 1, onCha
 
 const NetworkVisualizationController: React.FC = () => {
   // Basic controls
-  const [nodeCount, setNodeCount] = useState(15);
-  const [connectionCapacity, setConnectionCapacity] = useState(30);
-  const [lineThickness, setLineThickness] = useState(3);
-  const [connectionOpacity, setConnectionOpacity] = useState(100);
-  const [nodeSize, setNodeSize] = useState(6);
+  const [nodeCount, setNodeCount] = useState(50);
+  const [connectionCapacity, setConnectionCapacity] = useState(500);
+  const [lineThickness, setLineThickness] = useState(0.5);
+  const [connectionOpacity, setConnectionOpacity] = useState(20);
+  const [nodeSize, setNodeSize] = useState(2);
   const [theme, setTheme] = useState<ThemeVariant>('highContrast');
   const [nodeColor, setNodeColor] = useState<string>('');
   const [lineColor, setLineColor] = useState<string>('');
@@ -63,17 +63,17 @@ const NetworkVisualizationController: React.FC = () => {
   // Advanced controls
   const [mouseRadius, setMouseRadius] = useState(200);
   const [mouseForce, setMouseForce] = useState(0.05);
-  const [nodeSpeed, setNodeSpeed] = useState(0.1);
+  const [nodeSpeed, setNodeSpeed] = useState(0.08);
   const [nodePulseSpeed, setNodePulseSpeed] = useState(0.002);
   const [nodePulseAmplitude, setNodePulseAmplitude] = useState(0.2);
-  const [connectionDuration, setConnectionDuration] = useState(3000);
+  const [connectionDuration, setConnectionDuration] = useState(6000);
   const [connectionDistance, setConnectionDistance] = useState(400);
-  const [connectionInterval, setConnectionInterval] = useState(500);
+  const [connectionInterval, setConnectionInterval] = useState(50);
 
   // Clustering controls
-  const [clusterForce, setClusterForce] = useState(0.04);
-  const [connectionStrength, setConnectionStrength] = useState(0.05);
-  const [repulsionForce, setRepulsionForce] = useState(0.005);
+  const [clusterForce, setClusterForce] = useState(0.0002);
+  const [connectionStrength, setConnectionStrength] = useState(0.001);
+  const [repulsionForce, setRepulsionForce] = useState(0.01);
 
   // Section toggles
   const [openSections, setOpenSections] = useState({
@@ -270,47 +270,46 @@ const NetworkVisualizationController: React.FC = () => {
             <div className="space-y-4">
               <h3 className="text-lg font-medium text-white">Connections</h3>
               <Slider
+                label="Max Connections"
+                value={connectionCapacity}
+                min={50}
+                max={1000}
+                onChange={(e) => setConnectionCapacity(parseInt(e.target.value))}
+              />
+              <Slider
                 label="Distance"
                 value={connectionDistance}
                 min={100}
-                max={500}
-                step={25}
+                max={800}
+                step={50}
                 onChange={(e) => setConnectionDistance(parseInt(e.target.value))}
                 unit="px"
               />
               <Slider
                 label="Duration"
                 value={connectionDuration}
-                min={500}
-                max={3000}
-                step={100}
+                min={1000}
+                max={15000}
+                step={500}
                 onChange={(e) => setConnectionDuration(parseInt(e.target.value))}
                 unit="ms"
               />
               <Slider
-                label="Capacity"
-                value={connectionCapacity}
-                min={20}
-                max={100}
-                step={5}
-                onChange={(e) => setConnectionCapacity(parseInt(e.target.value))}
+                label="Interval"
+                value={connectionInterval}
+                min={10}
+                max={500}
+                step={10}
+                onChange={(e) => setConnectionInterval(parseInt(e.target.value))}
+                unit="ms"
               />
               <Slider
                 label="Opacity"
                 value={connectionOpacity}
-                min={50}
-                max={100}
+                min={5}
+                max={50}
                 onChange={(e) => setConnectionOpacity(parseInt(e.target.value))}
                 unit="%"
-              />
-              <Slider
-                label="Interval"
-                value={connectionInterval}
-                min={100}
-                max={500}
-                step={50}
-                onChange={(e) => setConnectionInterval(parseInt(e.target.value))}
-                unit="ms"
               />
             </div>
           )}
@@ -322,24 +321,24 @@ const NetworkVisualizationController: React.FC = () => {
                 label="Cluster Force"
                 value={clusterForce}
                 min={0}
-                max={0.05}
-                step={0.001}
+                max={0.01}
+                step={0.0005}
                 onChange={(e) => setClusterForce(parseFloat(e.target.value))}
               />
               <Slider
                 label="Connection Strength"
                 value={connectionStrength}
                 min={0}
-                max={0.05}
-                step={0.001}
+                max={0.01}
+                step={0.0005}
                 onChange={(e) => setConnectionStrength(parseFloat(e.target.value))}
               />
               <Slider
                 label="Repulsion Force"
                 value={repulsionForce}
                 min={0}
-                max={0.1}
-                step={0.001}
+                max={0.2}
+                step={0.005}
                 onChange={(e) => setRepulsionForce(parseFloat(e.target.value))}
               />
             </div>

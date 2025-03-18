@@ -334,26 +334,17 @@ export const useNetworkAnimation = (config: AnimationConfig) => {
 
       // Create new connections preferring nodes in the same cluster
       if (currentTime - lastConnectionTime.current >= config.connectionInterval) {
-        // Remove oldest connections if we're at capacity
+        // Remove oldest connections if we're at capacity, but keep more active connections
         while (connectionsRef.current.length >= config.connectionCapacity) {
-          // Find the oldest completed connection
-          const oldestIndex = connectionsRef.current.findIndex(conn => conn.completed);
-          if (oldestIndex !== -1) {
-            // Remove the connection
-            const oldConn = connectionsRef.current[oldestIndex];
-            // Decrease connection counts for the nodes
-            nodesRef.current[oldConn.fromNode].connections--;
-            nodesRef.current[oldConn.toNode].connections--;
-            // Remove the connection from the array
-            connectionsRef.current.splice(oldestIndex, 1);
-          } else {
-            break; // No completed connections to remove
-          }
+          // Remove a random connection to create more dynamic patterns
+          const randomIndex = Math.floor(Math.random() * connectionsRef.current.length);
+          connectionsRef.current.splice(randomIndex, 1);
         }
 
-        const maxNewConnections = Math.min(2, config.connectionCapacity - connectionsRef.current.length);
+        // Create many more connections per interval
+        const maxNewConnections = Math.min(20, config.connectionCapacity - connectionsRef.current.length);
         
-        // Find node pairs
+        // Find ALL possible node pairs within distance
         const nodePairs = [];
         for (let i = 0; i < nodesRef.current.length; i++) {
           for (let j = i + 1; j < nodesRef.current.length; j++) {
@@ -363,56 +354,48 @@ export const useNetworkAnimation = (config: AnimationConfig) => {
               Math.pow(toNode.x - fromNode.x, 2) + Math.pow(toNode.y - fromNode.y, 2)
             );
             
-            // Allow connections up to 1.5x the connection distance for nodes in the same cluster
-            const maxDistance = config.connectionDistance * (fromNode.cluster === toNode.cluster ? 1.5 : 1);
+            // Allow connections up to 3x the connection distance
+            const maxDistance = config.connectionDistance * 3;
             
             if (distance < maxDistance) {
-              // Prioritize connections within the same cluster and shorter distances
-              const clusterBonus = fromNode.cluster === toNode.cluster ? 0.5 : 0;
-              const distanceScore = 1 - (distance / maxDistance); // Prefer closer nodes
-              const score = distanceScore + clusterBonus;
-              
+              // Simplified scoring to create more connections
+              const distanceScore = 1 - (distance / maxDistance);
               nodePairs.push({ 
                 i, 
                 j, 
-                score,
+                score: distanceScore,
                 distance,
-                strength: 1 + (fromNode.cluster === toNode.cluster ? 0.5 : 0)
+                strength: 1
               });
             }
           }
         }
         
-        // Create connections for highest scoring pairs
-        nodePairs
-          .sort((a, b) => b.score - a.score) // Sort by score in descending order
-          .slice(0, maxNewConnections)
-          .forEach(({ i, j, strength }) => {
-            if (connectionsRef.current.length < config.connectionCapacity) {
-              const exists = connectionsRef.current.some(
-                conn => (conn.fromNode === i && conn.toNode === j) ||
-                       (conn.fromNode === j && conn.toNode === i)
-              );
-              
-              if (!exists) {
-                connectionsRef.current.push({
-                  fromNode: i,
-                  toNode: j,
-                  progress: 0,
-                  active: true,
-                  startTime: currentTime,
-                  duration: config.connectionDuration,
-                  opacity: 1,
-                  completed: false,
-                  strength
-                });
-                
-                // Update connection counts
-                nodesRef.current[i].connections++;
-                nodesRef.current[j].connections++;
-              }
-            }
-          });
+        // Randomly select from valid pairs to create more varied connections
+        const selectedPairs = nodePairs
+          .sort(() => Math.random() - 0.5) // Randomize order
+          .slice(0, maxNewConnections);
+
+        selectedPairs.forEach(({ i, j, strength }) => {
+          const exists = connectionsRef.current.some(
+            conn => (conn.fromNode === i && conn.toNode === j) ||
+                   (conn.fromNode === j && conn.toNode === i)
+          );
+          
+          if (!exists) {
+            connectionsRef.current.push({
+              fromNode: i,
+              toNode: j,
+              progress: 0,
+              active: true,
+              startTime: currentTime,
+              duration: config.connectionDuration * (0.5 + Math.random() * 0.5), // Randomize duration
+              opacity: 0.5 + Math.random() * 0.5, // Randomize opacity
+              completed: false,
+              strength
+            });
+          }
+        });
         
         lastConnectionTime.current = currentTime;
       }
