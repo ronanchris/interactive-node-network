@@ -2,13 +2,8 @@
 import React, { useState, ChangeEvent } from 'react';
 import InteractiveNodeNetwork from './InteractiveNodeNetwork';
 import { ThemeVariant } from '../constants/themes';
-
-interface ControlSectionProps {
-  title: string;
-  isOpen: boolean;
-  onToggle: () => void;
-  children: React.ReactNode;
-}
+import { Box, Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface SliderProps {
   label: string;
@@ -19,19 +14,6 @@ interface SliderProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   unit?: string;
 }
-
-const ControlSection: React.FC<ControlSectionProps> = ({ title, isOpen, onToggle, children }) => (
-  <div className="border-t border-gray-700 pt-4">
-    <button
-      onClick={onToggle}
-      className="flex justify-between items-center w-full text-left mb-4"
-    >
-      <h3 className="text-lg font-medium text-white">{title}</h3>
-      <span className="text-white">{isOpen ? '▼' : '▶'}</span>
-    </button>
-    {isOpen && <div className="space-y-4">{children}</div>}
-  </div>
-);
 
 const Slider: React.FC<SliderProps> = ({ label, value, min, max, step = 1, onChange, unit = '' }) => (
   <div className="flex items-center space-x-2">
@@ -87,18 +69,35 @@ const NetworkVisualizationController: React.FC = () => {
   const [connectionStrength, setConnectionStrength] = useState(0.001);
   const [repulsionForce, setRepulsionForce] = useState(0.01);
 
-  // Section toggles
-  const [openSections, setOpenSections] = useState({
-    basic: false,
-    mouse: false,
-    nodes: false,
-    connections: true,
-    clustering: true,
-    gradient: true
-  });
-
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+  const accordionStyles = {
+    width: '100%', 
+    bgcolor: 'transparent',
+    '& .MuiAccordion-root': {
+      background: 'transparent',
+      boxShadow: 'none',
+      '&:before': {
+        display: 'none',
+      },
+    },
+    '& .MuiAccordionSummary-root': {
+      minHeight: '40px',
+      padding: '0 8px',
+      color: '#fff',
+      '& .MuiAccordionSummary-expandIconWrapper': {
+        color: '#fff',
+      },
+    },
+    '& .MuiAccordionSummary-content': {
+      margin: '8px 0',
+    },
+    '& .MuiAccordionDetails-root': {
+      padding: '0 8px 8px',
+    },
+    '& .MuiTypography-root': {
+      fontSize: '0.9rem',
+      fontWeight: 500,
+      color: '#fff',
+    },
   };
 
   return (
@@ -136,354 +135,370 @@ const NetworkVisualizationController: React.FC = () => {
       </div>
 
       {/* Controls Panel */}
-      <div className="w-full bg-gray-900 rounded-lg p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-white">Network Controls</h2>
-          <div className="flex gap-2">
-            {Object.entries(openSections).map(([key, isOpen]) => (
-              <button
-                key={key}
-                onClick={() => toggleSection(key as keyof typeof openSections)}
-                className={`px-3 py-1 rounded text-sm ${
-                  isOpen 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-              >
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-              </button>
-            ))}
-          </div>
-        </div>
-
+      <div className="w-full bg-gray-800 rounded-lg p-4">
+        <h2 className="text-xl font-bold text-white mb-4">Network Controls</h2>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {openSections.basic && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Basic Settings</h3>
-              <Slider
-                label="Node Count"
-                value={nodeCount}
-                min={10}
-                max={100}
-                onChange={(e) => setNodeCount(parseInt(e.target.value))}
-              />
-              <Slider
-                label="Node Size"
-                value={nodeSize}
-                min={2}
-                max={8}
-                onChange={(e) => setNodeSize(parseInt(e.target.value))}
-                unit="px"
-              />
-              <Slider
-                label="Line Thickness"
-                value={lineThickness}
-                min={1}
-                max={5}
-                step={0.5}
-                onChange={(e) => setLineThickness(parseFloat(e.target.value))}
-                unit="px"
-              />
-              <div className="flex items-center space-x-2">
-                <label className="text-sm font-medium text-white w-1/3">Theme</label>
-                <select
-                  value={theme}
-                  onChange={(e) => setTheme(e.target.value as ThemeVariant)}
-                  className="w-2/3 bg-gray-700 text-white rounded-lg p-1 text-sm"
-                >
-                  <option value="default">Default</option>
-                  <option value="warm">Warm</option>
-                  <option value="cool">Cool</option>
-                  <option value="night">Night</option>
-                  <option value="highContrast">High Contrast</option>
-                  <option value="neon">Neon</option>
-                </select>
-              </div>
-              <div className="flex items-center space-x-2">
-                <label className="text-sm font-medium text-white w-1/3">Node Color</label>
-                <input
-                  type="color"
-                  value={nodeColor}
-                  onChange={(e) => setNodeColor(e.target.value)}
-                  className="w-16 h-8 bg-gray-700 rounded cursor-pointer"
-                />
-                <button
-                  onClick={() => setNodeColor('')}
-                  className="px-2 py-1 text-sm bg-gray-700 text-white rounded hover:bg-gray-600"
-                >
-                  Reset
-                </button>
-              </div>
-              <div className="flex items-center space-x-2">
-                <label className="text-sm font-medium text-white w-1/3">Line Color</label>
-                <input
-                  type="color"
-                  value={lineColor}
-                  onChange={(e) => setLineColor(e.target.value)}
-                  className="w-16 h-8 bg-gray-700 rounded cursor-pointer"
-                />
-                <button
-                  onClick={() => setLineColor('')}
-                  className="px-2 py-1 text-sm bg-gray-700 text-white rounded hover:bg-gray-600"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-          )}
-
-          {openSections.mouse && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Mouse Interaction</h3>
-              <Slider
-                label="Radius"
-                value={mouseRadius}
-                min={100}
-                max={300}
-                onChange={(e) => setMouseRadius(parseInt(e.target.value))}
-                unit="px"
-              />
-              <Slider
-                label="Force"
-                value={mouseForce}
-                min={0.01}
-                max={0.1}
-                step={0.01}
-                onChange={(e) => setMouseForce(parseFloat(e.target.value))}
-              />
-            </div>
-          )}
-
-          {openSections.nodes && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Node Animation</h3>
-              <Slider
-                label="Speed"
-                value={nodeSpeed}
-                min={0.1}
-                max={1.0}
-                step={0.1}
-                onChange={(e) => setNodeSpeed(parseFloat(e.target.value))}
-              />
-              <Slider
-                label="Pulse Speed"
-                value={nodePulseSpeed}
-                min={0.001}
-                max={0.005}
-                step={0.001}
-                onChange={(e) => setNodePulseSpeed(parseFloat(e.target.value))}
-              />
-              <Slider
-                label="Pulse Amplitude"
-                value={nodePulseAmplitude}
-                min={0.1}
-                max={0.5}
-                step={0.1}
-                onChange={(e) => setNodePulseAmplitude(parseFloat(e.target.value))}
-              />
-            </div>
-          )}
-
-          {openSections.connections && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Connections</h3>
-              <Slider
-                label="Max Connections"
-                value={connectionCapacity}
-                min={50}
-                max={1000}
-                onChange={(e) => setConnectionCapacity(parseInt(e.target.value))}
-              />
-              <Slider
-                label="Distance"
-                value={connectionDistance}
-                min={100}
-                max={800}
-                step={50}
-                onChange={(e) => setConnectionDistance(parseInt(e.target.value))}
-                unit="px"
-              />
-              <Slider
-                label="Duration"
-                value={connectionDuration}
-                min={1000}
-                max={15000}
-                step={500}
-                onChange={(e) => setConnectionDuration(parseInt(e.target.value))}
-                unit="ms"
-              />
-              <Slider
-                label="Interval"
-                value={connectionInterval}
-                min={10}
-                max={500}
-                step={10}
-                onChange={(e) => setConnectionInterval(parseInt(e.target.value))}
-                unit="ms"
-              />
-              <Slider
-                label="Opacity"
-                value={connectionOpacity}
-                min={5}
-                max={50}
-                onChange={(e) => setConnectionOpacity(parseInt(e.target.value))}
-                unit="%"
-              />
-            </div>
-          )}
-
-          {openSections.clustering && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Clustering</h3>
-              <Slider
-                label="Cluster Force"
-                value={clusterForce}
-                min={0}
-                max={0.01}
-                step={0.0005}
-                onChange={(e) => setClusterForce(parseFloat(e.target.value))}
-              />
-              <Slider
-                label="Connection Strength"
-                value={connectionStrength}
-                min={0}
-                max={0.01}
-                step={0.0005}
-                onChange={(e) => setConnectionStrength(parseFloat(e.target.value))}
-              />
-              <Slider
-                label="Repulsion Force"
-                value={repulsionForce}
-                min={0}
-                max={0.2}
-                step={0.005}
-                onChange={(e) => setRepulsionForce(parseFloat(e.target.value))}
-              />
-            </div>
-          )}
-
-          {openSections.gradient && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Gradient Overlay</h3>
-              <div className="flex items-center space-x-2">
-                <label className="text-sm font-medium text-white w-1/3">Enable Gradient</label>
-                <input
-                  type="checkbox"
-                  checked={gradientEnabled}
-                  onChange={(e) => setGradientEnabled(e.target.checked)}
-                  className="w-4 h-4 bg-gray-700 rounded cursor-pointer"
-                />
-              </div>
-              <div className="flex items-center space-x-2">
-                <label className="text-sm font-medium text-white w-1/3">Follow Mouse</label>
-                <input
-                  type="checkbox"
-                  checked={followMouse}
-                  onChange={(e) => setFollowMouse(e.target.checked)}
-                  className="w-4 h-4 bg-gray-700 rounded cursor-pointer"
-                />
-              </div>
-              <Slider
-                label="Radius"
-                value={gradientRadius}
-                min={200}
-                max={2000}
-                step={100}
-                onChange={(e) => setGradientRadius(parseInt(e.target.value))}
-                unit="px"
-              />
-              <Slider
-                label="Global Opacity"
-                value={gradientOpacity}
-                min={0}
-                max={100}
-                onChange={(e) => setGradientOpacity(parseInt(e.target.value))}
-                unit="%"
-              />
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white">Color Stops</label>
-                {gradientColors.map((stop, index) => (
-                  <div key={index} className="space-y-2 border-b border-gray-700 pb-2">
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="number"
-                        value={stop.position}
-                        min={0}
-                        max={1}
-                        step={0.1}
-                        onChange={(e) => {
-                          const newColors = [...gradientColors];
-                          newColors[index] = {
-                            ...stop,
-                            position: parseFloat(e.target.value)
-                          };
-                          setGradientColors(newColors);
-                        }}
-                        className="w-16 bg-gray-700 text-white rounded p-1 text-sm"
-                      />
-                      <input
-                        type="color"
-                        value={stop.color}
-                        onChange={(e) => {
-                          const newColors = [...gradientColors];
-                          newColors[index] = {
-                            ...stop,
-                            color: e.target.value
-                          };
-                          setGradientColors(newColors);
-                        }}
-                        className="w-16 h-8 bg-gray-700 rounded cursor-pointer"
-                      />
-                      <div className="flex-1">
-                        <Slider
-                          label="Opacity"
-                          value={Math.round(stop.opacity * 100)}
-                          min={0}
-                          max={100}
-                          onChange={(e) => {
-                            const newColors = [...gradientColors];
-                            newColors[index] = {
-                              ...stop,
-                              opacity: parseInt(e.target.value) / 100
-                            };
-                            setGradientColors(newColors);
-                          }}
-                          unit="%"
-                        />
-                      </div>
-                      <button
-                        onClick={() => {
-                          if (gradientColors.length > 2) {
-                            setGradientColors(gradientColors.filter((_, i) => i !== index));
-                          }
-                        }}
-                        className="px-2 py-1 text-sm bg-gray-700 text-white rounded hover:bg-gray-600"
-                        disabled={gradientColors.length <= 2}
-                      >
-                        Remove
-                      </button>
-                    </div>
+          <Box sx={accordionStyles}>
+            <Accordion defaultExpanded={true}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Basic Settings</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className="space-y-2">
+                  <Slider
+                    label="Node Count"
+                    value={nodeCount}
+                    min={10}
+                    max={100}
+                    onChange={(e) => setNodeCount(parseInt(e.target.value))}
+                  />
+                  <Slider
+                    label="Node Size"
+                    value={nodeSize}
+                    min={2}
+                    max={8}
+                    onChange={(e) => setNodeSize(parseInt(e.target.value))}
+                    unit="px"
+                  />
+                  <Slider
+                    label="Line Thickness"
+                    value={lineThickness}
+                    min={1}
+                    max={5}
+                    step={0.5}
+                    onChange={(e) => setLineThickness(parseFloat(e.target.value))}
+                    unit="px"
+                  />
+                  <div className="flex items-center space-x-2">
+                    <label className="text-sm font-medium text-white w-1/3">Theme</label>
+                    <select
+                      value={theme}
+                      onChange={(e) => setTheme(e.target.value as ThemeVariant)}
+                      className="w-2/3 bg-gray-700 text-white rounded-lg p-1 text-sm"
+                    >
+                      <option value="default">Default</option>
+                      <option value="warm">Warm</option>
+                      <option value="cool">Cool</option>
+                      <option value="night">Night</option>
+                      <option value="highContrast">High Contrast</option>
+                      <option value="neon">Neon</option>
+                    </select>
                   </div>
-                ))}
-                <button
-                  onClick={() => {
-                    const lastStop = gradientColors[gradientColors.length - 1];
-                    setGradientColors([
-                      ...gradientColors,
-                      {
-                        position: Math.min(1, lastStop.position + 0.1),
-                        color: lastStop.color,
-                        opacity: lastStop.opacity
-                      }
-                    ]);
-                  }}
-                  className="px-2 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-500"
-                >
-                  Add Color Stop
-                </button>
-              </div>
-            </div>
-          )}
+                  <div className="flex items-center space-x-2">
+                    <label className="text-sm font-medium text-white w-1/3">Node Color</label>
+                    <input
+                      type="color"
+                      value={nodeColor}
+                      onChange={(e) => setNodeColor(e.target.value)}
+                      className="w-16 h-8 bg-gray-700 rounded cursor-pointer"
+                    />
+                    <button
+                      onClick={() => setNodeColor('')}
+                      className="px-2 py-1 text-sm bg-gray-700 text-white rounded hover:bg-gray-600"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <label className="text-sm font-medium text-white w-1/3">Line Color</label>
+                    <input
+                      type="color"
+                      value={lineColor}
+                      onChange={(e) => setLineColor(e.target.value)}
+                      className="w-16 h-8 bg-gray-700 rounded cursor-pointer"
+                    />
+                    <button
+                      onClick={() => setLineColor('')}
+                      className="px-2 py-1 text-sm bg-gray-700 text-white rounded hover:bg-gray-600"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+
+          <Box sx={accordionStyles}>
+            <Accordion defaultExpanded={true}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Mouse Interaction</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className="space-y-2">
+                  <Slider
+                    label="Radius"
+                    value={mouseRadius}
+                    min={100}
+                    max={300}
+                    onChange={(e) => setMouseRadius(parseInt(e.target.value))}
+                    unit="px"
+                  />
+                  <Slider
+                    label="Force"
+                    value={mouseForce * 100}
+                    min={1}
+                    max={10}
+                    onChange={(e) => setMouseForce(parseInt(e.target.value) / 100)}
+                  />
+                </div>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+
+          <Box sx={accordionStyles}>
+            <Accordion defaultExpanded={true}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Node Animation</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className="space-y-2">
+                  <Slider
+                    label="Speed"
+                    value={nodeSpeed * 100}
+                    min={1}
+                    max={20}
+                    onChange={(e) => setNodeSpeed(parseInt(e.target.value) / 100)}
+                  />
+                  <Slider
+                    label="Pulse Speed"
+                    value={nodePulseSpeed * 1000}
+                    min={1}
+                    max={10}
+                    onChange={(e) => setNodePulseSpeed(parseInt(e.target.value) / 1000)}
+                  />
+                  <Slider
+                    label="Pulse Amplitude"
+                    value={nodePulseAmplitude * 100}
+                    min={10}
+                    max={50}
+                    onChange={(e) => setNodePulseAmplitude(parseInt(e.target.value) / 100)}
+                    unit="%"
+                  />
+                </div>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+
+          <Box sx={accordionStyles}>
+            <Accordion defaultExpanded={true}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Connection Controls</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className="space-y-2">
+                  <Slider
+                    label="Max Connections"
+                    value={connectionCapacity}
+                    min={50}
+                    max={1000}
+                    onChange={(e) => setConnectionCapacity(parseInt(e.target.value))}
+                  />
+                  <Slider
+                    label="Distance"
+                    value={connectionDistance}
+                    min={100}
+                    max={800}
+                    step={50}
+                    onChange={(e) => setConnectionDistance(parseInt(e.target.value))}
+                    unit="px"
+                  />
+                  <Slider
+                    label="Duration"
+                    value={connectionDuration}
+                    min={1000}
+                    max={15000}
+                    step={500}
+                    onChange={(e) => setConnectionDuration(parseInt(e.target.value))}
+                    unit="ms"
+                  />
+                  <Slider
+                    label="Interval"
+                    value={connectionInterval}
+                    min={10}
+                    max={500}
+                    step={10}
+                    onChange={(e) => setConnectionInterval(parseInt(e.target.value))}
+                    unit="ms"
+                  />
+                  <Slider
+                    label="Opacity"
+                    value={connectionOpacity}
+                    min={5}
+                    max={50}
+                    onChange={(e) => setConnectionOpacity(parseInt(e.target.value))}
+                    unit="%"
+                  />
+                </div>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+
+          <Box sx={accordionStyles}>
+            <Accordion defaultExpanded={true}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Physics Controls</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className="space-y-2">
+                  <Slider
+                    label="Cluster Force"
+                    value={clusterForce * 10000}
+                    min={0}
+                    max={100}
+                    step={5}
+                    onChange={(e) => setClusterForce(parseInt(e.target.value) / 10000)}
+                  />
+                  <Slider
+                    label="Connection Strength"
+                    value={connectionStrength * 10000}
+                    min={0}
+                    max={100}
+                    step={5}
+                    onChange={(e) => setConnectionStrength(parseInt(e.target.value) / 10000)}
+                  />
+                  <Slider
+                    label="Repulsion Force"
+                    value={repulsionForce * 100}
+                    min={0}
+                    max={20}
+                    step={1}
+                    onChange={(e) => setRepulsionForce(parseInt(e.target.value) / 100)}
+                  />
+                </div>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+
+          <Box sx={accordionStyles}>
+            <Accordion defaultExpanded={true}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Gradient Overlay</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <label className="text-sm font-medium text-white w-1/3">Enable Gradient</label>
+                    <input
+                      type="checkbox"
+                      checked={gradientEnabled}
+                      onChange={(e) => setGradientEnabled(e.target.checked)}
+                      className="w-4 h-4 bg-gray-700 rounded cursor-pointer"
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <label className="text-sm font-medium text-white w-1/3">Follow Mouse</label>
+                    <input
+                      type="checkbox"
+                      checked={followMouse}
+                      onChange={(e) => setFollowMouse(e.target.checked)}
+                      className="w-4 h-4 bg-gray-700 rounded cursor-pointer"
+                    />
+                  </div>
+                  <Slider
+                    label="Radius"
+                    value={gradientRadius}
+                    min={200}
+                    max={2000}
+                    step={100}
+                    onChange={(e) => setGradientRadius(parseInt(e.target.value))}
+                    unit="px"
+                  />
+                  <Slider
+                    label="Global Opacity"
+                    value={gradientOpacity}
+                    min={0}
+                    max={100}
+                    onChange={(e) => setGradientOpacity(parseInt(e.target.value))}
+                    unit="%"
+                  />
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-white">Color Stops</label>
+                    {gradientColors.map((stop, index) => (
+                      <div key={index} className="space-y-2 border-b border-gray-700 pb-2">
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="number"
+                            value={stop.position}
+                            min={0}
+                            max={1}
+                            step={0.1}
+                            onChange={(e) => {
+                              const newColors = [...gradientColors];
+                              newColors[index] = {
+                                ...stop,
+                                position: parseFloat(e.target.value)
+                              };
+                              setGradientColors(newColors);
+                            }}
+                            className="w-16 bg-gray-700 text-white rounded p-1 text-sm"
+                          />
+                          <input
+                            type="color"
+                            value={stop.color}
+                            onChange={(e) => {
+                              const newColors = [...gradientColors];
+                              newColors[index] = {
+                                ...stop,
+                                color: e.target.value
+                              };
+                              setGradientColors(newColors);
+                            }}
+                            className="w-16 h-8 bg-gray-700 rounded cursor-pointer"
+                          />
+                          <div className="flex-1">
+                            <Slider
+                              label="Opacity"
+                              value={Math.round(stop.opacity * 100)}
+                              min={0}
+                              max={100}
+                              onChange={(e) => {
+                                const newColors = [...gradientColors];
+                                newColors[index] = {
+                                  ...stop,
+                                  opacity: parseInt(e.target.value) / 100
+                                };
+                                setGradientColors(newColors);
+                              }}
+                              unit="%"
+                            />
+                          </div>
+                          <button
+                            onClick={() => {
+                              if (gradientColors.length > 2) {
+                                setGradientColors(gradientColors.filter((_, i) => i !== index));
+                              }
+                            }}
+                            className="px-2 py-1 text-sm bg-gray-700 text-white rounded hover:bg-gray-600"
+                            disabled={gradientColors.length <= 2}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    <button
+                      onClick={() => {
+                        const lastStop = gradientColors[gradientColors.length - 1];
+                        setGradientColors([
+                          ...gradientColors,
+                          {
+                            position: Math.min(1, lastStop.position + 0.1),
+                            color: lastStop.color,
+                            opacity: lastStop.opacity
+                          }
+                        ]);
+                      }}
+                      className="px-2 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-500"
+                    >
+                      Add Color Stop
+                    </button>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
         </div>
       </div>
     </div>
