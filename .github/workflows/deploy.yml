@@ -25,12 +25,11 @@ jobs:
           npm install
         
       - name: Build
-        run: |
-          npm run build
-          npm run build:status
+        run: npm run build
         env:
           NODE_ENV: production
           CI: false
+          BASE_URL: /interactive-node-network/
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

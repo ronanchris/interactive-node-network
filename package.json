@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "build:status": "mkdir -p dist/status && cp -r docs/status/* dist/status/ && mv dist/status/dashboard.html dist/status/index.html",
-    "predeploy": "npm run build && npm run build:status",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
