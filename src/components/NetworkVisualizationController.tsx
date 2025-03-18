@@ -60,6 +60,18 @@ const NetworkVisualizationController: React.FC = () => {
   const [nodeColor, setNodeColor] = useState<string>('');
   const [lineColor, setLineColor] = useState<string>('');
 
+  // Gradient controls
+  const [gradientEnabled, setGradientEnabled] = useState(true);
+  const [gradientColors, setGradientColors] = useState([
+    { position: 0, color: '#ffffff', opacity: 1 },
+    { position: 0.3, color: '#4dabf5', opacity: 0.8 },
+    { position: 0.6, color: '#2196f3', opacity: 0.6 },
+    { position: 1, color: '#000000', opacity: 0.4 }
+  ]);
+  const [gradientRadius, setGradientRadius] = useState(800);
+  const [gradientOpacity, setGradientOpacity] = useState(80);
+  const [followMouse, setFollowMouse] = useState(false);
+
   // Advanced controls
   const [mouseRadius, setMouseRadius] = useState(200);
   const [mouseForce, setMouseForce] = useState(0.05);
@@ -81,7 +93,8 @@ const NetworkVisualizationController: React.FC = () => {
     mouse: false,
     nodes: false,
     connections: true,
-    clustering: true
+    clustering: true,
+    gradient: true
   });
 
   const toggleSection = (section: keyof typeof openSections) => {
@@ -114,6 +127,11 @@ const NetworkVisualizationController: React.FC = () => {
           repulsionForce={repulsionForce}
           nodeColor={nodeColor || undefined}
           lineColor={lineColor || undefined}
+          gradientEnabled={gradientEnabled}
+          gradientColors={gradientColors}
+          gradientRadius={gradientRadius}
+          gradientOpacity={gradientOpacity}
+          followMouse={followMouse}
         />
       </div>
 
@@ -341,6 +359,129 @@ const NetworkVisualizationController: React.FC = () => {
                 step={0.005}
                 onChange={(e) => setRepulsionForce(parseFloat(e.target.value))}
               />
+            </div>
+          )}
+
+          {openSections.gradient && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-white">Gradient Overlay</h3>
+              <div className="flex items-center space-x-2">
+                <label className="text-sm font-medium text-white w-1/3">Enable Gradient</label>
+                <input
+                  type="checkbox"
+                  checked={gradientEnabled}
+                  onChange={(e) => setGradientEnabled(e.target.checked)}
+                  className="w-4 h-4 bg-gray-700 rounded cursor-pointer"
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <label className="text-sm font-medium text-white w-1/3">Follow Mouse</label>
+                <input
+                  type="checkbox"
+                  checked={followMouse}
+                  onChange={(e) => setFollowMouse(e.target.checked)}
+                  className="w-4 h-4 bg-gray-700 rounded cursor-pointer"
+                />
+              </div>
+              <Slider
+                label="Radius"
+                value={gradientRadius}
+                min={200}
+                max={2000}
+                step={100}
+                onChange={(e) => setGradientRadius(parseInt(e.target.value))}
+                unit="px"
+              />
+              <Slider
+                label="Global Opacity"
+                value={gradientOpacity}
+                min={0}
+                max={100}
+                onChange={(e) => setGradientOpacity(parseInt(e.target.value))}
+                unit="%"
+              />
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-white">Color Stops</label>
+                {gradientColors.map((stop, index) => (
+                  <div key={index} className="space-y-2 border-b border-gray-700 pb-2">
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="number"
+                        value={stop.position}
+                        min={0}
+                        max={1}
+                        step={0.1}
+                        onChange={(e) => {
+                          const newColors = [...gradientColors];
+                          newColors[index] = {
+                            ...stop,
+                            position: parseFloat(e.target.value)
+                          };
+                          setGradientColors(newColors);
+                        }}
+                        className="w-16 bg-gray-700 text-white rounded p-1 text-sm"
+                      />
+                      <input
+                        type="color"
+                        value={stop.color}
+                        onChange={(e) => {
+                          const newColors = [...gradientColors];
+                          newColors[index] = {
+                            ...stop,
+                            color: e.target.value
+                          };
+                          setGradientColors(newColors);
+                        }}
+                        className="w-16 h-8 bg-gray-700 rounded cursor-pointer"
+                      />
+                      <div className="flex-1">
+                        <Slider
+                          label="Opacity"
+                          value={Math.round(stop.opacity * 100)}
+                          min={0}
+                          max={100}
+                          onChange={(e) => {
+                            const newColors = [...gradientColors];
+                            newColors[index] = {
+                              ...stop,
+                              opacity: parseInt(e.target.value) / 100
+                            };
+                            setGradientColors(newColors);
+                          }}
+                          unit="%"
+                        />
+                      </div>
+                      <button
+                        onClick={() => {
+                          if (gradientColors.length > 2) {
+                            setGradientColors(gradientColors.filter((_, i) => i !== index));
+                          }
+                        }}
+                        className="px-2 py-1 text-sm bg-gray-700 text-white rounded hover:bg-gray-600"
+                        disabled={gradientColors.length <= 2}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    const lastStop = gradientColors[gradientColors.length - 1];
+                    setGradientColors([
+                      ...gradientColors,
+                      {
+                        position: Math.min(1, lastStop.position + 0.1),
+                        color: lastStop.color,
+                        opacity: lastStop.opacity
+                      }
+                    ]);
+                  }}
+                  className="px-2 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-500"
+                >
+                  Add Color Stop
+                </button>
+              </div>
             </div>
           )}
         </div>
